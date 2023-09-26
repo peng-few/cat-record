@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ObjectValues, SelectOptions } from "../_lib";
+import { ObjectValues, SelectOptions } from "../../_lib";
 
 export const EnergyType = z.enum(['ME', 'Energy']);
 export type EnergyType = z.infer<typeof EnergyType>;

@@ -2,7 +2,7 @@ import { isPercentageUnit } from '@/_data/UnitType';
 import { FieldFood } from '../_firebase';
 import { applyId } from "@/serialNumber/_firebase";
 import { Formatter} from '@/_lib';
-import { EnergyType, isME } from "@/_data/EnergyTypes";
+import { EnergyType, isME } from "../_data/EnergyTypes";
 import calcaluteCarbohydrate from "@/calculate/calculateCarbohydrate";
 import unitConverter from "@/_lib/unitConverter";
 import { WithId } from "@/_lib";

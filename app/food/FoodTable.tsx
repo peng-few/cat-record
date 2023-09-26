@@ -7,7 +7,7 @@ import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 import TableBody from '@mui/material/TableBody';
 import { unitConverter,toDecimalPlace } from "@/_lib"
-import { isDry } from "@/_data/FoodTypes"
+import { isDry } from "./_data/FoodTypes"
 import { Suspense } from "react"
 import { Loading } from "@/_components/Loading"
 import FoodListAction from "./FoodTableAction";

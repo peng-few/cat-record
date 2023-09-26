@@ -1,6 +1,7 @@
 "use client"
 import { useForm, SubmitHandler } from "react-hook-form"
-import { FoodType, FoodTypeName, isDry } from "../_data/FoodTypes"
+import { FoodType, FoodTypeName, isDry } from "./_data/FoodTypes"
+import { EnergyTypeOptions } from "./_data/EnergyTypes"
 import { ReactNode, useEffect, useMemo } from "react"
 import RadioGroup from "@mui/material/RadioGroup"
 import Radio from "@mui/material/Radio"
@@ -15,7 +16,6 @@ import { PostData as FieldFoodInput, PhosUnitType } from './api/route'
 import { noop, numberPattern } from "@/_lib"
 import { ValidateField, StyleForm, HorizontalFieldBox, Loading } from "@/_components"
 import { FieldBrand } from "@/brand/_firebase"
-import { EnergyTypeOptions } from "@/_data/EnergyTypes"
 import { getUnitOptions } from "@/_data/UnitType"
 
 export interface FoodFormProps {

@@ -4,7 +4,7 @@ import { errorResponse, successResponse } from '@/_lib';
 import formatPostData from "./formatPostData";
 import { z } from "zod";
 import UnitType from "@/_data/UnitType";
-import { EnergyType } from "@/_data/EnergyTypes";
+import { EnergyType } from "../_data/EnergyTypes";
 
 const collection = new CollectionHandler<FieldFood>(COLLECTION_NAME)
 

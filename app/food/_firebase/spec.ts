@@ -1,4 +1,4 @@
-import { FoodType } from "../../_data/FoodTypes";
+import { FoodType } from "../_data/FoodTypes";
 import { z } from "zod";
 import { zToNumber } from '@/_lib/zUtil'
 import { CollectionHandler } from "@/_firebase";
@@ -23,3 +23,4 @@ export const FieldFood = z.object({
 })
 
 export type FieldFood = z.infer<typeof FieldFood>; 
+
