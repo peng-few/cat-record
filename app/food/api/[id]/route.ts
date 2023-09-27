@@ -2,7 +2,7 @@ import { errorResponse, successResponse } from "@/_lib"
 import { deleteDoc, updateDoc } from "firebase/firestore"
 import { COLLECTION_NAME, FieldFood } from '../../_firebase'
 import { CollectionHandler } from "@/_firebase"
-import { FoodFormatter } from "../formatPostData"
+import { formatPostData } from "../foodFormatter"
 import { PostData } from "../route"
 
 const collection = new CollectionHandler<FieldFood>(COLLECTION_NAME)
@@ -26,14 +26,11 @@ export async function PUT(req: Request, { params: { id:stringId } }: Params) {
   try {
     const id = Number(stringId)
     const json = await req.json()
-    const { energyType,phosUnit,...putData } = PostData.parse(json)
-    const foodFormatter = new FoodFormatter({ ...putData, id })
-    foodFormatter.setPhosphorusBasePercentage(phosUnit)
-      .setEnergyBaseME(energyType)
-
+    const parsedData = PostData.parse(json)
+    const data = formatPostData({ ...parsedData,id })
     const doc = await collection.getDocById(id)
-    await updateDoc(doc.ref,foodFormatter.data)
-    return successResponse()
+    await updateDoc(doc.ref,data)
+    return successResponse({data})
   } catch (msg) {
     return errorResponse({msg})
   }

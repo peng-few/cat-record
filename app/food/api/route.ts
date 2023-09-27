@@ -1,10 +1,12 @@
 import { CollectionHandler } from "@/_firebase";
 import { FieldFood,COLLECTION_NAME } from '../_firebase';
-import { errorResponse, successResponse } from '@/_lib';
-import formatPostData from "./formatPostData";
+import { WithId, errorResponse, successResponse } from '@/_lib';
+import { formatPostData } from "./foodFormatter";
 import { z } from "zod";
 import UnitType from "@/_data/UnitType";
 import { EnergyType } from "../_data/EnergyTypes";
+import { applyId } from "@/serialNumber/_firebase";
+import { FoodType } from "../_data/FoodTypes";
 
 const collection = new CollectionHandler<FieldFood>(COLLECTION_NAME)
 
@@ -21,14 +23,21 @@ export const PostData = FieldFood
     phosUnit: PhosUnitType.optional(),
     energyType: EnergyType.optional(),
   })
+  .refine((data) => data.type == FoodType.Enum.Dry || data.water , {
+    message: "請輸入水份",
+    path: ["water"]
+  })
+
 export type PostData = z.infer<typeof PostData>;
 
 export async function POST(req: Request) { 
   try {
     const json = await req.json()
-    const postData = PostData.parse(json)
-    const data = await formatPostData(postData)
+    const parsedData = PostData.parse(json)
+    const dataWithId: WithId<PostData> = await applyId('food', parsedData)
+    const data = formatPostData(dataWithId)
     await collection.addData(data)
+
     return successResponse({data})
   } catch (msg) {
     return errorResponse({msg})

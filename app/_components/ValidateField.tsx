@@ -14,7 +14,6 @@ export type ValidateFieldProps<
   field?: keyof Fields
   variant?: Variant
   errors?: FieldErrors<Fields>
-  validateNumber?: boolean
   prefix?: ReactNode
   suffix?: ReactNode
   hidden?:boolean
@@ -40,7 +39,6 @@ export const ValidateField = forwardRef(function ValidateField<
     label,
     field = "",
     errors = {},
-    validateNumber = false,
     hidden = false,
     suffix,
     prefix,
@@ -50,13 +48,6 @@ export const ValidateField = forwardRef(function ValidateField<
   }: ValidateFieldProps<Fields, Variant>,
   ref: ForwardedRef<HTMLDivElement>
 ) {
-  const getErrorMessage = (error: FieldErrors<Fields>[keyof Fields]) => {
-    if (!error) return ""
-    if (error.message) return error.message as string
-    if (error.type === "pattern" && validateNumber) return "請輸入數字"
-    if (error.type === "required") return `請輸入${label}`
-  }
-
   const endAdornment = suffix ? (
     <InputAdornment position="end">{suffix}</InputAdornment>
   ) : (
@@ -76,7 +67,7 @@ export const ValidateField = forwardRef(function ValidateField<
       label={label}
       error={!!errors[field]}
       sx={{ ...sx,display: hidden ? 'none!important' : 'flex' }}
-      helperText={getErrorMessage(errors[field])}
+      helperText={errors[field]?.message as string}
       InputProps={{
         ...InputProps,
         endAdornment,

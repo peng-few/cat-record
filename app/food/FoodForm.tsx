@@ -13,10 +13,11 @@ import FormControl from "@mui/material/FormControl"
 import MenuItem from "@mui/material/MenuItem"
 import SwipeableDrawer from "@mui/material/SwipeableDrawer"
 import { PostData as FieldFoodInput, PhosUnitType } from './api/route'
-import { noop, numberPattern } from "@/_lib"
+import { noop } from "@/_lib"
 import { ValidateField, StyleForm, HorizontalFieldBox, Loading } from "@/_components"
 import { getUnitOptions } from "@/_data/UnitType"
 import { useBrands } from "@/brand/_components/BrandsContext"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 export interface FoodFormProps {
   values?: Partial<FieldFoodInput>,
@@ -45,7 +46,9 @@ export const FoodForm = ({
     watch,
     reset,
     formState: { errors },
-  } = useForm<FieldFoodInput>()
+  } = useForm<FieldFoodInput>({
+    resolver: zodResolver(FieldFoodInput)
+  })
 
   useEffect(() => {
     const defaultValues = {
@@ -77,7 +80,7 @@ export const FoodForm = ({
                 checked={watch('type') === type}
                 control={<Radio />}
                 label={FoodTypeName[type]}
-                {...register("type", { required: "請選擇乾/濕食" })}
+                {...register("type")}
               />
             ))}
           </RadioGroup>
@@ -91,7 +94,7 @@ export const FoodForm = ({
             field="brand"
             defaultValue={watch('brand')}
             errors={errors}
-            {...register("brand", { required: "請選擇品牌"})}
+            {...register("brand")}
           >
             {brands?.map((brand) => (
               <MenuItem key={brand.id} value={brand.id}>
@@ -113,7 +116,7 @@ export const FoodForm = ({
               select
               field="energyType"
               defaultValue={watch('energyType')}
-              {...register("energyType",{required: true})}
+              {...register("energyType")}
               sx={{ width: "auto" }}
             >
               {EnergyTypeOptions.map((option) => (
@@ -126,9 +129,9 @@ export const FoodForm = ({
               field="energy"
               errors={errors}
               suffix="kcal/100g"
-              validateNumber
+
               sx={{ maxWidth: "24ch" }}
-              {...register("energy", { required: `請輸入熱量`, ...numberPattern })}
+              {...register("energy")}
             />
           </HorizontalFieldBox>
           <ValidateField<FieldFoodInput>
@@ -137,9 +140,8 @@ export const FoodForm = ({
             field="water"
             errors={errors}
             suffix="%"
-            validateNumber
             hidden={isDry(watch("type"))}
-            {...register("water", { required: true, ...numberPattern })}
+            {...register("water")}
           />
         </HorizontalFieldBox>
 
@@ -149,32 +151,28 @@ export const FoodForm = ({
             field="protein"
             suffix="%"
             errors={errors}
-            validateNumber
-            {...register("protein", { required: true, ...numberPattern })}
+            {...register("protein")}
           />
           <ValidateField<FieldFoodInput>
             label="脂肪"
             suffix="%"
             field="fat"
             errors={errors}
-            validateNumber
-            {...register("fat", { required: true, ...numberPattern })}
+            {...register("fat")}
           />
           <ValidateField<FieldFoodInput>
             label="纖維"
             suffix="%"
             field="fiber"
             errors={errors}
-            validateNumber
-            {...register("fiber", { required: true, ...numberPattern })}
+            {...register("fiber")}
           />
           <ValidateField<FieldFoodInput>
             label="灰分"
             suffix="%"
             field="ash"
             errors={errors}
-            validateNumber
-            {...register("ash", { required: true, ...numberPattern })}
+            {...register("ash")}
           />
         </HorizontalFieldBox>
         <HorizontalFieldBox>
@@ -184,23 +182,21 @@ export const FoodForm = ({
             suffix="%"
             field="calcium"
             errors={errors}
-            validateNumber
-            {...register("calcium", numberPattern)}
+            {...register("calcium")}
           />
           <HorizontalFieldBox merged sx={{ my: 0 }}>
             <ValidateField<FieldFoodInput>
               label="磷"
               field="phosphorus"
               errors={errors}
-              validateNumber
               sx={{ width: "10ch" }}
-              {...register("phosphorus", numberPattern)}
+              {...register("phosphorus")}
             />
             <ValidateField<FieldFoodInput>
               select
               field="phosUnit"
-              defaultValue={phosUnitOptions[0].value}
-              {...register("phosUnit",{required: true})}
+              defaultValue={PhosUnitType.Enum.Percentage}
+              {...register("phosUnit")}
               sx={{ width: "auto" }}
             >
               {phosUnitOptions.map((option) => (

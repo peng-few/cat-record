@@ -38,11 +38,9 @@ export class FoodFormatter implements Formatter<FoodFormatter> {
   }
 }
 
-export default async function formatPostData(data:PostData) {
-  const { phosUnit, energyType, ...postData } = data
-  const dataWithId: WithId<PostData> = await applyId('food', postData)
 
-  const foodFormatter = new FoodFormatter(dataWithId)
+export const formatPostData = ({ phosUnit, energyType, ...postData }:WithId<PostData>) => {
+  const foodFormatter = new FoodFormatter(postData)
   foodFormatter.setPhosphorusBasePercentage(phosUnit)
     .setEnergyBaseME(energyType)
 
