@@ -3,11 +3,19 @@ import { forwardRef } from "react"
 
 const cssForm = {
   width: '600px',
-  "& .MuiFormControl-root": {
-    mx: 1,
-    my: 3,
-    minWidth: "65px",
+  "&>div": {
     display: "flex",
+    mb: 3,
+    "&:not(.label-name+div):not(.label-name)": {
+      my: 3,
+    },
+  },
+  '.MuiFormControl-root': {
+    mx: 1,
+  },
+  ".label-name": {
+    mt: 3,
+    mb: 1,
   },
 }
 export const StyleForm = forwardRef(function StyleForm({ className,children,sx, ...props }: BoxProps<'form'>,ref) {

@@ -1,4 +1,4 @@
-import { object, z } from "zod"
+import { z } from "zod"
 import { SelectOptions } from "../_lib"
 
 export const UnitType = z.enum([ 'Percentage', 'MgPerKalorie' ])

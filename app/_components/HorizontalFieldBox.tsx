@@ -9,7 +9,7 @@ const cssHorizontal = {
 const cssMerged = {
   mx: 1,
   "& .MuiFormControl-root": {
-    m: 0,
+    mx: 0,
   },
 }
 
