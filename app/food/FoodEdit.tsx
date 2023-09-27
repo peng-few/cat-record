@@ -6,7 +6,7 @@ import  simpleFetch from '@/_lib/simpleFetch'
 import { StatusSnackbar,useSnackbar } from "@/_components/StatusSnackbar"
 import { useRouter } from "next/navigation"
 import FoodForm from "./FoodForm"
-import { useBrands } from "@/brand/_component/BrandsContext"
+import { useBrands } from "@/brand/_components/BrandsContext"
 import { FieldFood } from "./_firebase"
 
 export interface FoodEditProps{
@@ -20,7 +20,6 @@ function FoodEdit({food,onClose: closeForm, open:formOpen}:FoodEditProps) {
   const {snackbarRef,snackbar} = useSnackbar()
   const [loading, setLoading] = useState(false)
   const router = useRouter()
-  const brands = useBrands()
 
   const submitForm: SubmitHandler<FieldFoodInput> = async (data) => {
     setLoading(true)
@@ -44,7 +43,6 @@ function FoodEdit({food,onClose: closeForm, open:formOpen}:FoodEditProps) {
         onSubmit={submitForm}
         submitText="編輯"
         loading={loading}
-        brands={brands}
         values={food}
       />
       <StatusSnackbar ref={snackbarRef}/>

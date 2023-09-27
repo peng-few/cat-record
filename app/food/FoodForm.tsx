@@ -15,11 +15,10 @@ import SwipeableDrawer from "@mui/material/SwipeableDrawer"
 import { PostData as FieldFoodInput, PhosUnitType } from './api/route'
 import { noop, numberPattern } from "@/_lib"
 import { ValidateField, StyleForm, HorizontalFieldBox, Loading } from "@/_components"
-import { FieldBrand } from "@/brand/_firebase"
 import { getUnitOptions } from "@/_data/UnitType"
+import { useBrands } from "@/brand/_components/BrandsContext"
 
 export interface FoodFormProps {
-  brands?: FieldBrand[]
   values?: Partial<FieldFoodInput>,
   onSubmit: SubmitHandler<FieldFoodInput>,
   onClose: () => void,
@@ -31,7 +30,6 @@ export interface FoodFormProps {
 export const DefaultValues = {}
 
 export const FoodForm = ({
-  brands,
   onClose,
   values= DefaultValues,
   onSubmit: submitForm,
@@ -40,7 +38,7 @@ export const FoodForm = ({
   open = false,
 }: FoodFormProps) => {
   const phosUnitOptions = useMemo(() => getUnitOptions(PhosUnitType.Values), [])
-  
+  const brands = useBrands()
   const {
     register,
     handleSubmit,

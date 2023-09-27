@@ -1,7 +1,7 @@
 import FoodAdd from "./FoodAdd";
 import FoodTable from "./FoodTable";
 import Typography from "@mui/material/Typography";
-import BrandsProvider from "@/brand/_component/BrandsProvider";
+import BrandsProvider from "@/brand/_components/BrandsProvider";
 
 export default async function Food() {
   return (

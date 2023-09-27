@@ -8,14 +8,13 @@ import { StatusSnackbar,useSnackbar } from "@/_components/StatusSnackbar"
 import { useRouter } from "next/navigation"
 import { PlusIcon } from "@heroicons/react/24/outline"
 import FoodForm from "./FoodForm"
-import { useBrands } from "@/brand/_component/BrandsContext"
+import { useBrands } from "@/brand/_components/BrandsContext"
 
 
 export default function FoodAdd() {
   const {snackbarRef,snackbar} = useSnackbar()
   const [loading,setLoading] = useState(false)
   const [formOpen, setFormOpen] = useState(false)
-  const brands = useBrands()
   const router = useRouter()
 
   const closeForm = () => {
@@ -56,7 +55,6 @@ export default function FoodAdd() {
         onSubmit={submitForm}
         submitText="新增"
         loading={loading}
-        brands={brands}
       />
       <StatusSnackbar ref={snackbarRef}/>
     </>
