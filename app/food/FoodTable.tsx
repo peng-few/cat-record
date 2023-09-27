@@ -80,7 +80,7 @@ export default async function FoodTable() {
           <Suspense fallback={<Loading/>}>
             <TableBody>
               <FocusedRowProvider>
-              {dryBasisFoods?.map(food => (
+              {dryBasisFoods?.map((food,idx) => (
                 <ExpandedTableRow
                   key={food.id}
                   detail={<FoodListDetail food={food}/>}
@@ -101,7 +101,7 @@ export default async function FoodTable() {
                   {`${food.phosphorus && food.calcium && toDecimalPlace(food.calcium/food.phosphorus, 1)}`}
                   </TableCell>
                   <TableCell>
-                    <FoodListAction food={food}/>
+                    <FoodListAction food={foods[idx]}/>
                   </TableCell>
                 </ExpandedTableRow>
               ))}

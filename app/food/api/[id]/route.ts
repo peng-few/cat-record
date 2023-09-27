@@ -2,6 +2,8 @@ import { errorResponse, successResponse } from "@/_lib"
 import { deleteDoc, updateDoc } from "firebase/firestore"
 import { COLLECTION_NAME, FieldFood } from '../../_firebase'
 import { CollectionHandler } from "@/_firebase"
+import { FoodFormatter } from "../formatPostData"
+import { PostData } from "../route"
 
 const collection = new CollectionHandler<FieldFood>(COLLECTION_NAME)
 export interface Params {
@@ -20,12 +22,17 @@ export async function DELETE(req: Request, { params: { id } }: Params) {
   }
 }
 
-export async function PUT(req: Request, { params: { id } }: Params) { 
+export async function PUT(req: Request, { params: { id:stringId } }: Params) { 
   try {
+    const id = Number(stringId)
     const json = await req.json()
-    const putData = FieldFood.parse({ ...json, id: Number(id) })
-    const doc = await collection.getDocById(Number(id))
-    await updateDoc(doc.ref,putData)
+    const { energyType,phosUnit,...putData } = PostData.parse(json)
+    const foodFormatter = new FoodFormatter({ ...putData, id })
+    foodFormatter.setPhosphorusBasePercentage(phosUnit)
+      .setEnergyBaseME(energyType)
+
+    const doc = await collection.getDocById(id)
+    await updateDoc(doc.ref,foodFormatter.data)
     return successResponse()
   } catch (msg) {
     return errorResponse({msg})
