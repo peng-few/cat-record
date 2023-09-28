@@ -11,11 +11,6 @@ export const EnergyTypeName = {
 
 export type EnergyTypeName = ObjectValues<typeof EnergyTypeName>
 
-export const EnergyTypeOptions: SelectOptions<EnergyType,EnergyTypeName> = [
-  { value: EnergyType.enum.ME, label: EnergyTypeName[EnergyType.enum.ME] },
-  { value: EnergyType.enum.Energy, label: EnergyTypeName[EnergyType.enum.Energy] },
-] as const
-
 export const isME = (value: string) => value === EnergyType.enum.ME;
 
 export const isEnergy = (value: string) => value === EnergyType.enum.Energy;

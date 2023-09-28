@@ -11,11 +11,6 @@ export const FoodTypeName = {
 
 export type FoodTypeName = ObjectValues<typeof FoodTypeName>
 
-export const FoodTypeOptions: SelectOptions<FoodType,FoodTypeName> = [
-  { value: FoodType.enum.Wet, label: FoodTypeName[FoodType.enum.Wet] },
-  { value: FoodType.enum.Dry, label: FoodTypeName[FoodType.enum.Dry] },
-] as const
-
 export const isWet = (value: string) => value ===  FoodType.enum.Wet
 
 export const isDry = (value: string) => value ===  FoodType.enum.Dry

@@ -1,10 +1,15 @@
 import { RegisterOptions } from "react-hook-form"
 
-export type AnyObject = { [x: string]: any }
+export interface AnyObject{ [x: string]: any }
+
+export interface NoSymbolKeyObject extends AnyObject{
+  [key: symbol]: never;
+}
+
 
 export type SelectOptions<
-  Value extends string = string,
-  Label extends string = string
+  Value extends string|number = string,
+  Label extends string|number = string
 > = {
   value: Value
   label: Label

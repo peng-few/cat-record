@@ -1,7 +1,7 @@
 "use client"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { FoodType, FoodTypeName, isDry } from "./_data/FoodTypes"
-import { EnergyTypeOptions } from "./_data/EnergyTypes"
+import { EnergyTypeName } from "./_data/EnergyTypes"
 import { ReactNode, useEffect, useMemo } from "react"
 import RadioGroup from "@mui/material/RadioGroup"
 import Radio from "@mui/material/Radio"
@@ -13,7 +13,7 @@ import FormControl from "@mui/material/FormControl"
 import MenuItem from "@mui/material/MenuItem"
 import SwipeableDrawer from "@mui/material/SwipeableDrawer"
 import { PostData as FieldFoodInput, PhosUnitType } from './api/route'
-import { noop } from "@/_lib"
+import { noop, typeNamesToOptions } from "@/_lib"
 import { ValidateField, StyleForm, HorizontalFieldBox, Loading } from "@/_components"
 import { getUnitOptions } from "@/_data/UnitType"
 import { useBrands } from "@/brand/_components/BrandsContext"
@@ -39,6 +39,7 @@ export const FoodForm = ({
   open = false,
 }: FoodFormProps) => {
   const phosUnitOptions = useMemo(() => getUnitOptions(PhosUnitType.Values), [])
+  const energyTypeOptions = useMemo(()=> typeNamesToOptions(EnergyTypeName),[])
   const brands = useBrands()
   const {
     register,
@@ -52,7 +53,7 @@ export const FoodForm = ({
 
   useEffect(() => {
     const defaultValues = {
-      energyType: EnergyTypeOptions[0].value,
+      energyType: energyTypeOptions[0].value,
       type: FoodType.enum.Wet,
       ...values,
     };
@@ -119,7 +120,7 @@ export const FoodForm = ({
               {...register("energyType")}
               sx={{ width: "auto" }}
             >
-              {EnergyTypeOptions.map((option) => (
+              {energyTypeOptions.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
                 </MenuItem>
