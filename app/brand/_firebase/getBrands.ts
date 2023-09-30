@@ -1,8 +1,8 @@
 import { unstable_cache } from 'next/cache'
-import { collection } from "../_firebase"
+import { Collection } from "../_firebase"
 
 export const getBrands = unstable_cache(async () => {
-  const brands = await collection.getAllData();
+  const brands = await Collection.getAllData();
   return brands
 },
   undefined,

@@ -4,7 +4,7 @@ import { zIsNumber, zIsPositiveNumber, zToNumber, zToNumberOptional } from '@/_l
 import { CollectionHandler } from "@/_firebase";
 
 export const COLLECTION_NAME = 'food'
-export const collection = new CollectionHandler<FieldFood>(COLLECTION_NAME)
+export const Collection = new CollectionHandler<FieldFood>(COLLECTION_NAME)
 
 export const FieldFood = z.object({
   id: zIsNumber(),
