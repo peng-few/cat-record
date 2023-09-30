@@ -35,6 +35,11 @@ export class CollectionHandler<Field extends AnyObject> {
     const querySnapshot = await getDocs(q); 
     return querySnapshot.docs[0]
   }
+
+  async getData(id:string|number) {
+    const doc = await this.getDocById(id)
+    return doc.data() as Field;
+  }
 }
 
 export default CollectionHandler;
