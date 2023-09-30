@@ -11,7 +11,7 @@ import FocusedTableRow from './FocusdTableRow';
 
 
 export interface ExpandedTableRowProps extends TableRowProps{
-  detail: React.ReactElement;
+  detail: React.ReactNode;
   colSpan: number;
   id: any;
 }
@@ -46,7 +46,9 @@ export const ExpandedTableRow = ({detail,children,sx,colSpan,id,...props}:Expand
         <TableCell sx={{ padding: 0 }} colSpan={colSpan}>
           <Collapse sx={{borderTop: (theme) => `1px solid ${theme.palette.grey[300]}`}} in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
+              <>
               {detail}
+              </>
             </Box>
           </Collapse>
         </TableCell>
