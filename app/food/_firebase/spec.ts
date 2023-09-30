@@ -7,7 +7,7 @@ export const COLLECTION_NAME = 'food'
 export const Collection = new CollectionHandler<FieldFood>(COLLECTION_NAME)
 
 export const FieldFood = z.object({
-  id: zIsNumber(),
+  id: z.string(),
   type: FoodType,
   energy: zToNumber('請填入熱量').pipe(zIsPositiveNumber()),
   brand: zToNumber('請選擇品牌').pipe(zIsPositiveNumber()),

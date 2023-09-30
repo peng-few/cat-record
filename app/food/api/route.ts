@@ -35,8 +35,7 @@ export async function POST(req: Request) {
   try {
     const json = await req.json()
     const parsedData = PostData.parse(json)
-    const dataWithId: WithId<PostData> = await applyId('food', parsedData)
-    const data = formatPostData(dataWithId)
+    const data = formatPostData(parsedData)
     await collection.addData(data)
     revalidateTag('foods')
     return successResponse({data})

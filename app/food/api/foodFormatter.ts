@@ -1,18 +1,16 @@
 import { isPercentageUnit } from '@/_data/UnitType';
 import { FieldFood } from '../_firebase';
-import { applyId } from "@/serialNumber/_firebase";
-import { Formatter} from '@/_lib';
 import { EnergyType, isME } from "../_data/EnergyTypes";
 import calcaluteCarbohydrate from "@/calculate/calculateCarbohydrate";
 import unitConverter from "@/_lib/unitConverter";
-import { WithId } from "@/_lib";
+import { Formatter, WithoutId } from "@/_lib";
 import calculateME from "@/calculate/calculateME";
 import { PhosUnitType, PostData } from './route';
 
-export class FoodFormatter implements Formatter<FoodFormatter> {
+export class FoodFormatter implements Formatter<WithoutId<FieldFood>> {
   data;
 
-  constructor(data: Omit<FieldFood, 'carbonhydrate'>) {
+  constructor(data: Omit<WithoutId<FieldFood>,'carbonhydrate'>) {
     const { protein, fat, fiber, ash, water = 0 } = data
     this.data = {
       ...data,
@@ -39,7 +37,7 @@ export class FoodFormatter implements Formatter<FoodFormatter> {
 }
 
 
-export const formatPostData = ({ phosUnit, energyType, ...postData }:WithId<PostData>) => {
+export const formatPostData = ({ phosUnit, energyType, ...postData }:PostData) => {
   const foodFormatter = new FoodFormatter(postData)
   foodFormatter.setPhosphorusBasePercentage(phosUnit)
     .setEnergyBaseME(energyType)

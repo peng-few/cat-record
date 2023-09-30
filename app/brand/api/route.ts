@@ -1,6 +1,6 @@
 import { applyId } from "@/serialNumber/_firebase";
 import { WithId, errorResponse, successResponse } from '@/_lib';
-import { FieldBrand, collection } from "../_firebase";
+import { FieldBrand, Collection } from "../_firebase";
 import { z } from "zod";
 import { getBrands } from "../_firebase/getBrands";
 
@@ -20,8 +20,7 @@ export async function POST(req:Request) {
   try {
     const json = await req.json()
     const postData = PostData.parse(json)
-    const dataWithId:WithId<PostData> = await applyId('brand',postData)
-    await collection.addData(dataWithId)
+    await Collection.addData(postData)
     return successResponse()
   } catch (msg) {
     return errorResponse({msg})
