@@ -25,7 +25,6 @@ function FoodEdit({food,onClose: closeForm, open:formOpen}:FoodEditProps) {
     setLoading(true)
     const { success } = await simpleFetch.put(`/food/api/${food?.id}`, data)
     if (success) {
-      await simpleFetch.post('/api/revalidate?tag=foods')
       snackbar?.success({msg: '新增成功'})
       router.refresh()
       closeForm();

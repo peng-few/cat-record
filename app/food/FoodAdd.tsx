@@ -29,7 +29,6 @@ export default function FoodAdd() {
     setLoading(true)
     const { success } = await simpleFetch.post('/food/api', data)
     if (success) {
-      await simpleFetch.post('/api/revalidate?tag=foods')
       snackbar?.success({msg: '新增成功'})
       router.refresh()
       closeForm();

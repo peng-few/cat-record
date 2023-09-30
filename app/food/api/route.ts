@@ -7,6 +7,7 @@ import UnitType from "@/_data/UnitType";
 import { EnergyType } from "../_data/EnergyTypes";
 import { applyId } from "@/serialNumber/_firebase";
 import { FoodType } from "../_data/FoodTypes";
+import { revalidateTag } from "next/cache";
 
 const collection = new CollectionHandler<FieldFood>(COLLECTION_NAME)
 
@@ -37,7 +38,7 @@ export async function POST(req: Request) {
     const dataWithId: WithId<PostData> = await applyId('food', parsedData)
     const data = formatPostData(dataWithId)
     await collection.addData(data)
-
+    revalidateTag('foods')
     return successResponse({data})
   } catch (msg) {
     return errorResponse({msg})

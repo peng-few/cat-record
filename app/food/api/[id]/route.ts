@@ -1,11 +1,10 @@
 import { errorResponse, successResponse } from "@/_lib"
 import { deleteDoc, updateDoc } from "firebase/firestore"
-import { COLLECTION_NAME, FieldFood } from '../../_firebase'
-import { CollectionHandler } from "@/_firebase"
+import { Collection } from '../../_firebase'
 import { formatPostData } from "../foodFormatter"
 import { PostData } from "../route"
+import { revalidateTag } from "next/cache"
 
-const collection = new CollectionHandler<FieldFood>(COLLECTION_NAME)
 export interface Params {
   params: {
     id: string
@@ -14,8 +13,9 @@ export interface Params {
 
 export async function DELETE(req: Request, { params: { id } }: Params) { 
   try {
-    const doc = await collection.getDocById(Number(id))
+    const doc = await Collection.getDocById(Number(id))
     await deleteDoc(doc.ref)
+    revalidateTag('foods')
     return successResponse()
   } catch (msg) {
     return errorResponse({msg})
@@ -28,8 +28,9 @@ export async function PUT(req: Request, { params: { id:stringId } }: Params) {
     const json = await req.json()
     const parsedData = PostData.parse(json)
     const data = formatPostData({ ...parsedData,id })
-    const doc = await collection.getDocById(id)
-    await updateDoc(doc.ref,data)
+    const doc = await Collection.getDocById(id)
+    await updateDoc(doc.ref, data)
+    revalidateTag('foods')
     return successResponse({data})
   } catch (msg) {
     return errorResponse({msg})
