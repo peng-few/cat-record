@@ -1,6 +1,6 @@
 'use client'
 import MuiDrawer, { DrawerProps } from '@mui/material/Drawer';
-import { styled,Theme, CSSObject } from '@mui/material';
+import { styled,Theme, CSSObject } from '@mui/material/styles';
 import { useState } from "react";
 import IconButton from '@mui/material/IconButton'
 import {Bars3Icon} from '@heroicons/react/24/outline'

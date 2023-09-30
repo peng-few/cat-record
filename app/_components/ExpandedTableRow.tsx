@@ -1,13 +1,14 @@
 'use client'
 import TableRow, { TableRowProps } from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
+import { SxProps, Theme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import React, { useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
 import FocusedTableRow from './FocusdTableRow';
-import { SxProps, Theme } from '@mui/material';
+
 
 export interface ExpandedTableRowProps extends TableRowProps{
   detail: React.ReactElement;

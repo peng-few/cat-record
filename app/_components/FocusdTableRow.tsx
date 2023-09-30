@@ -2,7 +2,7 @@
 import TableRow, { TableRowProps } from '@mui/material/TableRow';
 import { type ReactElement } from 'react';
 import { useFocusedRow} from './FocusedRowProvider';
-import { SxProps, Theme,alpha } from '@mui/material';
+import { SxProps, Theme,alpha } from '@mui/material/styles';
 
 export interface FocusedTableRowProps extends TableRowProps{
   detail: ReactElement;
