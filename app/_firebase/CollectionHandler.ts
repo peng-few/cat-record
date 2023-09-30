@@ -23,16 +23,6 @@ export class CollectionHandler<Field extends AnyObject> {
     }
   }
 
-  async addDataWithId(data: Field) {
-    try {
-      const docRef = await addDoc(this.collection, data)
-
-      return successResponse({data})
-    } catch (msg) {
-      return errorResponse({msg})
-    }
-  }
-
   updateData(id:string,data: Field | WithoutId<Field>) {
     const docRef = doc(this.collection, id);
 
@@ -57,7 +47,7 @@ export class CollectionHandler<Field extends AnyObject> {
   async getData(id:string) {
     const docRef = doc(this.collection, id)
     const docSnap = await getDoc(docRef);
-    return docSnap.data()
+    return docSnap.data() as Field
   }
 }
 
