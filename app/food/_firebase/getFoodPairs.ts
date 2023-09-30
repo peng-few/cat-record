@@ -10,7 +10,7 @@ export const getFoodPairs = unstable_cache(async () => {
   const foodPairs = foods.reduce((accu, food) => {
     accu[food.id] = brandPairs[food.brand]+food.name
     return accu
-  }, {} as Record<number, string>)
+  }, {} as Record<string, string>)
 
   return foodPairs
 },

@@ -1,5 +1,4 @@
-import { applyId } from "@/serialNumber/_firebase";
-import { WithId, errorResponse, successResponse } from '@/_lib';
+import { errorResponse, successResponse } from '@/_lib';
 import { FieldBrand, Collection } from "../_firebase";
 import { z } from "zod";
 import { getBrands } from "../_firebase/getBrands";

@@ -1,6 +1,6 @@
 import { FoodType } from "../_data/FoodTypes";
 import { z } from "zod";
-import { zIsNumber, zIsPositiveNumber, zToNumber, zToNumberOptional } from '@/_lib/zUtil'
+import { zIsPositiveNumber, zToNumber, zToNumberOptional } from '@/_lib/zUtil'
 import { CollectionHandler } from "@/_firebase";
 
 export const COLLECTION_NAME = 'food'
