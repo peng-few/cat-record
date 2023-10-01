@@ -1,3 +1,7 @@
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 import './globals.css'
 import type { Metadata } from 'next'
 import ThemeRegistry from './_layout/theme/ThemeRegistry'
@@ -6,14 +10,15 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import ListItemButton from '@mui/material/ListItemButton'
-import { BuildingStorefrontIcon, CalculatorIcon, CalendarIcon, ListBulletIcon } from '@heroicons/react/24/outline';
+import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
+import CalculateOutlinedIcon from '@mui/icons-material/CalculateOutlined';
+import FoodBankOutlinedIcon from '@mui/icons-material/FoodBankOutlined';
+import HistoryEduOutlinedIcon from '@mui/icons-material/HistoryEduOutlined';
 import Drawer from './_layout/Drawer';
 import LocalizationProvider from './_layout/LocalizationProvider';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { Loading } from './_components/Loading';
-
-
 
 export const metadata: Metadata = {
   title: '我是貓咪!!!',
@@ -24,22 +29,22 @@ export const menus = [
   {
     name: '飲食紀錄',
     path: '/record',
-    Icon: CalendarIcon
+    Icon: HistoryEduOutlinedIcon
   },
   {
     name: '食物一覽',
     path: '/food',
-    Icon: ListBulletIcon
+    Icon: FoodBankOutlinedIcon
   },
   {
     name: '品牌一覽',
     path: '/brand',
-    Icon: BuildingStorefrontIcon
+    Icon: StorefrontOutlinedIcon
   },
   {
     name: '計算機',
     path: '/calculator',
-    Icon: CalculatorIcon
+    Icon: CalculateOutlinedIcon
   },
 ]
 

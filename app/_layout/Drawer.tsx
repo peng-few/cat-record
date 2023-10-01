@@ -3,8 +3,8 @@ import MuiDrawer, { DrawerProps } from '@mui/material/Drawer';
 import { styled,Theme, CSSObject } from '@mui/material/styles';
 import { useState } from "react";
 import IconButton from '@mui/material/IconButton'
-import {Bars3Icon} from '@heroicons/react/24/outline'
-import { ArrowSmallLeftIcon } from '@heroicons/react/24/solid';
+import DehazeOutlinedIcon from '@mui/icons-material/DehazeOutlined';
+import WestOutlinedIcon from '@mui/icons-material/WestOutlined';
 
 const drawerWidth = 240;
 
@@ -79,10 +79,10 @@ export const Drawer = ({ children, ...props }:DrawerProps) => {
     <StyleDrawer open={open} {...props}>
       <DrawerHeader>
         <IconButton onClick={handleDrawerOpen}  className='btn-expand'>
-          <Bars3Icon className="w-7 h-7"/>
+          <DehazeOutlinedIcon/>
         </IconButton>
         <IconButton onClick={handleDrawerClose} className='btn-collapse'>
-          <ArrowSmallLeftIcon className="w-7 h-7"/>
+          <WestOutlinedIcon/>
         </IconButton>
       </DrawerHeader>
       {children}

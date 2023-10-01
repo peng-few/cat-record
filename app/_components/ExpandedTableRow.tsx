@@ -6,7 +6,8 @@ import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import React, { useState } from 'react';
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
+import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
+import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import FocusedTableRow from './FocusdTableRow';
 
 
@@ -37,7 +38,7 @@ export const ExpandedTableRow = ({detail,children,sx,colSpan,id,...props}:Expand
             size="small"
             onClick={() => setOpen(!open)}
           >
-            {open ? <ChevronUpIcon className='w-6 h-6'/> : <ChevronDownIcon className='w-6 h-6'/>}
+            {open ? <KeyboardArrowUpOutlinedIcon/> : <KeyboardArrowDownOutlinedIcon/>}
           </IconButton>
         </TableCell>
         {children}

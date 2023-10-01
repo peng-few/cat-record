@@ -6,9 +6,8 @@ import { PostData as FieldFoodInput } from './api/route'
 import  simpleFetch from '@/_lib/simpleFetch'
 import { StatusSnackbar,useSnackbar } from "@/_components/StatusSnackbar"
 import { useRouter } from "next/navigation"
-import { PlusIcon } from "@heroicons/react/24/outline"
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
 import FoodForm from "./FoodForm"
-import { useBrands } from "@/brand/_components/BrandsContext"
 
 
 export default function FoodAdd() {
@@ -44,7 +43,7 @@ export default function FoodAdd() {
         className="mb-4"
         variant="contained"
         onClick={openForm}
-        startIcon={<PlusIcon className="w-6 h-6"></PlusIcon>}
+        startIcon={<AddOutlinedIcon />}
       >
         新增品項
       </Button>

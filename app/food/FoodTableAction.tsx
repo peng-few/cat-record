@@ -1,6 +1,8 @@
 'use client'
-import { EllipsisVerticalIcon, TrashIcon,PencilIcon } from "@heroicons/react/24/outline";
+import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import IconButton from '@mui/material/IconButton';
+import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem'
 import React,{ useState } from "react";
@@ -59,7 +61,7 @@ export const FoodTableAction = ({ food }:FoodTableActionProps) => {
   return (
     <>
       <IconButton color="inherit" onClick={openMenu}>
-        <EllipsisVerticalIcon className="w-6 h-6"/>
+        <MoreVertOutlinedIcon/>
       </IconButton>
       <Menu
         anchorEl={anchorEl}
@@ -67,10 +69,10 @@ export const FoodTableAction = ({ food }:FoodTableActionProps) => {
         onClose={closeAll}
       >
         <MenuItem onClick={openEditForm}>
-          <PencilIcon className="w-4 h-4 mr-2"/> 編輯
+          <ModeEditOutlineOutlinedIcon color="action" className="mr-2"/> 編輯
         </MenuItem>
         <MenuItem onClick={confirmDelete}>
-          <TrashIcon className="w-4 h-4 mr-2"/> 刪除
+          <DeleteForeverOutlinedIcon color="action" className="mr-2"/> 刪除
         </MenuItem>
       </Menu>
       <FoodEdit food={food} onClose={closeAll} open={actionStatus === 'EDIT'}/>
