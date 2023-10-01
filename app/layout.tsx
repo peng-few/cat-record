@@ -1,16 +1,18 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import ThemeRegistry from './_theme/ThemeRegistry'
+import ThemeRegistry from './_layout/theme/ThemeRegistry'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import ListItemButton from '@mui/material/ListItemButton'
 import { BuildingStorefrontIcon, CalculatorIcon, CalendarIcon, ListBulletIcon } from '@heroicons/react/24/outline';
-import { Drawer } from './_components/Drawer';
+import Drawer from './_layout/Drawer';
+import LocalizationProvider from './_layout/LocalizationProvider';
 import Link from 'next/link';
 import { Suspense } from 'react';
-import { Loading } from './_components';
+import { Loading } from './_components/Loading';
+
 
 
 export const metadata: Metadata = {
@@ -51,29 +53,31 @@ export default function RootLayout({
     <html lang="zh-tw">
       <body>
         <ThemeRegistry options={{ key: 'few' }}>
-          <div className="flex">
-            <Drawer variant="permanent">
-              <List>
-                {menus.map((menu) => (
-                  <ListItem key={menu.path} className='block'>
-                    <Link href={menu.path}>
-                      <ListItemButton className='justify-center px-3'>
-                        <ListItemIcon className='mr-3 justify-center' sx={{minWidth: 'auto'}}>
-                          <menu.Icon className='w-5 h-5'/>
-                        </ListItemIcon>
-                        <ListItemText primary={menu.name} className="drawer-text"/>
-                      </ListItemButton>
-                    </Link>
-                  </ListItem>
-                ))}
-              </List>
-            </Drawer>
-            <div className="flex-grow">
-              <Suspense fallback={<Loading/>}>
-                {children}
-              </Suspense>
+          <LocalizationProvider>
+            <div className="flex">
+              <Drawer variant="permanent">
+                <List>
+                  {menus.map((menu) => (
+                    <ListItem key={menu.path} className='block'>
+                      <Link href={menu.path}>
+                        <ListItemButton className='justify-center px-3'>
+                          <ListItemIcon className='mr-3 justify-center' sx={{minWidth: 'auto'}}>
+                            <menu.Icon className='w-5 h-5'/>
+                          </ListItemIcon>
+                          <ListItemText primary={menu.name} className="drawer-text"/>
+                        </ListItemButton>
+                      </Link>
+                    </ListItem>
+                  ))}
+                </List>
+              </Drawer>
+              <div className="flex-grow">
+                <Suspense fallback={<Loading/>}>
+                  {children}
+                </Suspense>
+              </div>
             </div>
-          </div>
+          </LocalizationProvider>
         </ThemeRegistry>
       </body>
     </html>
