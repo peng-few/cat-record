@@ -48,7 +48,6 @@ export const FoodTableAction = ({ food }:FoodTableActionProps) => {
     setActionStatus('SENDING')
     const { success } = await simpleFetch.delete(`food/api/${food.id}`)
     if (success) {
-      await simpleFetch.post('/api/revalidate?tag=foods')
       router.refresh()
       snackbar?.success({msg: '刪除成功'})
     } else {

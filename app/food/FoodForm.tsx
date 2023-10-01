@@ -93,7 +93,7 @@ export const FoodForm = ({
             className="flex-grow"
             label="品牌"
             field="brand"
-            defaultValue={watch('brand')}
+            value={watch('brand')}
             errors={errors}
             {...register("brand")}
           >
@@ -116,7 +116,7 @@ export const FoodForm = ({
             <ValidateField<FieldFoodInput>
               select
               field="energyType"
-              defaultValue={watch('energyType')}
+              value={watch('energyType')}
               {...register("energyType")}
               sx={{ width: "auto" }}
             >
@@ -196,7 +196,7 @@ export const FoodForm = ({
             <ValidateField<FieldFoodInput>
               select
               field="phosUnit"
-              defaultValue={PhosUnitType.Enum.Percentage}
+              value={PhosUnitType.Enum.Percentage}
               {...register("phosUnit")}
               sx={{ width: "auto" }}
             >

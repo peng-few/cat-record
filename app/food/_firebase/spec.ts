@@ -10,7 +10,7 @@ export const FieldFood = z.object({
   id: z.string(),
   type: FoodType,
   energy: zToNumber('請填入熱量').pipe(zIsPositiveNumber()),
-  brand: zToNumber('請選擇品牌').pipe(zIsPositiveNumber()),
+  brand: z.string({ required_error: '請選擇品牌' }),
   name: z.string().min(1,{message: '請填入品名'}),
   protein: zToNumber('請輸入蛋白質').pipe(zIsPositiveNumber()),
   fat: zToNumber('請輸入脂肪').pipe(zIsPositiveNumber()),
