@@ -3,8 +3,8 @@ import MuiDrawer, { DrawerProps } from '@mui/material/Drawer';
 import { styled,Theme, CSSObject } from '@mui/material/styles';
 import { useState } from "react";
 import IconButton from '@mui/material/IconButton'
-import DehazeOutlinedIcon from '@mui/icons-material/DehazeOutlined';
 import WestOutlinedIcon from '@mui/icons-material/WestOutlined';
+import PetsIcon from '@mui/icons-material/Pets';
 
 const drawerWidth = 180;
 
@@ -89,7 +89,7 @@ export const Navbar = ({ children, ...props }:DrawerProps) => {
     <StyleDrawer open={open} {...props} variant="permanent">
       <DrawerHeader className={open?'open': ''}>
         <IconButton onClick={handleDrawerOpen}  className='btn-fold'>
-          <DehazeOutlinedIcon fontSize='small' color='primary'/>
+          <PetsIcon color='primary'/>
         </IconButton>
         <IconButton onClick={handleDrawerClose} className='btn-expand'>
           <WestOutlinedIcon fontSize='small' color='primary'/>
