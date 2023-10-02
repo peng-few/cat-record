@@ -20,10 +20,7 @@ export default async function RecordTable() {
   const [brandPairs, records] = await Promise.all([getBrandPairs(), getRecords({ page: 1 })])
   return (
     <>
-      <Typography className="pt-3" variant="caption" display="block">
-        *比例皆為乾物比
-      </Typography>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} className="mt-4">
         <Table sx={{ minWidth: 650 }}>
           <TableHead>
             <TableRow>
