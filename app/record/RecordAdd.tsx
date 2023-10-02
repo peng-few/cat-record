@@ -44,7 +44,7 @@ export default function RecordAdd() {
         onClick={openForm}
         startIcon={<AddOutlinedIcon/>}
       >
-        新增品項
+        新增紀錄
       </Button>
       <RecordForm
         open={formOpen}
