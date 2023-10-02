@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton'
 import DehazeOutlinedIcon from '@mui/icons-material/DehazeOutlined';
 import WestOutlinedIcon from '@mui/icons-material/WestOutlined';
 
-const drawerWidth = 240;
+const drawerWidth = 180;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -15,9 +15,6 @@ const openedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: 'hidden',
-  ' .btn-expand': {
-    display: 'none'
-  }
 });
 
 
@@ -31,20 +28,26 @@ const closedMixin = (theme: Theme): CSSObject => ({
   [theme.breakpoints.up('sm')]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
-  ' .btn-collapse': {
-    display: 'none'
-  },
-  '.drawer-text': {
-    visibility: 'hidden'
-  }
 });
 
 export const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'flex-end',
+  justifyContent: 'center',
   padding: theme.spacing(0, 1),
   ...theme.mixins.toolbar,
+  '.btn-expand': {
+    display: 'none'
+  },
+  '&.open': {
+    justifyContent: 'flex-end',
+    '.btn-fold': {
+      display: 'none'
+    },
+    ' .btn-expand': {
+      display: 'inline-flex'
+    }
+  },
 }));
 
 const StyleDrawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -53,6 +56,9 @@ const StyleDrawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'o
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
+    '.MuiDrawer-paper': {
+      borderRight: '0',
+    },
     ...(open && {
       ...openedMixin(theme),
       '& .MuiDrawer-paper': openedMixin(theme),
@@ -60,11 +66,14 @@ const StyleDrawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'o
     ...(!open && {
       ...closedMixin(theme),
       '& .MuiDrawer-paper': closedMixin(theme),
+      '& .drawer-text': {
+        display: 'none'
+      }
     }),
   }),
 );
 
-export const Drawer = ({ children, ...props }:DrawerProps) => {
+export const Navbar = ({ children, ...props }:DrawerProps) => {
   const [open, setOpen] = useState(true);
 
   const handleDrawerOpen = () => {
@@ -76,13 +85,13 @@ export const Drawer = ({ children, ...props }:DrawerProps) => {
   };
 
   return (
-    <StyleDrawer open={open} {...props}>
-      <DrawerHeader>
-        <IconButton onClick={handleDrawerOpen}  className='btn-expand'>
-          <DehazeOutlinedIcon/>
+    <StyleDrawer open={open} {...props} variant="permanent">
+      <DrawerHeader className={open?'open': ''}>
+        <IconButton onClick={handleDrawerOpen}  className='btn-fold'>
+          <DehazeOutlinedIcon fontSize='small' color='primary'/>
         </IconButton>
-        <IconButton onClick={handleDrawerClose} className='btn-collapse'>
-          <WestOutlinedIcon/>
+        <IconButton onClick={handleDrawerClose} className='btn-expand'>
+          <WestOutlinedIcon fontSize='small' color='primary'/>
         </IconButton>
       </DrawerHeader>
       {children}
@@ -90,4 +99,4 @@ export const Drawer = ({ children, ...props }:DrawerProps) => {
   )
 }
 
-export default Drawer;
+export default Navbar;

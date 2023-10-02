@@ -2,13 +2,9 @@ import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
-// import '@fontsource/noto-sans-tc/400.css'
-// import '@fontsource/noto-sans-tc/500.css'
-// import '@fontsource/noto-sans-tc/700.css'
 import './globals.css'
 import type { Metadata } from 'next'
 import ThemeRegistry from './_layout/theme/ThemeRegistry'
-import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
@@ -17,11 +13,15 @@ import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import CalculateOutlinedIcon from '@mui/icons-material/CalculateOutlined';
 import FoodBankOutlinedIcon from '@mui/icons-material/FoodBankOutlined';
 import HistoryEduOutlinedIcon from '@mui/icons-material/HistoryEduOutlined';
-import Drawer from './_layout/Drawer';
+import Navbar from './_layout/Navbar';
 import LocalizationProvider from './_layout/LocalizationProvider';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { Loading } from './_components/Loading';
+import { SxProps, Theme } from '@mui/material/styles'
+import List from '@mui/material/List'
+import NavbarLink from './_layout/NavbarLink'
+
 
 export const metadata: Metadata = {
   title: '我是貓咪!!!',
@@ -51,11 +51,22 @@ export const menus = [
   },
 ]
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactElement
-  }) {
+const listStyle: SxProps<Theme> = {
+    '.MuiListItem-root': {
+      justifyContent: 'center'
+    },
+    '.MuiListItemButton-root': {
+      borderRadius: '100px',
+      px: 1,
+      justifyContent: 'center'
+    },
+    '.MuiListItemIcon-root': {
+      minWidth: 'auto',
+      color: '#b8b4ae'
+    },
+}
+
+export default function RootLayout({children,}:{children: React.ReactNode}) {
 
   return (
     <html lang="zh-tw">
@@ -63,22 +74,28 @@ export default function RootLayout({
         <ThemeRegistry options={{ key: 'few' }}>
           <LocalizationProvider>
             <div className="flex">
-              <Drawer variant="permanent">
-                <List>
-                  {menus.map((menu) => (
-                    <ListItem key={menu.path} className='block'>
-                      <Link href={menu.path}>
-                        <ListItemButton className='justify-center px-3'>
-                          <ListItemIcon className='mr-3 justify-center' sx={{minWidth: 'auto'}}>
-                            <menu.Icon className='w-5 h-5'/>
-                          </ListItemIcon>
-                          <ListItemText primary={menu.name} className="drawer-text"/>
-                        </ListItemButton>
-                      </Link>
-                    </ListItem>
-                  ))}
+              <Navbar>
+                <List sx={listStyle}>
+                {menus.map((menu) => (
+                  <ListItem key={menu.path}>
+                    <NavbarLink href={menu.path}>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <menu.Icon/>
+                        </ListItemIcon>
+                        <ListItemText
+                          primary={menu.name}
+                          primaryTypographyProps={{
+                            fontSize: '0.875rem',
+                            fontWeight: 'bold',
+                          }}
+                          className="drawer-text ml-3" />
+                      </ListItemButton>
+                    </NavbarLink>
+                  </ListItem>
+                ))}
                 </List>
-              </Drawer>
+              </Navbar>
               <div className="flex-grow">
                 <Suspense fallback={<Loading/>}>
                   {children}

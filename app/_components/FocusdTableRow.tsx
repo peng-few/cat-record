@@ -12,7 +12,7 @@ export interface FocusedTableRowProps extends TableRowProps{
 
 const cssRow:SxProps<Theme> = {
   '&.focus': {
-    background: (theme) => alpha(theme.palette.primary.light,0.5),
+    background: (theme) => alpha(theme.palette.primary.light,0.2),
   } 
 }
 
