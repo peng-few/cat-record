@@ -1,8 +1,7 @@
 import { z } from "zod";
 import { Collection, FieldRecord } from "../_firebase";
 import { errorResponse, successResponse } from "@/_lib";
-import dayjs, { Dayjs } from "dayjs";
-import { formatPostData } from "./recordFormatter";
+import { formatPostData, getGroupId } from "./recordFormatter";
 import { revalidateTag } from "next/cache";
 
 export const PostData = FieldRecord
@@ -23,7 +22,8 @@ export async function POST(req: Request) {
     const json = await req.json()
     const postData = PostData.parse(json)
     const data = await formatPostData(postData);
-    const groupId = dayjs(data.date).format('YYYYMMDD')
+    const groupId = getGroupId(data.date)
+    console.log(data)
     await Collection.addData(groupId,data)
     Collection.setGroupId(groupId)
     

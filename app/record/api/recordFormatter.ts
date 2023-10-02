@@ -3,6 +3,7 @@ import { PostData } from "./route";
 import { FieldRecord } from "../_firebase";
 import getFood from "@/food/_firebase/getFood";
 import { FieldFood } from "@/food/_firebase";
+import dayjs from "dayjs";
 
 class RecordFormatter implements Formatter<WithoutId<FieldRecord>> {
   food?: FieldFood;
@@ -45,3 +46,5 @@ export const formatPostData = async (data:PostData) => {
 
   return recordFormatter.data
 }
+
+export const getGroupId = (date: Date) => dayjs(date).format('YYYYMMDD');

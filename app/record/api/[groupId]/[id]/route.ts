@@ -1,6 +1,6 @@
 import { errorResponse, successResponse } from "@/_lib"
 import { Collection } from '../../../_firebase'
-import { formatPostData } from "../../recordFormatter"
+import { formatPostData, getGroupId } from "../../recordFormatter"
 import { PostData } from "../../route"
 import { revalidateTag } from "next/cache"
 
@@ -22,12 +22,22 @@ export async function DELETE(req: Request, { params: { id,groupId } }: Params) {
   }
 }
 
-export async function PUT(req: Request, { params: { groupId, id } }: Params) { 
+export async function PUT(req: Request, params: Params) { 
+  const { params: { groupId, id } } = params;
   try {
     const json = await req.json()
     const parsedData = PostData.parse(json)
     const data = await formatPostData(parsedData)
-    await Collection.updateData(groupId,id,data)
+    const expectGroupId = getGroupId(data.date);
+    if (expectGroupId === groupId) {
+      await Collection.updateData(groupId, id, data)
+    } else {
+      await Promise.all([
+        Collection.deleteData(groupId, id),
+        Collection.addData(expectGroupId,data)
+      ])
+      Collection.setGroupId(expectGroupId)
+    }
     revalidateTag('records')
     return successResponse({data})
   } catch (msg) {
