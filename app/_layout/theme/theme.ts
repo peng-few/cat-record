@@ -41,7 +41,7 @@ const theme = createTheme({
     }
   },
   typography: {
-    fontFamily: "'Noto Sans TC', sans-serif",
+    fontFamily: '"Helvetica Neue", Helvetica, Arial, "PingFang TC", "Heiti TC", "Microsoft JhengHei", sans-serif',
     h1: {
       fontSize: '1.5rem',
       fontWeight: '600',
@@ -55,14 +55,24 @@ const theme = createTheme({
     MuiTableCell: {
       styleOverrides: {
         root: {
-          fontSize: '0.9375rem',
+          fontSize: '0.875rem',
         }
       }
     },
     MuiMenuItem: {
       styleOverrides: {
         root: {
-          fontSize: '0.9375rem',
+          fontSize: '0.875rem',
+        }
+      }
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          fontWeight: '600'
+        },
+        sizeMedium: {
+          fontSize: '1rem'
         }
       }
     }

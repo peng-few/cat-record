@@ -11,11 +11,10 @@ import { isDry } from "./_data/FoodTypes"
 import { Suspense } from "react"
 import { Loading } from "@/_components/Loading"
 import FoodListAction from "./FoodTableAction";
-import ExpandedTableRow from "@/_components/ExpandedTableRow";
-import FoodListDetail from "./FoodTableDetail";
 import FocusedRowProvider from "@/_components/FocusedRowProvider";
 import { getBrandPairs } from "@/brand/_firebase/getBrandPairs"
 import { getFoods } from "./_firebase/getFoods"
+import { FocusedTableRow } from "@/_components"
 
 export default async function FoodTable() {
   const [brandPairs, foods] = await Promise.all([getBrandPairs(), getFoods()])
@@ -41,7 +40,6 @@ export default async function FoodTable() {
         <Table sx={{ minWidth: 650 }}>
           <TableHead>
             <TableRow>
-              <TableCell size="medium"></TableCell>
               <TableCell size="medium">品項</TableCell>
               <TableCell align="right">
                 代謝能
@@ -81,10 +79,8 @@ export default async function FoodTable() {
             <TableBody>
               <FocusedRowProvider>
               {dryBasisFoods?.map((food,idx) => (
-                <ExpandedTableRow
+                <FocusedTableRow
                   key={food.id}
-                  detail={<FoodListDetail food={food}/>}
-                  colSpan={9}
                   id={food.id}
                 >
                   <TableCell size="medium" sx={{maxWidth: '150px'}}>
@@ -103,7 +99,7 @@ export default async function FoodTable() {
                   <TableCell>
                     <FoodListAction food={foods[idx]}/>
                   </TableCell>
-                </ExpandedTableRow>
+                </FocusedTableRow>
               ))}
               </FocusedRowProvider>
             </TableBody>

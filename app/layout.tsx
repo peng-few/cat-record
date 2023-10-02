@@ -2,9 +2,9 @@ import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
-import '@fontsource/noto-sans-tc/400.css'
-import '@fontsource/noto-sans-tc/500.css'
-import '@fontsource/noto-sans-tc/700.css'
+// import '@fontsource/noto-sans-tc/400.css'
+// import '@fontsource/noto-sans-tc/500.css'
+// import '@fontsource/noto-sans-tc/700.css'
 import './globals.css'
 import type { Metadata } from 'next'
 import ThemeRegistry from './_layout/theme/ThemeRegistry'
@@ -35,7 +35,7 @@ export const menus = [
     Icon: HistoryEduOutlinedIcon
   },
   {
-    name: '食物一覽',
+    name: '收藏食物',
     path: '/food',
     Icon: FoodBankOutlinedIcon
   },
@@ -45,7 +45,7 @@ export const menus = [
     Icon: StorefrontOutlinedIcon
   },
   {
-    name: '計算機',
+    name: '成分計算',
     path: '/calculator',
     Icon: CalculateOutlinedIcon
   },

@@ -1,3 +1,4 @@
+import { Timestamp } from "firebase/firestore";
 import { RegisterOptions } from "react-hook-form"
 
 export interface AnyObject{ [x: string]: any }
@@ -21,8 +22,15 @@ export type FieldErrorTexts<Field extends AnyObject> = Partial<
 
 export type ObjectValues<O extends AnyObject> = O[keyof O] 
 
+export interface Formatter<T>{
+  data: T
+}
 
-export type Formatter<T> = { [K in keyof T]: T[K] extends Function ?
-  ((...arg:any[]) =>  ThisType<T>) : T[K] }
+export type WithId<T> = T & { id: string }; 
+export type WithoutId<T> = Omit<T,'id'>; 
 
-export type WithId<T> = T & { id: number }; 
+export type OverrideTimestamp<
+  O extends AnyObject,
+  T extends string> = Omit<O, T> & { [k in T]: Timestamp }
+  
+

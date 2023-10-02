@@ -6,7 +6,7 @@ export const getBrandPairs = unstable_cache(async () => {
   const brandPairs = brands.reduce((accu, brand) => {
     accu[brand.id] = brand.name
     return accu
-  }, {} as Record<number, string>)
+  }, {} as Record<string, string>)
 
   return brandPairs
 },
