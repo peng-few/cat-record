@@ -28,18 +28,17 @@ export interface FoodFormProps {
   open: boolean,
 }
 
-export const DefaultValues = {}
-
 export const FoodForm = ({
   onClose,
-  values= DefaultValues,
+  values,
   onSubmit: submitForm,
   submitText='',
   loading = false,
   open = false,
 }: FoodFormProps) => {
   const phosUnitOptions = useMemo(() => getUnitOptions(PhosUnitType.Values), [])
-  const energyTypeOptions = useMemo(()=> typeNamesToOptions(EnergyTypeName),[])
+  const energyTypeOptions = useMemo(() => typeNamesToOptions(EnergyTypeName), [])
+  const foodTypeOptions = useMemo(()=> typeNamesToOptions(FoodTypeName), [])
   const brands = useBrands()
   const {
     register,
@@ -54,11 +53,12 @@ export const FoodForm = ({
   useEffect(() => {
     const defaultValues = {
       energyType: energyTypeOptions[0].value,
-      type: FoodType.enum.Wet,
+      type: FoodType.enum.Compelete,
+      brand: '',
       ...values,
     };
     reset(defaultValues)
-  },[reset,values])
+  },[reset,values, energyTypeOptions])
 
   return (
     <SwipeableDrawer
@@ -74,13 +74,13 @@ export const FoodForm = ({
         <FormControl error={!!errors.type} sx={{ minWidth: "85px" }}>
           <FormLabel>類型</FormLabel>
           <RadioGroup row>
-            {(Object.keys(FoodTypeName) as FoodType[]).map((type) => (
+            {foodTypeOptions.map((option) => (
               <FormControlLabel
-                key={type}
-                value={type}
-                checked={watch('type') === type}
+                key={option.value}
+                value={option.value}
+                checked={watch('type') === option.value}
                 control={<Radio />}
-                label={FoodTypeName[type]}
+                label={option.label}
                 {...register("type")}
               />
             ))}
@@ -130,7 +130,6 @@ export const FoodForm = ({
               field="energy"
               errors={errors}
               suffix="kcal/100g"
-
               sx={{ maxWidth: "24ch" }}
               {...register("energy")}
             />

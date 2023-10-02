@@ -6,7 +6,6 @@ import  simpleFetch from '@/_lib/simpleFetch'
 import { StatusSnackbar,useSnackbar } from "@/_components/StatusSnackbar"
 import { useRouter } from "next/navigation"
 import FoodForm from "./FoodForm"
-import { useBrands } from "@/brand/_components/BrandsContext"
 import { FieldFood } from "./_firebase"
 
 export interface FoodEditProps{

@@ -25,6 +25,7 @@ import FormControlLabel from "@mui/material/FormControlLabel"
 import { RecordStatusName } from "./_data/RecordStatus"
 import { DateTimePicker} from "@mui/x-date-pickers"
 import dayjs from "dayjs"
+import { FoodTypeName } from "@/food/_data/FoodTypes"
 
 export interface FoodFormProps {
   values?: Partial<FieldRecordInput>
@@ -35,11 +36,9 @@ export interface FoodFormProps {
   open: boolean
 }
 
-export const DefaultValues = {}
-
 export const FoodForm = ({
   onClose,
-  values = DefaultValues,
+  values,
   onSubmit: submitForm,
   submitText = "",
   loading = false,
@@ -48,6 +47,7 @@ export const FoodForm = ({
   const brands = useBrands()
   const foods = useFoods()
   const recordStatusOptions = useMemo(() => typeNamesToOptions(RecordStatusName), [])
+  const foodTypeOptions = useMemo(()=> typeNamesToOptions(FoodTypeName), [])
   const {
     register,
     handleSubmit,
@@ -58,19 +58,25 @@ export const FoodForm = ({
   } = useForm<FieldRecordInput>({
     resolver: zodResolver(FieldRecordInput),
   })
-  const [brand, setBrand] = useState<string>()
+  const [brand, setBrand] = useState<string>('')
+  const [foodType, setFoodType] = useState<string>('')
+
   const foodOptions = useMemo(() => {
-    return foods?.filter((food) => food.brand === brand)
-  }, [foods, brand])
-  console.log(errors)
+    return foods?.filter((food) =>
+      food.brand === brand
+      && (food.type === foodType || !foodType))
+
+  }, [foods, brand,foodType])
+
   useEffect(() => {
     const defaultValues = {
+      foodId: '',
       date: new Date(),
       ...values
     }
     reset(defaultValues)
 
-    const defaultBrand = foods?.find((food) => food.id === values.foodId)?.brand
+    const defaultBrand = foods?.find((food) => food.id === values?.foodId)?.brand || ''
     setBrand(defaultBrand)
   }, [reset, values,foods])
   
@@ -89,6 +95,19 @@ export const FoodForm = ({
           <FormLabel>餵食</FormLabel>
         </FormControl>
         <HorizontalFieldBox sx={{ my: 2 }}>
+          <TextField
+            select
+            label="類型"
+            value={foodType}
+            sx={{ minWidth: "100px" }}
+            onChange={(e) => setFoodType(e.target.value)}
+          >
+            {foodTypeOptions?.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
           <HorizontalFieldBox merged sx={{ my: 0 }}>
             <TextField
               select
