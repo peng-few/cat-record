@@ -35,18 +35,13 @@ class RecordFormatter implements Formatter<WithoutId<FieldRecord>> {
     this.data.totalWater = toDecimalPlace(this.data.water + this.data.amount / 100 * this.food.water,2)
     return this
   }
-
-  formatDate() {
-    this.data.date = new Date(this.data.date)
-    return this
-  }
 }
 
 export const formatPostData = async (data:PostData) => {
   const recordFormatter = new RecordFormatter(data)
     
   await recordFormatter.getFood()
-  recordFormatter.setEnergy().setTotalWater().formatDate()
+  recordFormatter.setEnergy().setTotalWater()
 
   return recordFormatter.data
 }

@@ -9,6 +9,8 @@ export const zToNumberOptional = () => z.number()
   .or(z.string())
   .pipe(z.coerce.number({ invalid_type_error: "請輸入數字" }))
 
+export const zToDate = () => z.date().or(z.string()).pipe(z.coerce.date({invalid_type_error: '請輸入正確時間'})) 
+
 export const zIsNumber = (msg='請輸入數字') => z.number({ invalid_type_error: msg })
 
 export const zIsPositiveNumber = () => z

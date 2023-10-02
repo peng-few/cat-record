@@ -66,7 +66,7 @@ const theme = createTheme({
         sizeMedium: {
           fontSize: '1rem',
           borderRadius: '50px',
-          padding:'6px 22px'
+          padding:'5px 20px'
         }
       }
     }

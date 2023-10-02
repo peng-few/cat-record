@@ -22,8 +22,8 @@ import RadioGroup from "@mui/material/RadioGroup"
 import Radio from "@mui/material/Radio"
 import FormHelperText from "@mui/material/FormHelperText"
 import FormControlLabel from "@mui/material/FormControlLabel"
-import { RecordStatus, RecordStatusName } from "./_data/RecordStatus"
-import { DateTimePicker,DatePicker, TimePicker} from "@mui/x-date-pickers"
+import { RecordStatusName } from "./_data/RecordStatus"
+import { DateTimePicker} from "@mui/x-date-pickers"
 import dayjs from "dayjs"
 
 export interface FoodFormProps {
@@ -65,6 +65,7 @@ export const FoodForm = ({
   console.log(errors)
   useEffect(() => {
     const defaultValues = {
+      date: new Date(),
       ...values
     }
     reset(defaultValues)
@@ -143,8 +144,13 @@ export const FoodForm = ({
             label="日期"
             value={dayjs(watch("date"))}
             format='YYYY/MM/DD HH:mm'
+            slotProps={{
+              popper:{
+                placement: "right"
+              }
+            }}
             {...register("date")}
-            onChange={(newValue) => setValue('date',new Date(newValue)) }
+            onChange={(newValue) => setValue('date',newValue ? newValue.toDate() : new Date()) }
           />
         </HorizontalFieldBox>
         <FormControl error={!!errors.status} sx={{ minWidth: "85px" }}>
