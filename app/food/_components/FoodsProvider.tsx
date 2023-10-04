@@ -1,5 +1,5 @@
 import { ReactNode, } from 'react';
-import { FoodsContextProvider } from './FoodsContext';
+import { FoodsContextProvider } from './FoodsProvider.client';
 import { getFoods } from '../_firebase/getFoods';
 
 export interface FoodEditProvider{
