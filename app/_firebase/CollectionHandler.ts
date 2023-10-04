@@ -1,6 +1,6 @@
 import { AnyObject, WithoutId, errorResponse, successResponse } from "../_lib";
 import { db } from "./db";
-import { collection as firbaseCollection, addDoc,getDoc, getDocs, setDoc, doc, updateDoc, deleteDoc } from "firebase/firestore";
+import { collection as firbaseCollection, addDoc,getDoc, getDocs, setDoc, doc, updateDoc, deleteDoc, query, where, QueryFieldFilterConstraint, and } from "firebase/firestore";
 
 export class CollectionHandler<Field extends AnyObject> {
   collectionName;
@@ -34,9 +34,10 @@ export class CollectionHandler<Field extends AnyObject> {
     return deleteDoc(docRef)
   }
 
-  async getAllData() {
+  async getDatas(queries:QueryFieldFilterConstraint[] = []) {
     try {
-      const snapshot = await getDocs(this.collection)
+      const q1 = query(this.collection,...queries);
+      const snapshot = await getDocs(q1)
       const list = snapshot.docs.map((doc) => doc.data())
       return list as Field[]
     } catch (msg) {
