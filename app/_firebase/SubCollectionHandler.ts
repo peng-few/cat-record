@@ -35,7 +35,7 @@ export class SubCollectionHander<Field extends AnyObject>{
     return deleteDoc(doc(this.collection, groupId, this.subCollectionName,id))
   }
 
-  async getAllData(id: string) {
+  async getDatas(id: string) {
     try {
       const snapshot = await this.getDocs(id)
       const list = snapshot.docs.map((doc) => doc.data())
