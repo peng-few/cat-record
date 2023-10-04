@@ -67,7 +67,7 @@ const StyleDrawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'o
     ...(!open && {
       ...closedMixin(theme),
       '& .MuiDrawer-paper': closedMixin(theme),
-      '& .drawer-text': {
+      '& .drawer-text, .sub-icon': {
         display: 'none'
       }
     }),
