@@ -24,6 +24,12 @@ const theme = createTheme({
     info: {
       main: '#3777b5',
     },
+    neutral: {
+      main: '#899391',
+      light: '#f5f5f5',
+      dark: '#414347',
+      contrastText: 'white',
+    }
   },
   typography: {
     fontFamily: '"Helvetica Neue", Helvetica, Arial, "PingFang TC", "Heiti TC", "Microsoft JhengHei", sans-serif',
