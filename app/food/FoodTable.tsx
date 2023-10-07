@@ -6,7 +6,7 @@ import TableRow from "@mui/material/TableRow"
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 import TableBody from '@mui/material/TableBody';
-import { unitConverter,toDecimalPlace } from "@/_lib"
+import { unitConverter,toDecimalPlace, PageProps } from "@/_lib"
 import { isDry } from "./_data/FoodTypes"
 import { Suspense } from "react"
 import { Loading } from "@/_components/Loading"
@@ -14,23 +14,11 @@ import FoodListAction from "./FoodTableAction";
 import FocusedRowProvider from "@/_components/FocusedRowProvider";
 import { getBrandPairs } from "@/brand/_firebase/getBrandPairs"
 import { getFoods } from "./_firebase/getFoods"
-import { FocusedTableRow } from "@/_components"
+import FocusedTableRow  from "@/_components/FocusdTableRow"
 
-export default async function FoodTable() {
-  const [brandPairs, foods] = await Promise.all([getBrandPairs(), getFoods()])
-
-  const dryBasisFoods = foods?.map((food) => {
-    if (isDry(food.type) || !food.water) return food
-    const toDry = unitConverter.toDryMatterBasis(food.water)
-    const { carbonhydrate, protein, fat, ...rest } = food
-    return {
-      ...rest,
-      carbonhydrate: toDry(carbonhydrate),
-      protein: toDry(protein),
-      fat: toDry(fat),
-    }
-  })
-
+export default async function FoodTable({searchParams}:PageProps) {
+  const [brandPairs, foods] = await Promise.all([getBrandPairs(), getFoods(searchParams)])
+  console.log(foods)
   return (
     <>
       <Typography className="pt-3" variant="caption" display="block">
@@ -78,7 +66,7 @@ export default async function FoodTable() {
           <Suspense fallback={<Loading/>}>
             <TableBody>
               <FocusedRowProvider>
-              {dryBasisFoods?.map((food,idx) => (
+              {foods?.map((food,idx) => (
                 <FocusedTableRow
                   key={food.id}
                   id={food.id}
@@ -91,7 +79,7 @@ export default async function FoodTable() {
                   <TableCell align="right">{`${food.protein}`}</TableCell>
                   <TableCell align="right">{`${food.fat}`}</TableCell>
                   <TableCell align="right">
-                  {`${food.phosphorus && unitConverter.percentageToMg(food.phosphorus,food.energy)}`}
+                  {`${food.phosphorus}`}
                   </TableCell>
                   <TableCell align="right">
                   {`${food.phosphorus && food.calcium && toDecimalPlace(food.calcium/food.phosphorus, 1)}`}

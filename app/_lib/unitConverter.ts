@@ -27,7 +27,11 @@ export const unitConverter = {
 
   toDryMatterBasis: (water: number) => (target: number) => {
     return toDecimalPlace(target / (100 - water) * 100, 2 )
-  }
+  },
+
+  toWetMatterBasis: (water: number = 0) => (target: number = 0) => {
+    return toDecimalPlace(target / 100 * (100 - water), 2 )
+  },
 }
 
 export default unitConverter;

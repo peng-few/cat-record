@@ -4,7 +4,7 @@ import RecordAdd from "./RecordAdd";
 import FoodsProvider from "@/food/_components/FoodsProvider";
 import RecordTable from "./RecordTable";
 import { Suspense } from "react";
-import { Loading } from "@/_components";
+import { Loading } from "@/_components/Loading";
 
 export default async function Record() {
   return (

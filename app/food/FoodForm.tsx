@@ -13,7 +13,7 @@ import FormControl from "@mui/material/FormControl"
 import MenuItem from "@mui/material/MenuItem"
 import SwipeableDrawer from "@mui/material/SwipeableDrawer"
 import { PostData as FieldFoodInput, PhosUnitType } from './api/route'
-import { noop, typeNamesToOptions } from "@/_lib"
+import { noop, objToSelectOptions } from "@/_lib"
 import { ValidateField, StyleForm, HorizontalFieldBox, Loading } from "@/_components"
 import { getUnitOptions } from "@/_data/UnitType"
 import { useBrands } from "@/brand/_components/BrandsContext"
@@ -37,8 +37,8 @@ export const FoodForm = ({
   open = false,
 }: FoodFormProps) => {
   const phosUnitOptions = useMemo(() => getUnitOptions(PhosUnitType.Values), [])
-  const energyTypeOptions = useMemo(() => typeNamesToOptions(EnergyTypeName), [])
-  const foodTypeOptions = useMemo(()=> typeNamesToOptions(FoodTypeName), [])
+  const energyTypeOptions = useMemo(() => objToSelectOptions(EnergyTypeName), [])
+  const foodTypeOptions = useMemo(()=> objToSelectOptions(FoodTypeName), [])
   const brands = useBrands()
   const {
     register,

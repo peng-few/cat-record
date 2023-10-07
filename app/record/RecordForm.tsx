@@ -8,14 +8,14 @@ import SwipeableDrawer from "@mui/material/SwipeableDrawer"
 import FormControl from "@mui/material/FormControl"
 import TextField from "@mui/material/TextField"
 import { PostData as FieldRecordInput } from "./api/route"
-import { noop, typeNamesToOptions } from "@/_lib"
+import { noop, objToSelectOptions } from "@/_lib"
 import {
   ValidateField,
   StyleForm,
   HorizontalFieldBox,
   Loading,
 } from "@/_components"
-import { useFoods } from "@/food/_components/FoodsContext"
+import { useFoods } from "@/food/_components/FoodsProvider.client"
 import { useBrands } from "@/brand/_components/BrandsContext"
 import { zodResolver } from "@hookform/resolvers/zod"
 import RadioGroup from "@mui/material/RadioGroup"
@@ -46,8 +46,8 @@ export const FoodForm = ({
 }: FoodFormProps) => {
   const brands = useBrands()
   const foods = useFoods()
-  const recordStatusOptions = useMemo(() => typeNamesToOptions(RecordStatusName), [])
-  const foodTypeOptions = useMemo(()=> typeNamesToOptions(FoodTypeName), [])
+  const recordStatusOptions = useMemo(() => objToSelectOptions(RecordStatusName), [])
+  const foodTypeOptions = useMemo(()=> objToSelectOptions(FoodTypeName), [])
   const {
     register,
     handleSubmit,

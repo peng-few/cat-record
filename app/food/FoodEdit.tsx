@@ -7,6 +7,7 @@ import { StatusSnackbar,useSnackbar } from "@/_components/StatusSnackbar"
 import { useRouter } from "next/navigation"
 import FoodForm from "./FoodForm"
 import { FieldFood } from "./_firebase"
+import { unitConverter } from "@/_lib"
 
 export interface FoodEditProps{
   food?: FieldFood,
@@ -19,6 +20,14 @@ function FoodEdit({food,onClose: closeForm, open:formOpen}:FoodEditProps) {
   const {snackbarRef,snackbar} = useSnackbar()
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+  const toWetMatterBasis = unitConverter.toWetMatterBasis(food?.water)
+  const percentageFood = {
+    ...food,
+    protein: toWetMatterBasis(food?.protein),
+    fat: toWetMatterBasis(food?.fat),
+    ash: toWetMatterBasis(food?.ash),
+    fiber: toWetMatterBasis(food?.fiber)
+  }
 
   const submitForm: SubmitHandler<FieldFoodInput> = async (data) => {
     setLoading(true)
@@ -41,7 +50,7 @@ function FoodEdit({food,onClose: closeForm, open:formOpen}:FoodEditProps) {
         onSubmit={submitForm}
         submitText="編輯"
         loading={loading}
-        values={food}
+        values={percentageFood}
       />
       <StatusSnackbar ref={snackbarRef}/>
     </>

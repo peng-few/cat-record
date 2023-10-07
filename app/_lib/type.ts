@@ -6,7 +6,7 @@ export interface AnyObject{ [x: string]: any }
 export interface NoSymbolKeyObject extends AnyObject{
   [key: symbol]: never;
 }
-
+export type NoSymbolKeys<T> = keyof T extends string|number ? keyof T : string;
 
 export type SelectOptions<
   Value extends string|number = string,
@@ -34,3 +34,9 @@ export type OverrideTimestamp<
   T extends string> = Omit<O, T> & { [k in T]: Timestamp }
   
 
+export interface PageProps {
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+
+export type FilterNumberType<Obj extends NoSymbolKeyObject> = 
+  { [K in keyof Obj]: Obj[K] extends number ? K : never }[keyof Obj]
