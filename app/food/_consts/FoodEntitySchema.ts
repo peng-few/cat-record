@@ -1,13 +1,8 @@
-import { FoodType } from "../_data/FoodTypes";
 import { z } from "zod";
 import { zIsPositiveNumber, zToNumber, zToNumberOptional } from '@/_lib/zUtil'
-import { CollectionHandler } from "@/_firebase";
+import { FoodType } from "./FoodType";
 
-export const COLLECTION_NAME = 'food'
-export const Collection = new CollectionHandler<FieldFood>(COLLECTION_NAME)
-
-export const FieldFood = z.object({
-  id: z.string(),
+export const FoodEntitySchema = z.object({
   type: FoodType,
   energy: zToNumber('請填入熱量').pipe(zIsPositiveNumber()),
   brand: z.string({ required_error: '請選擇品牌' }),
@@ -21,6 +16,4 @@ export const FieldFood = z.object({
   phosphorus: zToNumberOptional(),
   calcium: zToNumberOptional(),
 });
-
-export type FieldFood = z.infer<typeof FieldFood>; 
-
+export type FoodEntity = z.infer<typeof FoodEntitySchema>; 

@@ -1,4 +1,4 @@
-import { FoodTypeName } from "./FoodTypes";
+import { FoodTypeName } from "./FoodType";
 
 export const SearchParams = {
   type: FoodTypeName,

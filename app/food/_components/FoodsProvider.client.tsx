@@ -1,8 +1,9 @@
 'use client'
 import { ReactNode, createContext, useContext  } from 'react';
-import { FieldFood } from '../_firebase';
+import { FoodEntity } from '../_consts/FoodEntitySchema';
+import { type WithId } from 'mongodb';
 
-export const FoodsContext = createContext<FieldFood[]|undefined>([]);
+export const FoodsContext = createContext<WithId<FoodEntity>[]|undefined>([]);
 
 export function useFoods() {
   return useContext(FoodsContext)
@@ -10,7 +11,7 @@ export function useFoods() {
 
 export interface FoodsContextProviderProps{
   children: ReactNode,
-  value?: FieldFood[]
+  value?: WithId<FoodEntity>[]
 }
 export function FoodsContextProvider({ children,value }:FoodsContextProviderProps) {
   return (

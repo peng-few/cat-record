@@ -1,4 +1,4 @@
-import { PageProps } from "../type";
+import { PageProps } from "../../_types/types";
 
 export const toUrlSearchParams = (searchParams: PageProps['searchParams']): URLSearchParams => {
   const paramKeys = Object.keys(searchParams)

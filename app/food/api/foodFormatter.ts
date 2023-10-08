@@ -1,17 +1,19 @@
 import { isMgPerKalorieUnit} from '@/_data/UnitType';
-import { FieldFood } from '../_firebase';
-import { EnergyType, isME } from "../_data/EnergyTypes";
+import { FoodEntity } from '../_consts/FoodEntitySchema';
+import { EnergyType, isME } from "../_consts/EnergyType";
+import { PhosUnitType } from '../_consts/PhosUnitType';
+import { FoodFormRequest } from '../_consts/FoodFormRequestSchema';
 import calcaluteCarbohydrate from "@/calculate/calculateCarbohydrate";
-import unitConverter from "@/_lib/unitConverter";
-import { FilterNumberType, Formatter, WithoutId } from "@/_lib";
 import calculateME from "@/calculate/calculateME";
-import { PhosUnitType, PostData } from './route';
+import unitConverter from "@/_lib/unitConverter";
+import { FilterNumberType, Formatter } from "@/_lib";
+import { OptionalId } from 'mongodb';
 
-export class FoodFormatter implements Formatter<WithoutId<FieldFood>> {
+export class FoodFormatter implements Formatter<OptionalId<FoodEntity>> {
   data;
   toDryMatterBasis;
 
-  constructor(data: Omit<WithoutId<FieldFood>,'carbonhydrate'>) {
+  constructor(data: Omit<OptionalId<FoodEntity>,'carbonhydrate'>) {
     const { protein, fat, fiber, ash, water = 0 } = data
     this.data = {
       ...data,
@@ -35,19 +37,19 @@ export class FoodFormatter implements Formatter<WithoutId<FieldFood>> {
     return this
   }
 
-  setInDryBasis(name: FilterNumberType<FieldFood>) {
+  setInDryBasis(name: FilterNumberType<FoodEntity>) {
     this.data[name] = this.toDryMatterBasis(this.data[name])
     
     return this
   }
 
-  setInMgPerKcal(name: FilterNumberType<FieldFood>) {
+  setInMgPerKcal(name: FilterNumberType<FoodEntity>) {
     this.data[name] = unitConverter.percentageToMg(this.data[name], this.data.energy)
     return this
   }
 }
 
-export const formatPostData = ({ phosUnit, energyType, ...postData }:PostData) => {
+export const formatFormRequest = ({ phosUnit, energyType, ...postData }:FoodFormRequest) => {
   const foodFormatter = new FoodFormatter(postData)
   foodFormatter.setPhosphorusBaseMgPerKcal(phosUnit)
     .setInMgPerKcal("calcium")

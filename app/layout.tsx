@@ -14,7 +14,7 @@ import LocalizationProvider from './_layout/LocalizationProvider';
 import { Suspense } from 'react';
 import { Loading } from './_components/Loading';
 import { revalidateTag } from 'next/cache'
-import { FoodType, FoodTypeName } from './food/_data/FoodTypes'
+import { FoodType, FoodTypeName } from './food/_consts/FoodType'
 import NavbarList, { NavbarItemProps } from './_layout/NavbarList'
 
 export const metadata: Metadata = {

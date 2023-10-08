@@ -10,11 +10,12 @@ import ConfirmDialog from "@/_components/ConfirmDialog";
 import { simpleFetch } from "@/_lib";
 import { useRouter } from "next/navigation"
 import { StatusSnackbar,useSnackbar } from "@/_components/StatusSnackbar";
-import { FieldFood } from "./_firebase";
+import { FoodEntity } from "./_consts/FoodEntitySchema";
 import FoodEdit from "./FoodEdit";
+import { type WithId } from 'mongodb';
 
 export interface FoodTableActionProps{
-  food: FieldFood,
+  food: WithId<FoodEntity>,
 }
 
 export const FoodTableAction = ({ food }:FoodTableActionProps) => {
@@ -48,7 +49,7 @@ export const FoodTableAction = ({ food }:FoodTableActionProps) => {
 
   const deleteFood = async () => {
     setActionStatus('SENDING')
-    const { success } = await simpleFetch.delete(`food/api/${food.id}`)
+    const { success } = await simpleFetch.delete(`food/api/${food._id}`)
     if (success) {
       router.refresh()
       snackbar?.success({msg: '刪除成功'})

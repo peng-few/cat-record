@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { SelectOptions } from "../_lib"
+import { SelectOptions } from "@/_types/types"
 
 export const UnitType = z.enum([ 'Percentage', 'MgPerKalorie' ])
 export type UnitType = z.infer<typeof UnitType>;
@@ -9,7 +9,8 @@ export const UnitTypeName = {
   [UnitType.enum.MgPerKalorie]: 'mg/kcal'
 } as const satisfies Record<UnitType,string>
 
-export const getUnitOptions = <T extends typeof UnitType.Values>(type: T | UnitType): SelectOptions<UnitType> => {
+export const getUnitOptions = <TUnit extends typeof UnitType.Values>
+  (type: TUnit | UnitType): SelectOptions<UnitType> => {
   
   const typeNames = typeof type === 'string'
     ? [type]

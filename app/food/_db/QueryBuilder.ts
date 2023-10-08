@@ -1,18 +1,17 @@
-import { QueryFieldFilterConstraint, where } from "firebase/firestore"
-import { FoodType } from "../_data/FoodTypes";
+import { FoodType } from "../_consts/FoodType";
 
 export class QueryGenerator {
-  contraint: QueryFieldFilterConstraint[] = []
+  contraint = {}
 
   isType(type?:FoodType) {
     if (!type) return this;
-    this.contraint.push(where('type', '==', type))
+    this.contraint.type = type
     return this
   }
 
   isLowProtein(value:string) {
     if (value !== 'low') return this;
-    this.contraint.push(where('protein', '<=', 30))
+    this.contraint.protein = 30
     return this
   }
 

@@ -1,6 +1,5 @@
 export * from './toDecimalPlace'
 export * from './unitConverter'
-export * from './type'
 export * from './apiResponse'
 export * from './simpleFetch'
 export * from './zUtil'

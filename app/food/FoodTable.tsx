@@ -6,19 +6,18 @@ import TableRow from "@mui/material/TableRow"
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 import TableBody from '@mui/material/TableBody';
-import { unitConverter,toDecimalPlace, PageProps } from "@/_lib"
-import { isDry } from "./_data/FoodTypes"
+import { toDecimalPlace } from "@/_lib"
+import { PageProps } from "@/_types"
 import { Suspense } from "react"
 import { Loading } from "@/_components/Loading"
 import FoodListAction from "./FoodTableAction";
 import FocusedRowProvider from "@/_components/FocusedRowProvider";
 import { getBrandPairs } from "@/brand/_firebase/getBrandPairs"
-import { getFoods } from "./_firebase/getFoods"
+import { getFoods } from "./_db/getFoods"
 import FocusedTableRow  from "@/_components/FocusdTableRow"
 
 export default async function FoodTable({searchParams}:PageProps) {
   const [brandPairs, foods] = await Promise.all([getBrandPairs(), getFoods(searchParams)])
-  console.log(foods)
   return (
     <>
       <Typography className="pt-3" variant="caption" display="block">
@@ -68,8 +67,8 @@ export default async function FoodTable({searchParams}:PageProps) {
               <FocusedRowProvider>
               {foods?.map((food,idx) => (
                 <FocusedTableRow
-                  key={food.id}
-                  id={food.id}
+                  key={food._id.toHexString()}
+                  id={food._id.toHexString()}
                 >
                   <TableCell size="medium" sx={{maxWidth: '150px'}}>
                     {brandPairs?.[food.brand]}{food.name}

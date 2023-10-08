@@ -1,16 +1,17 @@
 "use client"
 import { SubmitHandler } from "react-hook-form"
 import { useState } from "react"
-import { PostData as FieldFoodInput } from './api/route'
+import { FoodFormRequest } from "./_consts/FoodFormRequestSchema"
 import  simpleFetch from '@/_lib/simpleFetch'
 import { StatusSnackbar,useSnackbar } from "@/_components/StatusSnackbar"
 import { useRouter } from "next/navigation"
 import FoodForm from "./FoodForm"
-import { FieldFood } from "./_firebase"
+import { FoodEntity } from "./_consts/FoodEntitySchema" 
 import { unitConverter } from "@/_lib"
+import { type WithId } from "mongodb"
 
 export interface FoodEditProps{
-  food?: FieldFood,
+  food?: WithId<FoodEntity>,
   onClose: () => void,
   open: boolean
 }
@@ -29,9 +30,9 @@ function FoodEdit({food,onClose: closeForm, open:formOpen}:FoodEditProps) {
     fiber: toWetMatterBasis(food?.fiber)
   }
 
-  const submitForm: SubmitHandler<FieldFoodInput> = async (data) => {
+  const submitForm: SubmitHandler<FoodFormRequest> = async (data) => {
     setLoading(true)
-    const { success } = await simpleFetch.put(`/food/api/${food?.id}`, data)
+    const { success } = await simpleFetch.put(`/food/api/${food?._id}`, data)
     if (success) {
       snackbar?.success({msg: '新增成功'})
       router.refresh()

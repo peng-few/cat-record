@@ -1,4 +1,4 @@
-import { PageProps } from "../type";
+import { PageProps } from "../../_types/types";
 
 export const isSelectedParam = (
   param: string,

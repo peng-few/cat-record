@@ -1,7 +1,7 @@
 "use client"
 import { useForm, SubmitHandler } from "react-hook-form"
-import { FoodType, FoodTypeName, isDry } from "./_data/FoodTypes"
-import { EnergyTypeName } from "./_data/EnergyTypes"
+import { FoodType, FoodTypeName, isDry } from "./_consts/FoodType"
+import { EnergyTypeName } from "./_consts/EnergyType"
 import { ReactNode, useEffect, useMemo } from "react"
 import RadioGroup from "@mui/material/RadioGroup"
 import Radio from "@mui/material/Radio"
@@ -12,16 +12,17 @@ import FormLabel from "@mui/material/FormLabel"
 import FormControl from "@mui/material/FormControl"
 import MenuItem from "@mui/material/MenuItem"
 import SwipeableDrawer from "@mui/material/SwipeableDrawer"
-import { PostData as FieldFoodInput, PhosUnitType } from './api/route'
+import { PhosUnitType } from './_consts/PhosUnitType'
+import { FoodFormRequestSchema,FoodFormRequest } from "./_consts/FoodFormRequestSchema"
 import { noop, objToSelectOptions } from "@/_lib"
 import { ValidateField, StyleForm, HorizontalFieldBox, Loading } from "@/_components"
-import { getUnitOptions } from "@/_data/UnitType"
+import { getUnitOptions,UnitType } from "@/_data/UnitType"
 import { useBrands } from "@/brand/_components/BrandsContext"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 export interface FoodFormProps {
-  values?: Partial<FieldFoodInput>,
-  onSubmit: SubmitHandler<FieldFoodInput>,
+  values?: Partial<FoodFormRequest>,
+  onSubmit: SubmitHandler<FoodFormRequest>,
   onClose: () => void,
   submitText: ReactNode,
   loading: boolean,
@@ -46,8 +47,8 @@ export const FoodForm = ({
     watch,
     reset,
     formState: { errors },
-  } = useForm<FieldFoodInput>({
-    resolver: zodResolver(FieldFoodInput)
+  } = useForm<FoodFormRequest>({
+    resolver: zodResolver(FoodFormRequestSchema)
   })
 
   useEffect(() => {
@@ -88,7 +89,7 @@ export const FoodForm = ({
           <FormHelperText>{errors.type?.message}</FormHelperText>
         </FormControl>
         <HorizontalFieldBox>
-          <ValidateField<FieldFoodInput>
+          <ValidateField<FoodFormRequest>
             select
             className="flex-grow"
             label="品牌"
@@ -103,7 +104,7 @@ export const FoodForm = ({
               </MenuItem>
             ))}
           </ValidateField>
-          <ValidateField<FieldFoodInput>
+          <ValidateField<FoodFormRequest>
             label="品名"
             className="flex-grow"
             field="name"
@@ -113,7 +114,7 @@ export const FoodForm = ({
         </HorizontalFieldBox>
         <HorizontalFieldBox>
           <HorizontalFieldBox merged sx={{ my: 0 }}>
-            <ValidateField<FieldFoodInput>
+            <ValidateField<FoodFormRequest>
               select
               field="energyType"
               value={watch('energyType')}
@@ -126,7 +127,7 @@ export const FoodForm = ({
                 </MenuItem>
               ))}
             </ValidateField> 
-            <ValidateField<FieldFoodInput>
+            <ValidateField<FoodFormRequest>
               field="energy"
               errors={errors}
               suffix="kcal/100g"
@@ -134,7 +135,7 @@ export const FoodForm = ({
               {...register("energy")}
             />
           </HorizontalFieldBox>
-          <ValidateField<FieldFoodInput>
+          <ValidateField<FoodFormRequest>
             className="w-24"
             label="水份"
             field="water"
@@ -146,28 +147,28 @@ export const FoodForm = ({
         </HorizontalFieldBox>
 
         <HorizontalFieldBox>
-          <ValidateField<FieldFoodInput>
+          <ValidateField<FoodFormRequest>
             label="蛋白質"
             field="protein"
             suffix="%"
             errors={errors}
             {...register("protein")}
           />
-          <ValidateField<FieldFoodInput>
+          <ValidateField<FoodFormRequest>
             label="脂肪"
             suffix="%"
             field="fat"
             errors={errors}
             {...register("fat")}
           />
-          <ValidateField<FieldFoodInput>
+          <ValidateField<FoodFormRequest>
             label="纖維"
             suffix="%"
             field="fiber"
             errors={errors}
             {...register("fiber")}
           />
-          <ValidateField<FieldFoodInput>
+          <ValidateField<FoodFormRequest>
             label="灰分"
             suffix="%"
             field="ash"
@@ -176,7 +177,7 @@ export const FoodForm = ({
           />
         </HorizontalFieldBox>
         <HorizontalFieldBox>
-          <ValidateField<FieldFoodInput>
+          <ValidateField<FoodFormRequest>
             className="w-24"
             label="鈣"
             suffix="%"
@@ -185,14 +186,14 @@ export const FoodForm = ({
             {...register("calcium")}
           />
           <HorizontalFieldBox merged sx={{ my: 0 }}>
-            <ValidateField<FieldFoodInput>
+            <ValidateField<FoodFormRequest>
               label="磷"
               field="phosphorus"
               errors={errors}
               sx={{ width: "10ch" }}
               {...register("phosphorus")}
             />
-            <ValidateField<FieldFoodInput>
+            <ValidateField<FoodFormRequest>
               select
               field="phosUnit"
               value={PhosUnitType.Enum.Percentage}

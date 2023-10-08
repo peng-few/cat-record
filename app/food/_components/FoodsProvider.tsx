@@ -1,6 +1,6 @@
 import { ReactNode, } from 'react';
 import { FoodsContextProvider } from './FoodsProvider.client';
-import { getFoods } from '../_firebase/getFoods';
+import { getFoods } from '../_db/getFoods';
 
 export interface FoodEditProvider{
   children: ReactNode,

@@ -1,4 +1,4 @@
-import { NoSymbolKeys,SelectOptions,NoSymbolKeyObject } from "./type";
+import { NoSymbolKeys,SelectOptions,NoSymbolKeyObject } from "../_types/types";
 
 export const objToSelectOptions = <T extends NoSymbolKeyObject>(data: T): SelectOptions<
 NoSymbolKeys<T>,T[keyof T]> => {

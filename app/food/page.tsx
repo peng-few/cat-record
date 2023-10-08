@@ -1,22 +1,23 @@
 import FoodAdd from "./FoodAdd";
 import FoodTable from "./FoodTable";
-import Typography from "@mui/material/Typography";
 import BrandsProvider from "@/brand/_components/BrandsProvider";
-import Chip from "@mui/material/Chip";
+import Typography from "@mui/material/Typography";
 import MenuItem from "@mui/material/MenuItem";
-import { FoodTypeName, foodTypeToName } from "./_data/FoodTypes";
-import { PageProps, objToSelectOptions } from "@/_lib";
-import Link from "next/link";;
+import Box from "@mui/material/Box";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { FoodTypeName, foodTypeToName } from "./_consts/FoodType";
+import { PageProps } from "@/_types";
 import { Suspense } from "react";
 import { Loading } from "@/_components/Loading";
-import { Metadata, ResolvedMetadata } from "next";
 import ChipMenu from "@/_components/ChipMenu";
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ChipLink from "@/_components/ChipLink";
-import Box from "@mui/material/Box";
+import objToSelectOptions from "@/_lib/objToSelectOptions";
 import toUrlSearchParams from "@/_lib/searchParams/toUrlSearchParams";
 import isSelectedParam from '@/_lib/searchParams/isSelectedParam'
 import { refreshPage, toggleParam } from "@/_lib/searchParams/handleSearchParam";
+import { revalidateTag } from "next/cache";
+import Link from "next/link";
+import { Metadata, ResolvedMetadata } from "next";
 
 export const generateParamNames = (searchParams:PageProps['searchParams']) => {
   const { type } = searchParams;
@@ -46,6 +47,7 @@ export default async function Food({searchParams}:PageProps) {
   const { type,phosphorus,protein,carbon,fishmeat } = searchParams; 
   const foodTypeName = foodTypeToName(type)
   const urlParams = toUrlSearchParams(searchParams)
+  revalidateTag('foods')
   return (
     <div className="py-4 px-6">
       <Typography className="pb-3" variant="h1" display="block">
