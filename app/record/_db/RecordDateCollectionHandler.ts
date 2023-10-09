@@ -1,6 +1,5 @@
 import { CollectionHandler } from "@/_db";
 import { RecordDate } from "../_consts/RecordDateSchema";
-import { ObjectId } from 'mongodb'
 
 export class RecordDateCollectionHandler extends CollectionHandler<RecordDate>{
   async upsertData({date}:RecordDate) {

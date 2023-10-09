@@ -1,4 +1,4 @@
-import { AnyObject } from ".";
+import { AnyObject } from "../_types/types";
 
 export const getObjValueFromKey = <T extends AnyObject>(obj: T) => (
   values?: string | string[],

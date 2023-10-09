@@ -57,7 +57,7 @@ export const RecordTableDetail = async ({ record: records }: RecordTableDetailPr
                 <TableCell>{RecordStatusName[record.status]}</TableCell>
                 <TableCell>
                   <RecordEdit record={record} />
-                  <RecordDelete id={record._id} sx={{ml: 1}} groupId={record.groupId}/>
+                  <RecordDelete id={record._id} sx={{ml: 1}}/>
                 </TableCell>
               </TableRow>
             ))}

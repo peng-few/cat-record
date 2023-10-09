@@ -16,7 +16,7 @@ import { PhosUnitType } from './_consts/PhosUnitType'
 import { FoodFormRequestSchema,FoodFormRequest } from "./_consts/FoodFormRequestSchema"
 import { noop, objToSelectOptions, unitConverter } from "@/_lib"
 import { ValidateField, StyleForm, HorizontalFieldBox, Loading } from "@/_components"
-import { getUnitOptions,UnitType } from "@/_consts/UnitType"
+import { getUnitOptions } from "@/_consts/UnitType"
 import { useBrands } from "@/brand/_components/BrandsContext"
 import { zodResolver } from "@hookform/resolvers/zod"
 

@@ -1,4 +1,4 @@
-import { AnyObject } from "@/_lib"
+import { AnyObject } from "@/_types/types"
 import InputAdornment from "@mui/material/InputAdornment"
 import TextField, {
   TextFieldProps,

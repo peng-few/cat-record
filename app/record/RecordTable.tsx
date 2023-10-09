@@ -6,8 +6,6 @@ import TableRow from "@mui/material/TableRow"
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 import TableBody from '@mui/material/TableBody';
-import { Suspense } from "react"
-import { Loading } from "@/_components/Loading"
 import ExpandedTableRow from "@/_components/ExpandedTableRow";
 import FocusedRowProvider from "@/_components/FocusedRowProvider";
 import { getBrandPairs } from "@/brand/_db/getBrandPairs"

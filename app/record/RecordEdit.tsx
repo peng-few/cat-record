@@ -2,15 +2,15 @@
 import { SubmitHandler } from "react-hook-form"
 import { useState } from "react"
 import Button from "@mui/material/Button"
-import { PostData as FieldFoodInput } from './api/route'
 import  simpleFetch from '@/_lib/simpleFetch'
 import { StatusSnackbar,useSnackbar } from "@/_components/StatusSnackbar"
 import { useRouter } from "next/navigation"
 import RecordForm from "./RecordForm"
-import { GetRecordsType } from "./_db/getRecords"
+import { DailyRecord } from "./_db/getRecords"
+import { RecordFormRequest } from "./_consts/RecordFormRequestSchema"
 
 export interface RecordEditProps {
-  record: GetRecordsType['list'][number]
+  record: DailyRecord['list'][number]
 }
 export default function RecordEdit({ record }: RecordEditProps) {
   const {snackbarRef,snackbar} = useSnackbar()
@@ -26,9 +26,9 @@ export default function RecordEdit({ record }: RecordEditProps) {
     setFormOpen(true)
   }
 
-  const submitForm: SubmitHandler<FieldFoodInput> = async (data) => {
+  const submitForm: SubmitHandler<RecordFormRequest> = async (data) => {
     setLoading(true)
-    const { success } = await simpleFetch.put(`/record/api/${record.groupId}/${record.id}`, data)
+    const { success } = await simpleFetch.put(`/record/api/${record._id}`, data)
     if (success) {
       snackbar?.success({msg: '修改成功'})
       router.refresh()

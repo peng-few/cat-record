@@ -1,5 +1,6 @@
 import { z } from "zod"
-import { ObjectValues, getObjValueFromKey } from "@/_lib"
+import { getObjValueFromKey } from "@/_lib"
+import { ObjectValues } from "@/_types";
 
 export const FoodType = z.enum(['Compelete','Complementary', 'Dry'])
 export type FoodType = z.infer<typeof FoodType>;
