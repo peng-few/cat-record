@@ -14,9 +14,9 @@ import MenuItem from "@mui/material/MenuItem"
 import SwipeableDrawer from "@mui/material/SwipeableDrawer"
 import { PhosUnitType } from './_consts/PhosUnitType'
 import { FoodFormRequestSchema,FoodFormRequest } from "./_consts/FoodFormRequestSchema"
-import { noop, objToSelectOptions } from "@/_lib"
+import { noop, objToSelectOptions, unitConverter } from "@/_lib"
 import { ValidateField, StyleForm, HorizontalFieldBox, Loading } from "@/_components"
-import { getUnitOptions,UnitType } from "@/_data/UnitType"
+import { getUnitOptions,UnitType } from "@/_consts/UnitType"
 import { useBrands } from "@/brand/_components/BrandsContext"
 import { zodResolver } from "@hookform/resolvers/zod"
 
@@ -52,11 +52,13 @@ export const FoodForm = ({
   })
 
   useEffect(() => {
-    const defaultValues = {
+    const defaultValues:Partial<FoodFormRequest> = {
       energyType: energyTypeOptions[0].value,
       type: FoodType.enum.Compelete,
       brand: '',
       ...values,
+      calcium: unitConverter.mgToPercentage(values?.calcium, values?.energy),
+      phosphorus: unitConverter.mgToPercentage(values?.phosphorus, values?.energy)
     };
     reset(defaultValues)
   },[reset,values, energyTypeOptions])
@@ -99,7 +101,7 @@ export const FoodForm = ({
             {...register("brand")}
           >
             {brands?.map((brand) => (
-              <MenuItem key={brand.id} value={brand.id}>
+              <MenuItem key={brand._id} value={brand._id}>
                 {brand.name}
               </MenuItem>
             ))}

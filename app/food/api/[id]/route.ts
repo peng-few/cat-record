@@ -29,6 +29,7 @@ export async function PUT(req: Request, { params: { id } }: Params) {
     revalidateTag('foods')
     return successResponse({data})
   } catch (msg) {
+    console.log(msg)
     return errorResponse({msg})
   }
 }

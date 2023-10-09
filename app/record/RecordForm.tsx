@@ -7,7 +7,6 @@ import MenuItem from "@mui/material/MenuItem"
 import SwipeableDrawer from "@mui/material/SwipeableDrawer"
 import FormControl from "@mui/material/FormControl"
 import TextField from "@mui/material/TextField"
-import { PostData as FieldRecordInput } from "./api/route"
 import { noop, objToSelectOptions } from "@/_lib"
 import {
   ValidateField,
@@ -22,14 +21,15 @@ import RadioGroup from "@mui/material/RadioGroup"
 import Radio from "@mui/material/Radio"
 import FormHelperText from "@mui/material/FormHelperText"
 import FormControlLabel from "@mui/material/FormControlLabel"
-import { RecordStatusName } from "./_data/RecordStatus"
+import { RecordStatusName } from "./_consts/RecordStatus"
 import { DateTimePicker} from "@mui/x-date-pickers"
 import dayjs from "dayjs"
-import { FoodTypeName } from "@/food/_data/FoodTypes"
+import { FoodTypeName } from "@/food/_consts/FoodType"
+import { RecordFormRequest, RecordFormRequestSchema } from "./_consts/RecordFormRequestSchema"
 
 export interface FoodFormProps {
-  values?: Partial<FieldRecordInput>
-  onSubmit: SubmitHandler<FieldRecordInput>
+  values?: Partial<RecordFormRequest>
+  onSubmit: SubmitHandler<RecordFormRequest>
   onClose: () => void
   submitText: ReactNode
   loading: boolean
@@ -55,8 +55,8 @@ export const FoodForm = ({
     watch,
     setValue,
     formState: { errors },
-  } = useForm<FieldRecordInput>({
-    resolver: zodResolver(FieldRecordInput),
+  } = useForm<RecordFormRequest>({
+    resolver: zodResolver(RecordFormRequestSchema),
   })
   const [brand, setBrand] = useState<string>('')
   const [foodType, setFoodType] = useState<string>('')
@@ -76,7 +76,7 @@ export const FoodForm = ({
     }
     reset(defaultValues)
 
-    const defaultBrand = foods?.find((food) => food.id === values?.foodId)?.brand || ''
+    const defaultBrand = foods?.find((food) => food._id === values?.foodId)?.brand || ''
     setBrand(defaultBrand)
   }, [reset, values,foods])
   
@@ -117,12 +117,12 @@ export const FoodForm = ({
               onChange={(e) => setBrand(e.target.value)}
             >
               {brands?.map((brand) => (
-                <MenuItem key={brand.id} value={brand.id}>
+                <MenuItem key={brand._id} value={brand._id}>
                   {brand.name}
                 </MenuItem>
               ))}
             </TextField>
-            <ValidateField<FieldRecordInput>
+            <ValidateField<RecordFormRequest>
               select
               field="foodId"
               label="口味"
@@ -133,13 +133,13 @@ export const FoodForm = ({
               {...register("foodId")}
             >
               {foodOptions?.map((option) => (
-                <MenuItem key={option.id} value={option.id}>
+                <MenuItem key={option._id} value={option._id}>
                   {option.name}
                 </MenuItem>
               ))}
             </ValidateField>
           </HorizontalFieldBox>
-          <ValidateField<FieldRecordInput>
+          <ValidateField<RecordFormRequest>
             field="amount"
             label="食用量"
             suffix="g"
@@ -150,7 +150,7 @@ export const FoodForm = ({
         <FormControl className="label-name mt-3">
           <FormLabel>加水</FormLabel>
         </FormControl>
-        <ValidateField<FieldRecordInput>
+        <ValidateField<RecordFormRequest>
           field="water"
           label="水量"
           suffix="g"

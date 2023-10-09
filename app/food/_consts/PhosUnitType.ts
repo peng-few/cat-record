@@ -1,4 +1,4 @@
-import UnitType from "@/_data/UnitType";
+import UnitType from "@/_consts/UnitType";
 import { z } from "zod";
 
 export const PhosUnitType = z.enum([

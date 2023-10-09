@@ -1,9 +1,9 @@
 'use client'
 import { ReactNode, createContext, useContext  } from 'react';
-import { FoodEntity } from '../_consts/FoodEntitySchema';
-import { type WithId } from 'mongodb';
+import { Food } from '../_consts/FoodSchema';
+import { WithStringId } from '@/_types';
 
-export const FoodsContext = createContext<WithId<FoodEntity>[]|undefined>([]);
+export const FoodsContext = createContext<WithStringId<Food>[]|undefined>([]);
 
 export function useFoods() {
   return useContext(FoodsContext)
@@ -11,7 +11,7 @@ export function useFoods() {
 
 export interface FoodsContextProviderProps{
   children: ReactNode,
-  value?: WithId<FoodEntity>[]
+  value?: WithStringId<Food>[]
 }
 export function FoodsContextProvider({ children,value }:FoodsContextProviderProps) {
   return (

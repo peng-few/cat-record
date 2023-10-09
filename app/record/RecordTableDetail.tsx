@@ -7,13 +7,13 @@ import TableBody from '@mui/material/TableBody';
 import dayjs from "dayjs"
 import Box from "@mui/material/Box"
 import RecordEdit from "./RecordEdit"
-import { RecordStatusName } from "./_data/RecordStatus"
+import { RecordStatusName } from "./_consts/RecordStatus"
 import RecordDelete from "./RecordDelete"
-import { getFoodPairs } from "@/food/_firebase/getFoodPairs"
-import { GetRecordsType } from "./_firebase/getRecords"
+import { getFoodPairs } from "@/food/_db/getFoodPairs"
+import { type DailyRecord } from "./_db/getRecords"
 
 export interface RecordTableDetailProps{
-  record: GetRecordsType['list']
+  record: DailyRecord['list']
 }
 export const RecordTableDetail = async ({ record: records }: RecordTableDetailProps) => {
   const foodPairs = await getFoodPairs()
@@ -48,7 +48,7 @@ export const RecordTableDetail = async ({ record: records }: RecordTableDetailPr
           <TableBody>
             {records.map(record => (
               <TableRow
-                key={record.id}
+                key={record._id}
               >
                 <TableCell>{`${dayjs(record.date).format('HH:mm')}`}</TableCell>
                 <TableCell>{record.foodId && foodPairs[record.foodId]}</TableCell>
@@ -57,7 +57,7 @@ export const RecordTableDetail = async ({ record: records }: RecordTableDetailPr
                 <TableCell>{RecordStatusName[record.status]}</TableCell>
                 <TableCell>
                   <RecordEdit record={record} />
-                  <RecordDelete id={record.id} sx={{ml: 1}} groupId={record.groupId}/>
+                  <RecordDelete id={record._id} sx={{ml: 1}} groupId={record.groupId}/>
                 </TableCell>
               </TableRow>
             ))}

@@ -10,8 +10,8 @@ import { Suspense } from "react"
 import { Loading } from "@/_components/Loading"
 import ExpandedTableRow from "@/_components/ExpandedTableRow";
 import FocusedRowProvider from "@/_components/FocusedRowProvider";
-import { getBrandPairs } from "@/brand/_firebase/getBrandPairs"
-import { getRecords } from "./_firebase/getRecords"
+import { getBrandPairs } from "@/brand/_db/getBrandPairs"
+import { getRecords } from "./_db/getRecords"
 import RecordTableDetail from "./RecordTableDetail"
 import dayjs from "dayjs"
 import { toDecimalPlace } from "@/_lib"
@@ -44,12 +44,12 @@ export default async function RecordTable() {
               <FocusedRowProvider>
               {records?.map(record => (
                 <ExpandedTableRow
-                  key={record.id}
+                  key={record.date}
                   detail={<RecordTableDetail record={record.list}/>}
                   colSpan={4}
                   id={record}
                 >
-                  <TableCell>{dayjs(record.id).format('YYYY/MM/DD')}</TableCell>
+                  <TableCell>{dayjs(record.date).format('YYYY/MM/DD')}</TableCell>
                   <TableCell align="right">{`${toDecimalPlace(record.energy,2)}`}</TableCell>
                   <TableCell align="right">{`${toDecimalPlace(record.totalWater,2)}`}</TableCell>
                 </ExpandedTableRow>

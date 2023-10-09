@@ -1,5 +1,5 @@
 import { CollectionHandler } from "@/_db";
-import { FoodEntity } from "../_consts/FoodEntitySchema";
+import { Food } from "../_consts/FoodSchema";
 
 export const COLLECTION_NAME = 'food'
-export const Collection = new CollectionHandler<FoodEntity>(COLLECTION_NAME)
+export const Collection = new CollectionHandler<Food>(COLLECTION_NAME)

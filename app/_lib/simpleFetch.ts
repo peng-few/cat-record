@@ -1,4 +1,4 @@
-import { AnyObject } from "."
+import { AnyObject } from "../_types/types"
 import { Response } from './apiResponse'
 
 

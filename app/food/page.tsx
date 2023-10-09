@@ -42,7 +42,7 @@ export async function generateMetadata(
 }
 
 
-export default async function Food({searchParams}:PageProps) {
+export default async function FoodPage({searchParams}:PageProps) {
   const foodTypeOptions = objToSelectOptions(FoodTypeName)
   const { type,phosphorus,protein,carbon,fishmeat } = searchParams; 
   const foodTypeName = foodTypeToName(type)

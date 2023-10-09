@@ -2,17 +2,14 @@
 import { SubmitHandler } from "react-hook-form"
 import { useState } from "react"
 import Button from "@mui/material/Button"
-import { PostData as FieldFoodInput } from './api/route'
 import  simpleFetch from '@/_lib/simpleFetch'
 import { StatusSnackbar,useSnackbar } from "@/_components/StatusSnackbar"
 import { useRouter } from "next/navigation"
-import RecordForm from "./RecordForm"
-import { GetRecordsType } from "./_db/getRecords"
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
+import FoodForm from "./BrandForm"
+import { Brand } from "./_consts/BrandSchema"
 
-export interface RecordEditProps {
-  record: GetRecordsType['list'][number]
-}
-export default function RecordEdit({ record }: RecordEditProps) {
+export default function BrandAdd() {
   const {snackbarRef,snackbar} = useSnackbar()
   const [loading,setLoading] = useState(false)
   const [formOpen, setFormOpen] = useState(false)
@@ -26,15 +23,15 @@ export default function RecordEdit({ record }: RecordEditProps) {
     setFormOpen(true)
   }
 
-  const submitForm: SubmitHandler<FieldFoodInput> = async (data) => {
+  const submitForm: SubmitHandler<Brand> = async (data) => {
     setLoading(true)
-    const { success } = await simpleFetch.put(`/record/api/${record.groupId}/${record.id}`, data)
+    const { success } = await simpleFetch.post('/brand/api', data)
     if (success) {
-      snackbar?.success({msg: '修改成功'})
+      snackbar?.success({msg: '新增成功'})
       router.refresh()
       closeForm();
     } else {
-      snackbar?.error({msg: '修改失敗'})
+      snackbar?.error({msg: '新增失敗'})
     }
     setLoading(false)
   }
@@ -42,19 +39,19 @@ export default function RecordEdit({ record }: RecordEditProps) {
   return (
     <>
       <Button
-        variant="outlined"
+        className="mb-4"
+        variant="contained"
         onClick={openForm}
-        size="small"
+        startIcon={<AddOutlinedIcon />}
       >
-        編輯
+        新增品項
       </Button>
-      <RecordForm
+      <FoodForm
         open={formOpen}
         onClose={closeForm}
         onSubmit={submitForm}
-        submitText="儲存"
+        submitText="新增"
         loading={loading}
-        values={record}
       />
       <StatusSnackbar ref={snackbarRef}/>
     </>

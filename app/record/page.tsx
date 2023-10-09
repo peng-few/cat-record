@@ -6,7 +6,7 @@ import RecordTable from "./RecordTable";
 import { Suspense } from "react";
 import { Loading } from "@/_components/Loading";
 
-export default async function Record() {
+export default async function RecordPage() {
   return (
     <div className="py-4 px-6">
       <Typography className="pb-3" variant="h1" display="block">

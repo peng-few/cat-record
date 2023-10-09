@@ -10,12 +10,12 @@ import ConfirmDialog from "@/_components/ConfirmDialog";
 import { simpleFetch } from "@/_lib";
 import { useRouter } from "next/navigation"
 import { StatusSnackbar,useSnackbar } from "@/_components/StatusSnackbar";
-import { FoodEntity } from "./_consts/FoodEntitySchema";
+import { Food } from "./_consts/FoodSchema";
 import FoodEdit from "./FoodEdit";
-import { type WithId } from 'mongodb';
+import { WithStringId } from '@/_types';
 
 export interface FoodTableActionProps{
-  food: WithId<FoodEntity>,
+  food: WithStringId<Food>,
 }
 
 export const FoodTableAction = ({ food }:FoodTableActionProps) => {

@@ -7,7 +7,7 @@ export const unitConverter = {
    * @param energy kcal/100g
    * @returns % in weight
    */
-  mgToPercentage(value: number, energy: number) {
+  mgToPercentage(value: number = 0, energy: number =0) {
     return unitConverter.toPercentage(value * energy / 1000)
   },
 
@@ -17,7 +17,7 @@ export const unitConverter = {
    * @param energy kcal/100g
    * @returns mg/kcal
    */
-  percentageToMg(value: number, energy: number) {
+  percentageToMg(value: number = 0, energy: number = 0) {
     return toDecimalPlace(value / energy * 100000, 2)
   },
 

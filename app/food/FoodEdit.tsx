@@ -6,12 +6,12 @@ import  simpleFetch from '@/_lib/simpleFetch'
 import { StatusSnackbar,useSnackbar } from "@/_components/StatusSnackbar"
 import { useRouter } from "next/navigation"
 import FoodForm from "./FoodForm"
-import { FoodEntity } from "./_consts/FoodEntitySchema" 
+import { Food } from "./_consts/FoodSchema" 
 import { unitConverter } from "@/_lib"
-import { type WithId } from "mongodb"
+import { WithStringId } from "@/_types"
 
 export interface FoodEditProps{
-  food?: WithId<FoodEntity>,
+  food?: WithStringId<Food>,
   onClose: () => void,
   open: boolean
 }

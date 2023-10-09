@@ -2,12 +2,12 @@
 import { SubmitHandler } from "react-hook-form"
 import { useState } from "react"
 import Button from "@mui/material/Button"
-import { PostData as FieldFoodInput } from './api/route'
 import  simpleFetch from '@/_lib/simpleFetch'
 import { StatusSnackbar,useSnackbar } from "@/_components/StatusSnackbar"
 import { useRouter } from "next/navigation"
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import RecordForm from "./RecordForm"
+import { RecordFormRequest } from "./_consts/RecordFormRequestSchema"
 
 export default function RecordAdd() {
   const {snackbarRef,snackbar} = useSnackbar()
@@ -23,7 +23,7 @@ export default function RecordAdd() {
     setFormOpen(true)
   }
 
-  const submitForm: SubmitHandler<FieldFoodInput> = async (data) => {
+  const submitForm: SubmitHandler<RecordFormRequest> = async (data) => {
     setLoading(true)
     const { success } = await simpleFetch.post('/record/api', data)
     if (success) {

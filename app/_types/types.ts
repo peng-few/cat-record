@@ -31,3 +31,5 @@ export interface PageProps {
 
 export type FilterNumberType<Obj extends NoSymbolKeyObject> = 
   { [K in keyof Obj]: Obj[K] extends number ? K : never }[keyof Obj]
+
+export type WithStringId<TData> = Omit<TData,'_id'> & {_id: string}

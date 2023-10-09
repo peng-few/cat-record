@@ -1,6 +1,6 @@
 import { unstable_cache } from 'next/cache'
 import { getFoods } from './getFoods';
-import { getBrandPairs } from '@/brand/_firebase/getBrandPairs';
+import { getBrandPairs } from '@/brand/_db/getBrandPairs';
 
 export const getFoodPairs = unstable_cache(async () => {
   const [foods, brandPairs] = await Promise.all([
@@ -8,7 +8,7 @@ export const getFoodPairs = unstable_cache(async () => {
   ])
 
   const foodPairs = foods.reduce((accu, food) => {
-    accu[food._id.toHexString()] = brandPairs[food.brand]+food.name
+    accu[food._id] = brandPairs[food.brand]+food.name
     return accu
   }, {} as Record<string, string>)
 

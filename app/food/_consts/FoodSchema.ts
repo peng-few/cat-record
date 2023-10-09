@@ -2,7 +2,7 @@ import { z } from "zod";
 import { zIsPositiveNumber, zToNumber, zToNumberOptional } from '@/_lib/zUtil'
 import { FoodType } from "./FoodType";
 
-export const FoodEntitySchema = z.object({
+export const FoodSchema = z.object({
   type: FoodType,
   energy: zToNumber('請填入熱量').pipe(zIsPositiveNumber()),
   brand: z.string({ required_error: '請選擇品牌' }),
@@ -16,4 +16,4 @@ export const FoodEntitySchema = z.object({
   phosphorus: zToNumberOptional(),
   calcium: zToNumberOptional(),
 });
-export type FoodEntity = z.infer<typeof FoodEntitySchema>; 
+export type Food = z.infer<typeof FoodSchema>; 

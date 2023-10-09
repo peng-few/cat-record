@@ -8,10 +8,9 @@ import Button,{ ButtonProps } from "@mui/material/Button";
 
 export interface RecordDeleteProps extends Omit<ButtonProps,'id'>{
   id: string
-  groupId: string
 }
 
-export const RecordDelete = ({ id,groupId,...props }:RecordDeleteProps) => {
+export const RecordDelete = ({ id,...props }:RecordDeleteProps) => {
   const [actionStatus, setActionStatus] = useState<
     | 'NONE'
     | 'DELETE_CONFIRM'
@@ -30,7 +29,7 @@ export const RecordDelete = ({ id,groupId,...props }:RecordDeleteProps) => {
 
   const deleteRecord = async () => {
     setActionStatus('SENDING')
-    const { success } = await simpleFetch.delete(`record/api/${groupId}/${id}`)
+    const { success } = await simpleFetch.delete(`record/api/${id}`)
     if (success) {
       router.refresh()
       snackbar?.success({msg: '刪除成功'})

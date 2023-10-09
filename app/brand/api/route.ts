@@ -1,7 +1,7 @@
 import { errorResponse, successResponse } from '@/_lib';
-import { FieldBrand, Collection } from "../_firebase";
-import { z } from "zod";
-import { getBrands } from "../_firebase/getBrands";
+import { BrandSchema } from "../_consts/BrandSchema";
+import { getBrands } from "../_db/getBrands";
+import { Collection } from '../_db/Collection';
 
 export async function GET() {
   try {
@@ -12,13 +12,10 @@ export async function GET() {
   }
 }
 
-export const PostData = FieldBrand.omit({ id: true })
-export type PostData = z.infer<typeof PostData>;
-
 export async function POST(req:Request) {
   try {
     const json = await req.json()
-    const postData = PostData.parse(json)
+    const postData = BrandSchema.parse(json)
     await Collection.addData(postData)
     return successResponse()
   } catch (msg) {

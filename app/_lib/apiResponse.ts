@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { AnyObject } from ".";
 
 export interface Response<T extends any = undefined>{
   success: boolean,

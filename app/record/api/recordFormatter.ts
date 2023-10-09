@@ -1,20 +1,22 @@
-import { Formatter, WithoutId, toDecimalPlace } from "@/_lib";
-import { PostData } from "./route";
-import { FieldRecord } from "../_firebase";
-import getFood from "@/food/_firebase/getFood";
-import { FieldFood } from "@/food/_firebase";
+import { toDecimalPlace } from "@/_lib";
+import { Formatter } from "@/_types/types";
+import { Record } from "../_consts/RecordSchema";
+import getFood from "@/food/_db/getFood";
+import { Food } from "@/food/_consts/FoodSchema";
 import dayjs from "dayjs";
+import { type WithId } from 'mongodb'
+import { RecordFormRequest } from "../_consts/RecordFormRequestSchema";
 
-class RecordFormatter implements Formatter<WithoutId<FieldRecord>> {
-  food?: FieldFood;
+class RecordFormatter implements Formatter<Record> {
+  food: WithId<Food> | null;
   data;
-  constructor(data: PostData) {
+  constructor(data: RecordFormRequest) {
     this.data = {
       energy: 0,
       totalWater: 0,
       ...data,
     }
-    this.food = undefined;
+    this.food = null;
   }
 
   async getFood() {
@@ -38,7 +40,7 @@ class RecordFormatter implements Formatter<WithoutId<FieldRecord>> {
   }
 }
 
-export const formatPostData = async (data:PostData) => {
+export const formatFormRequest = async (data:RecordFormRequest) => {
   const recordFormatter = new RecordFormatter(data)
     
   await recordFormatter.getFood()
@@ -47,4 +49,4 @@ export const formatPostData = async (data:PostData) => {
   return recordFormatter.data
 }
 
-export const getGroupId = (date: Date) => dayjs(date).format('YYYYMMDD');
+export const getRecordDate = (date: Date) => dayjs(date).format('YYYY-MM-DD');

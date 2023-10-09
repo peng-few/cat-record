@@ -12,7 +12,7 @@ import { Suspense } from "react"
 import { Loading } from "@/_components/Loading"
 import FoodListAction from "./FoodTableAction";
 import FocusedRowProvider from "@/_components/FocusedRowProvider";
-import { getBrandPairs } from "@/brand/_firebase/getBrandPairs"
+import { getBrandPairs } from "@/brand/_db/getBrandPairs"
 import { getFoods } from "./_db/getFoods"
 import FocusedTableRow  from "@/_components/FocusdTableRow"
 
@@ -67,8 +67,8 @@ export default async function FoodTable({searchParams}:PageProps) {
               <FocusedRowProvider>
               {foods?.map((food,idx) => (
                 <FocusedTableRow
-                  key={food._id.toHexString()}
-                  id={food._id.toHexString()}
+                  key={food._id}
+                  id={food._id}
                 >
                   <TableCell size="medium" sx={{maxWidth: '150px'}}>
                     {brandPairs?.[food.brand]}{food.name}
