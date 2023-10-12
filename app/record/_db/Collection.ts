@@ -1,6 +1,5 @@
 import {CollectionHandler} from "@/_db/CollectionHandler";
-import { RecordCollectionHandler } from "./RecordCollectionHandler";
+import { Record } from "../_consts/RecordSchema";
 
 export const COLLECTION_NAME = 'record'
-export const DATE_COLLECTION_NAME = 'recordDate'
-export const Collection = new RecordCollectionHandler(COLLECTION_NAME)
+export const Collection = new CollectionHandler<Record>(COLLECTION_NAME)

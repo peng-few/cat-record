@@ -1,6 +1,7 @@
 import { Collection, BSON,Sort,Condition,Filter, ObjectId, OptionalUnlessRequiredId, WithId} from "mongodb";
 import clientPromise from "./db";
 import objectIdToString from "@/_lib/obectIdToString";
+import { AnyObject, Pagination } from "@/_types";
 
 export class CollectionHandler<TEntity extends BSON.Document> {
   collectionName;
@@ -53,6 +54,51 @@ export class CollectionHandler<TEntity extends BSON.Document> {
       console.log('失敗')
       console.log(msg)
       return []
+    }
+  }
+
+  async paginate<TData extends AnyObject = []>({ pageSize, page, pipeline }: {
+    pageSize: number,
+    page: number,
+    pipeline: BSON.Document[],
+  }): Promise<Pagination & { data?: TData }> {
+    try {
+      const skip = (page-1) * pageSize
+      const collection = await this.getCollection()
+      const findCursors = collection.aggregate<{data: TData}>([...pipeline,
+        {
+          $facet: {
+            data: [{ $skip: skip }, { $limit: pageSize }],
+            pagination: [
+              {
+                $count: 'total'
+              },
+            ]
+          }
+        }])
+      
+      const { data, pagination } = await findCursors.next() as {
+        data: TData
+        pagination: [{ total: number }]
+      };
+      findCursors.close();
+
+      return {
+        data,
+        pagination: {
+          ...pagination[0],
+          page,
+          pageSize,
+        }
+      }
+    } catch (error) {
+      return {
+        pagination: {
+          page,
+          pageSize,
+          total: 0
+        }
+      }
     }
   }
 
