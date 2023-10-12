@@ -10,12 +10,13 @@ import RecordEdit from "./RecordEdit"
 import { RecordStatusName } from "./_consts/RecordStatus"
 import RecordDelete from "./RecordDelete"
 import { getFoodPairs } from "@/food/_db/getFoodPairs"
-import { type DailyRecord } from "./_db/getRecords"
+import { Record } from "./_consts/RecordSchema"
+import { WithStringId } from "@/_types"
 
 export interface RecordTableDetailProps{
-  record: DailyRecord['list']
+  records: WithStringId<Record>[]
 }
-export const RecordTableDetail = async ({ record: records }: RecordTableDetailProps) => {
+export const RecordTableDetail = async ({ records }: RecordTableDetailProps) => {
   const foodPairs = await getFoodPairs()
 
   return (
@@ -45,23 +46,23 @@ export const RecordTableDetail = async ({ record: records }: RecordTableDetailPr
             <TableCell/>
           </TableRow>
         </TableHead>
-          <TableBody>
-            {records.map(record => (
-              <TableRow
-                key={record._id}
-              >
-                <TableCell>{`${dayjs(record.date).format('HH:mm')}`}</TableCell>
-                <TableCell>{record.foodId && foodPairs[record.foodId]}</TableCell>
-                <TableCell align="right">{`${record.amount}`}</TableCell>
-                <TableCell align="right">{`${record.water}`}</TableCell>
-                <TableCell>{RecordStatusName[record.status]}</TableCell>
-                <TableCell>
-                  <RecordEdit record={record} />
-                  <RecordDelete id={record._id} sx={{ml: 1}}/>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
+        <TableBody>
+          {records.map(record => (
+            <TableRow
+              key={record._id}
+            >
+              <TableCell>{`${dayjs(record.date).format('HH:mm')}`}</TableCell>
+              <TableCell>{record.foodId && foodPairs[record.foodId]}</TableCell>
+              <TableCell align="right">{`${record.amount}`}</TableCell>
+              <TableCell align="right">{`${record.water}`}</TableCell>
+              <TableCell>{RecordStatusName[record.status]}</TableCell>
+              <TableCell>
+                <RecordEdit record={record} />
+                <RecordDelete id={record._id} sx={{ml: 1}}/>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
       </Table>
     </Box>
    

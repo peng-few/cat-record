@@ -5,8 +5,11 @@ import FoodsProvider from "@/food/_components/FoodsProvider";
 import RecordTable from "./RecordTable";
 import { Suspense } from "react";
 import { Loading } from "@/_components/Loading";
+import { revalidateTag } from "next/cache";
+import { PageProps } from "@/_types";
 
-export default async function RecordPage() {
+export default async function RecordPage({searchParams}:PageProps) {
+  revalidateTag('records')
   return (
     <div className="py-4 px-6">
       <Typography className="pb-3" variant="h1" display="block">
@@ -16,7 +19,7 @@ export default async function RecordPage() {
         <FoodsProvider>
           <RecordAdd />
           <Suspense fallback={<Loading />}>
-            <RecordTable/>
+            <RecordTable searchParams={searchParams}/>
           </Suspense>
         </FoodsProvider>
       </BrandsProvider>

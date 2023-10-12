@@ -8,14 +8,23 @@ import Typography from "@mui/material/Typography"
 import TableBody from '@mui/material/TableBody';
 import ExpandedTableRow from "@/_components/ExpandedTableRow";
 import FocusedRowProvider from "@/_components/FocusedRowProvider";
-import { getBrandPairs } from "@/brand/_db/getBrandPairs"
-import { getRecords } from "./_db/getRecords"
 import RecordTableDetail from "./RecordTableDetail"
 import dayjs from "dayjs"
 import { toDecimalPlace } from "@/_lib"
+import { getRecordDiary } from "./_db/getRecordDiary"
+import { PageProps } from "@/_types"
+import { Button } from "@mui/material"
+import Link from "next/link"
 
-export default async function RecordTable() {
-  const [brandPairs, records] = await Promise.all([getBrandPairs(), getRecords({ page: 1 })])
+interface RecordTableProps{
+  searchParams: PageProps['searchParams']
+}
+
+export default async function RecordTable({searchParams}: RecordTableProps) {
+  const {data:recordDiary, pagination } = await getRecordDiary({page: searchParams.page})
+  const prevPage = pagination.page - 1;
+  const nextPage = pagination.page + 1;
+  const maxPage = Math.ceil(pagination.pageSize / pagination.pageSize)
   return (
     <>
       <TableContainer component={Paper} className="mt-4">
@@ -38,23 +47,37 @@ export default async function RecordTable() {
               </TableCell>
             </TableRow>
           </TableHead>
-            <TableBody>
-              <FocusedRowProvider>
-              {records?.map(record => (
-                <ExpandedTableRow
-                  key={record.date}
-                  detail={<RecordTableDetail record={record.list}/>}
-                  colSpan={4}
-                  id={record}
-                >
-                  <TableCell>{dayjs(record.date).format('YYYY/MM/DD')}</TableCell>
-                  <TableCell align="right">{`${toDecimalPlace(record.energy,2)}`}</TableCell>
-                  <TableCell align="right">{`${toDecimalPlace(record.totalWater,2)}`}</TableCell>
-                </ExpandedTableRow>
-              ))}
-              </FocusedRowProvider>
-            </TableBody> 
+          <TableBody>
+            <FocusedRowProvider>
+            {recordDiary?.map(diary => (
+              <ExpandedTableRow
+                key={diary._id}
+                detail={<RecordTableDetail records={diary.records}/>}
+                colSpan={4}
+                id={diary}
+              >
+                <TableCell>{dayjs(diary._id).format('YYYY/MM/DD')}</TableCell>
+                <TableCell align="right">{`${toDecimalPlace(diary.totalEnergy,2)}`}</TableCell>
+                <TableCell align="right">{`${toDecimalPlace(diary.totalWater,2)}`}</TableCell>
+              </ExpandedTableRow>
+            ))}
+            </FocusedRowProvider>
+          </TableBody>
         </Table>
+        {
+          prevPage > 0 && (
+            <Link href={`/record${prevPage == 1 ?'':'?page='+prevPage}`}>
+              <Button>上一頁</Button>  
+            </Link>
+          )
+        }
+        {
+          nextPage <= maxPage&& (
+            <Link href={`/record?page=${nextPage}`}>
+              <Button>下一頁</Button>  
+            </Link>
+          )
+        }
       </TableContainer>
     </>
   )

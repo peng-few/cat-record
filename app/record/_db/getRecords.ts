@@ -1,47 +1,27 @@
 import { unstable_cache } from 'next/cache'
 import { Record } from '../_consts/RecordSchema'
-import { RecordDateCollection,Collection } from '.'
-import dayjs from 'dayjs'
+import { Collection } from '.'
 import { WithStringId } from '@/_types'
+import dayjs from 'dayjs'
 
 export interface DailyRecord {
   date: string,
   list: (WithStringId<Record>)[],
   totalWater: number,
-  energy: number,
+  totalEnergy: number,
 }
 
-export const getRecords = unstable_cache(async ({ page = 1 }) => {
+export const getRecords = unstable_cache(async ({ date }:{date:string}) => {
   try {
-    const dateCollection = await RecordDateCollection.getCollection()
-    const findCursors = await dateCollection .find({}).sort({ date: -1 }).limit(20)
-    const DailyRecordPomises = await findCursors.map(async (doc) => {
-      const list = await Collection.getDatas(
-        {
-          date: {
-            "$gte": dayjs(doc.date).toDate(),
-            "$lt": dayjs(doc.date).add(1, 'day').toDate()
-          }
-        })
-
-      const { totalWater, energy } = list.reduce((accu, record) => (
-        {
-          totalWater: accu.totalWater + record.totalWater,
-          energy: accu.energy + record.energy
+    const records = await Collection.getDatas([{
+      $match: {
+        date: {
+          "$gte": dayjs(date).toDate(),
+          "$lt": dayjs(date).add(1, 'day').toDate()
         }
-      ), { totalWater: 0, energy: 0 })
-
-      return {
-        date: doc.date,
-        list,
-        totalWater,
-        energy,
       }
-    }).toArray()
-
-    const dailyRecords = await Promise.all(DailyRecordPomises)
-    findCursors.close();
-    return dailyRecords
+    }])
+    return records
   } catch (msg) {
     return []
   }

@@ -2,6 +2,7 @@ import { RegisterOptions } from "react-hook-form"
 
 export interface AnyObject{ [x: string]: any }
 
+export type Override<T, U> = Omit<T, keyof U> & U;
 export interface NoSymbolKeyObject extends AnyObject{
   [key: symbol]: never;
 }

@@ -48,5 +48,3 @@ export const formatFormRequest = async (data:RecordFormRequest) => {
 
   return recordFormatter.data
 }
-
-export const getRecordDate = (date: Date) => dayjs(date).format('YYYY-MM-DD');
