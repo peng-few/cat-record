@@ -15,7 +15,6 @@ import objToSelectOptions from "@/_lib/objToSelectOptions";
 import toUrlSearchParams from "@/_lib/searchParams/toUrlSearchParams";
 import isSelectedParam from '@/_lib/searchParams/isSelectedParam'
 import { refreshPage, toggleParam } from "@/_lib/searchParams/handleSearchParam";
-import { revalidateTag } from "next/cache";
 import Link from "next/link";
 import { Metadata, ResolvedMetadata } from "next";
 
@@ -47,12 +46,14 @@ export default async function FoodPage({searchParams}:PageProps) {
   const { type,phosphorus,protein,carbon,fishmeat } = searchParams; 
   const foodTypeName = foodTypeToName(type)
   const urlParams = toUrlSearchParams(searchParams)
-  revalidateTag('foods')
+
   return (
     <div className="py-4 px-6">
-      <Typography className="pb-3" variant="h1" display="block">
-        {`貓咪${foodTypeName || '食物'}一覽`}
+      <BrandsProvider>
+      <Typography className="pb-3" variant="h1">
+          {`貓咪${foodTypeName || '食物'}一覽`}
       </Typography>
+      <FoodAdd />
       <Box sx={{'.MuiChip-root': {m:0.3}}}>
         <ChipMenu
           label={foodTypeName}
@@ -105,8 +106,6 @@ export default async function FoodPage({searchParams}:PageProps) {
           selected={isSelectedParam('0',fishmeat)}
         />
       </Box>
-      <BrandsProvider>
-        <FoodAdd />
         <Suspense fallback={<Loading/>}>
           <FoodTable searchParams={searchParams} />
         </Suspense>
