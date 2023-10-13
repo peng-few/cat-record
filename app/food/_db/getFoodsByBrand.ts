@@ -25,6 +25,8 @@ export const getFoodsByBrand = unstable_cache(async (searchParams = {}) => {
           $push: "$$ROOT"
         },
       }
+    }, {
+      $sort: { _id: -1 }
     }]
   });
 
