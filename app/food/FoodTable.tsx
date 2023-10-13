@@ -15,10 +15,15 @@ import { getBrandPairs } from "@/brand/_db/getBrandPairs"
 import { getFoodsByBrand } from "./_db/getFoodsByBrand"
 import { FoodTypeName } from "./_consts/FoodType"
 import { FocusedBox, FocusedBoxProvider } from "@/_components"
+import formatPagination from "@/_lib/formatPagination"
+import Link from "next/link"
+import Button  from "@mui/material/Button"
 
 export default async function FoodTable({searchParams}:PageProps) {
   const [brandPairs, foodsByBrand] = await Promise.all([getBrandPairs(), getFoodsByBrand(searchParams)])
-  const { data:brandsFood, pagination } = foodsByBrand;
+  const { data: brandsFood, pagination } = foodsByBrand;
+  const { prevPage, nextPage, maxPage } = formatPagination(pagination)
+  
   return (
     <>
       <Typography className="pt-3" variant="caption" display="block">
@@ -98,10 +103,23 @@ export default async function FoodTable({searchParams}:PageProps) {
               </Suspense>   
             </Table>
           </TableContainer>
-          
         </React.Fragment>
       ))}
       </FocusedBoxProvider>
+      {
+          prevPage > 0 && (
+            <Link href={`/record${prevPage == 1 ?'':'?page='+prevPage}`}>
+              <Button>上一頁</Button>  
+            </Link>
+          )
+        }
+        {
+          nextPage <= maxPage&& (
+            <Link href={`/record?page=${nextPage}`}>
+              <Button>下一頁</Button>  
+            </Link>
+          )
+        }
     </>
   )
 }

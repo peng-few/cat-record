@@ -15,16 +15,15 @@ import { PageProps } from "@/_types"
 import { Button } from "@mui/material"
 import Link from "next/link"
 import { FocusedBoxProvider } from "@/_components/FocusedBox"
+import formatPagination from "@/_lib/formatPagination"
 
 interface RecordTableProps{
   searchParams: PageProps['searchParams']
 }
 
 export default async function RecordTable({searchParams}: RecordTableProps) {
-  const {data:recordDiary, pagination } = await getRecordDiary({page: searchParams.page})
-  const prevPage = pagination.page - 1;
-  const nextPage = pagination.page + 1;
-  const maxPage = Math.ceil(pagination.pageSize / pagination.pageSize)
+  const { data: recordDiary, pagination } = await getRecordDiary({ page: searchParams.page })
+  const {prevPage,nextPage,maxPage} = formatPagination(pagination)
   return (
     <>
       <TableContainer component={Paper} className="mt-4">
