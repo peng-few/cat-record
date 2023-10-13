@@ -26,50 +26,50 @@ export default async function FoodTable({searchParams}:PageProps) {
   
   return (
     <>
-      <Typography className="pt-3" variant="caption" display="block">
-        *比例皆為乾物比
-      </Typography>
+      <p className="my-3 text-sm">
+        比例皆為乾物比
+      </p>
       <FocusedBoxProvider>
       {brandsFood?.map(brand => (
         <React.Fragment key={brand._id}>
-          <Typography variant="h6" sx={{ mt: 5 }}>{brandPairs[brand._id]}</Typography>
-          <TableContainer component={Paper} variant="outlined">
-            <Table sx={{ minWidth: 650 }}>
+          <Typography variant="h6">{brandPairs[brand._id]}</Typography>
+          <TableContainer component={Paper} variant="outlined" sx={{ mb: 5 }}>
+            <Table sx={{ minWidth: 650, '.MuiTableCell-head': {fontSize: '0.75rem',position: 'sticky'} }}>
               <TableHead>
                 <TableRow>
-                  <TableCell size="medium">品項</TableCell>
-                  <TableCell align="right">
+                  <TableCell size="small">品項</TableCell>
+                  <TableCell align="right" size="small">
                     代謝能
-                    <Typography className="ps-1" variant="caption">
+                    <span className="ps-1 text-stone-400">
                       (kcal/100g)
-                    </Typography>
+                    </span>
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell align="right" size="small">
                     碳水化合物
-                    <Typography className="ps-1" variant="caption">
+                    <span className="ps-1 text-stone-400">
                       (%)
-                    </Typography>
+                    </span>
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell align="right" size="small">
                     蛋白質
-                    <Typography className="ps-1" variant="caption">
+                    <span className="ps-1 text-stone-400">
                       (%)
-                    </Typography>
+                    </span>
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell align="right" size="small">
                     脂肪
-                    <Typography className="ps-1" variant="caption">
+                    <span className="ps-1 text-stone-400">
                       (%)
-                    </Typography>
+                    </span>
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell align="right" size="small">
                     磷
-                    <Typography className="ps-1" variant="caption">
+                    <span className="ps-1 text-stone-400">
                       (mg/100kcal)
-                    </Typography>
+                    </span>
                   </TableCell>
-                  <TableCell align="right">鈣磷比</TableCell>
-                  <TableCell></TableCell>
+                  <TableCell align="right" size="small">鈣磷比</TableCell>
+                  <TableCell size="small"></TableCell>
                 </TableRow>
               </TableHead>
               <Suspense fallback={<Loading/>}>
@@ -81,15 +81,15 @@ export default async function FoodTable({searchParams}:PageProps) {
                       id={food._id}
                       sx={{ '& > *': { borderBottom: 'unset!important' } }}
                     >
-                      <TableCell size="medium" sx={{maxWidth: '150px'}}>
-                        {food.name} <span className="text-slate-400 text-xs">{ FoodTypeName[food.type] }</span>
+                      <TableCell size="medium" sx={{width: '150px'}}>
+                        {food.name} <span className="text-stone-400 text-xs">{ FoodTypeName[food.type] }</span>
                       </TableCell>
-                      <TableCell align="right">{`${food.energy}`}</TableCell>
-                      <TableCell align="right">{`${food.carbonhydrate}`}</TableCell>
-                      <TableCell align="right">{`${food.protein}`}</TableCell>
-                      <TableCell align="right">{`${food.fat}`}</TableCell>
+                      <TableCell align="right">{`${Math.round(food.energy)}`}</TableCell>
+                      <TableCell align="right">{`${Math.round(food.carbonhydrate)}`}</TableCell>
+                      <TableCell align="right">{`${Math.round(food.protein)}`}</TableCell>
+                      <TableCell align="right">{`${Math.round(food.fat)}`}</TableCell>
                       <TableCell align="right">
-                      {`${food.phosphorus}`}
+                      {`${Math.round(food.phosphorus)}`}
                       </TableCell>
                       <TableCell align="right">
                       {`${food.phosphorus && food.calcium && toDecimalPlace(food.calcium/food.phosphorus, 1)}`}

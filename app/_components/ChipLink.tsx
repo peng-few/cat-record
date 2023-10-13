@@ -10,7 +10,7 @@ export const ChipLink = ({
 }:ChipLinkProps) => {
   return (
     <Link href={href}>
-      <Chip {...props} variant={variant} color={selected? 'primary': 'default'} />
+      <Chip {...props} variant={variant} color={selected? 'primary': 'default'}/>
     </Link>
   )
 }

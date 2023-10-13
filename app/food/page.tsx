@@ -17,6 +17,7 @@ import isSelectedParam from '@/_lib/searchParams/isSelectedParam'
 import { refreshPage, toggleParam } from "@/_lib/searchParams/handleSearchParam";
 import Link from "next/link";
 import { Metadata, ResolvedMetadata } from "next";
+import TuneIcon from '@mui/icons-material/Tune';
 
 export const generateParamNames = (searchParams:PageProps['searchParams']) => {
   const { type } = searchParams;
@@ -54,7 +55,10 @@ export default async function FoodPage({searchParams}:PageProps) {
           {`貓咪${foodTypeName || '食物'}一覽`}
       </Typography>
       <FoodAdd />
-      <Box sx={{'.MuiChip-root': {m:0.3}}}>
+        <Box sx={{ '.MuiChip-root': { mr: 0.6 } }}>
+        <div className="inline-flex text-stone-500 text-sm mr-2 items-center align-middle">
+          <TuneIcon sx={{fontSize: '14px',mb: 0.2}} /> 條件篩選
+        </div>   
         <ChipMenu
           label={foodTypeName}
           placeholder="種類"
@@ -69,7 +73,7 @@ export default async function FoodPage({searchParams}:PageProps) {
                   {
                     isSelectedParam(option.value,type) && (
                       <CheckCircleIcon sx={{
-                        fontSize: '15px',
+                        fontSize: '14px',
                         ml: '8px',
                         fill: '#ebaf1a'
                       }} />

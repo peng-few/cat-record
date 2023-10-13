@@ -39,7 +39,7 @@ export default function FoodAdd() {
   return (
     <>
       <Button
-        className="mb-4"
+        sx={{mb: 1.5}}
         variant="contained"
         onClick={openForm}
         startIcon={<AddOutlinedIcon />}

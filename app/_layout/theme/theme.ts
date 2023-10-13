@@ -37,8 +37,12 @@ const theme = createTheme({
       fontSize: '1.5rem',
       fontWeight: '600',
     },
+    h3: {
+      fontSize: '1.125rem',
+      fontWeight: '600',
+    },
     h6: {
-      fontSize: '1.1rem',
+      fontSize: '1rem',
       fontWeight: '600',
     }
   },
@@ -67,9 +71,16 @@ const theme = createTheme({
           }
         },
         sizeMedium: {
-          fontSize: '1rem',
+          fontSize: '0.875rem',
           borderRadius: '50px',
-          padding:'5px 20px'
+          padding:'4px 18px'
+        }
+      }
+    },
+    MuiChip: {
+      styleOverrides: {
+        sizeMedium: {
+          fontSize: '0.875rem',
         }
       }
     }
