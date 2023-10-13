@@ -8,91 +8,100 @@ import Typography from "@mui/material/Typography"
 import TableBody from '@mui/material/TableBody';
 import { toDecimalPlace } from "@/_lib"
 import { PageProps } from "@/_types"
-import { Suspense } from "react"
+import React, { Suspense } from "react"
 import { Loading } from "@/_components/Loading"
 import FoodListAction from "./FoodTableAction";
-import FocusedRowProvider from "@/_components/FocusedRowProvider";
 import { getBrandPairs } from "@/brand/_db/getBrandPairs"
-import { getFoods } from "./_db/getFoods"
-import FocusedTableRow  from "@/_components/FocusdTableRow"
+import { getFoodsByBrand } from "./_db/getFoodsByBrand"
+import { FoodTypeName } from "./_consts/FoodType"
+import { FocusedBox, FocusedBoxProvider } from "@/_components"
 
 export default async function FoodTable({searchParams}:PageProps) {
-  const [brandPairs, foods] = await Promise.all([getBrandPairs(), getFoods(searchParams)])
+  const [brandPairs, foodsByBrand] = await Promise.all([getBrandPairs(), getFoodsByBrand(searchParams)])
+  const { data:brandsFood, pagination } = foodsByBrand;
   return (
     <>
       <Typography className="pt-3" variant="caption" display="block">
         *比例皆為乾物比
       </Typography>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }}>
-          <TableHead>
-            <TableRow>
-              <TableCell size="medium">品項</TableCell>
-              <TableCell align="right">
-                代謝能
-                <Typography className="ps-1" variant="caption">
-                  (kcal/100g)
-                </Typography>
-              </TableCell>
-              <TableCell align="right">
-                碳水化合物
-                <Typography className="ps-1" variant="caption">
-                  (%)
-                </Typography>
-              </TableCell>
-              <TableCell align="right">
-                蛋白質
-                <Typography className="ps-1" variant="caption">
-                  (%)
-                </Typography>
-              </TableCell>
-              <TableCell align="right">
-                脂肪
-                <Typography className="ps-1" variant="caption">
-                  (%)
-                </Typography>
-              </TableCell>
-              <TableCell align="right">
-                磷
-                <Typography className="ps-1" variant="caption">
-                  (mg/100kcal)
-                </Typography>
-              </TableCell>
-              <TableCell align="right">鈣磷比</TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-          </TableHead>
-          <Suspense fallback={<Loading/>}>
-            <TableBody>
-              <FocusedRowProvider>
-              {foods?.map((food,idx) => (
-                <FocusedTableRow
-                  key={food._id}
-                  id={food._id}
-                >
-                  <TableCell size="medium" sx={{maxWidth: '150px'}}>
-                    {brandPairs?.[food.brand]}{food.name}
-                  </TableCell>
-                  <TableCell align="right">{`${food.energy}`}</TableCell>
-                  <TableCell align="right">{`${food.carbonhydrate}`}</TableCell>
-                  <TableCell align="right">{`${food.protein}`}</TableCell>
-                  <TableCell align="right">{`${food.fat}`}</TableCell>
+      <FocusedBoxProvider>
+      {brandsFood?.map(brand => (
+        <React.Fragment key={brand._id}>
+          <Typography variant="h6" sx={{ mt: 5 }}>{brandPairs[brand._id]}</Typography>
+          <TableContainer component={Paper} variant="outlined">
+            <Table sx={{ minWidth: 650 }}>
+              <TableHead>
+                <TableRow>
+                  <TableCell size="medium">品項</TableCell>
                   <TableCell align="right">
-                  {`${food.phosphorus}`}
+                    代謝能
+                    <Typography className="ps-1" variant="caption">
+                      (kcal/100g)
+                    </Typography>
                   </TableCell>
                   <TableCell align="right">
-                  {`${food.phosphorus && food.calcium && toDecimalPlace(food.calcium/food.phosphorus, 1)}`}
+                    碳水化合物
+                    <Typography className="ps-1" variant="caption">
+                      (%)
+                    </Typography>
                   </TableCell>
-                  <TableCell>
-                    <FoodListAction food={foods[idx]}/>
+                  <TableCell align="right">
+                    蛋白質
+                    <Typography className="ps-1" variant="caption">
+                      (%)
+                    </Typography>
                   </TableCell>
-                </FocusedTableRow>
-              ))}
-              </FocusedRowProvider>
-            </TableBody>
-          </Suspense>   
-        </Table>
-      </TableContainer>
+                  <TableCell align="right">
+                    脂肪
+                    <Typography className="ps-1" variant="caption">
+                      (%)
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="right">
+                    磷
+                    <Typography className="ps-1" variant="caption">
+                      (mg/100kcal)
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="right">鈣磷比</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableHead>
+              <Suspense fallback={<Loading/>}>
+                <TableBody>
+                  {brand.foods.map((food,idx) => (
+                    <FocusedBox
+                      component={TableRow}
+                      key={food._id}
+                      id={food._id}
+                      sx={{ '& > *': { borderBottom: 'unset!important' } }}
+                    >
+                      <TableCell size="medium" sx={{maxWidth: '150px'}}>
+                        {food.name} <span className="text-slate-400 text-xs">{ FoodTypeName[food.type] }</span>
+                      </TableCell>
+                      <TableCell align="right">{`${food.energy}`}</TableCell>
+                      <TableCell align="right">{`${food.carbonhydrate}`}</TableCell>
+                      <TableCell align="right">{`${food.protein}`}</TableCell>
+                      <TableCell align="right">{`${food.fat}`}</TableCell>
+                      <TableCell align="right">
+                      {`${food.phosphorus}`}
+                      </TableCell>
+                      <TableCell align="right">
+                      {`${food.phosphorus && food.calcium && toDecimalPlace(food.calcium/food.phosphorus, 1)}`}
+                      </TableCell>
+                      <TableCell>
+                        <FoodListAction food={food}/>
+                      </TableCell>
+                    </FocusedBox>
+                  ))}
+                </TableBody>
+              </Suspense>   
+            </Table>
+          </TableContainer>
+          
+        </React.Fragment>
+      ))}
+      </FocusedBoxProvider>
     </>
   )
 }
