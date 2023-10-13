@@ -61,7 +61,7 @@ export class CollectionHandler<TEntity extends BSON.Document> {
     pageSize: number,
     page: number,
     pipeline?: BSON.Document[],
-  }): Promise<Pagination & { data?: TData }> {
+  }): Promise<{ pagination: Pagination; data?: TData }> {
     try {
       const skip = (page-1) * pageSize
       const collection = await this.getCollection()

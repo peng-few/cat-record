@@ -13,8 +13,9 @@ export interface RecordDiary {
   records: WithStringId<Record>[]
 }
 
-export interface RecordDiaries extends Pagination {
+export interface RecordDiaries {
   data: RecordDiary[],
+  pagination: Pagination,
 }
 
 type dbRecordDiary = Override<RecordDiary, { records: WithId<Record>[] }>
