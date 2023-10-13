@@ -5,7 +5,6 @@ import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import Paper from "@mui/material/Paper"
 import TableBody from '@mui/material/TableBody';
-import FocusedRowProvider from "@/_components/FocusedRowProvider";
 import { getBrands } from "./_db/getBrands"
 
 export default async function BrandTable() {
@@ -22,7 +21,6 @@ export default async function BrandTable() {
             </TableRow>
           </TableHead>
             <TableBody>
-              <FocusedRowProvider>
               {brands?.map(brand => (
                 <TableRow
                   key={brand._id}
@@ -30,7 +28,6 @@ export default async function BrandTable() {
                   <TableCell>{brand.name}</TableCell>
                 </TableRow>
               ))}
-              </FocusedRowProvider>
             </TableBody> 
         </Table>
       </TableContainer>

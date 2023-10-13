@@ -7,7 +7,6 @@ import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 import TableBody from '@mui/material/TableBody';
 import ExpandedTableRow from "@/_components/ExpandedTableRow";
-import FocusedRowProvider from "@/_components/FocusedRowProvider";
 import RecordTableDetail from "./RecordTableDetail"
 import dayjs from "dayjs"
 import { toDecimalPlace } from "@/_lib"
@@ -15,6 +14,7 @@ import { getRecordDiary } from "./_db/getRecordDiary"
 import { PageProps } from "@/_types"
 import { Button } from "@mui/material"
 import Link from "next/link"
+import { FocusedBoxProvider } from "@/_components/FocusedBox"
 
 interface RecordTableProps{
   searchParams: PageProps['searchParams']
@@ -48,7 +48,7 @@ export default async function RecordTable({searchParams}: RecordTableProps) {
             </TableRow>
           </TableHead>
           <TableBody>
-            <FocusedRowProvider>
+            <FocusedBoxProvider>
             {recordDiary?.map(diary => (
               <ExpandedTableRow
                 key={diary._id}
@@ -61,7 +61,7 @@ export default async function RecordTable({searchParams}: RecordTableProps) {
                 <TableCell align="right">{`${toDecimalPlace(diary.totalWater,2)}`}</TableCell>
               </ExpandedTableRow>
             ))}
-            </FocusedRowProvider>
+            </FocusedBoxProvider>
           </TableBody>
         </Table>
         {

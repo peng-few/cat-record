@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import React, { useState } from 'react';
 import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
-import FocusedTableRow from './FocusdTableRow';
+import { FocusedBox } from './FocusedBox/FocusedBox';
 
 
 export interface ExpandedTableRowProps extends TableRowProps{
@@ -27,8 +27,9 @@ export const ExpandedTableRow = ({detail,children,sx,colSpan,id,...props}:Expand
 
   return (
     <>
-      <FocusedTableRow
+      <FocusedBox
         {...props}
+        component={TableRow}
         id={id}
         sx={{...cssRow, ...sx }}
       >
@@ -42,7 +43,7 @@ export const ExpandedTableRow = ({detail,children,sx,colSpan,id,...props}:Expand
           </IconButton>
         </TableCell>
         {children}
-      </FocusedTableRow>
+      </FocusedBox>
       <TableRow>
         <TableCell sx={{ padding: 0 }} colSpan={colSpan}>
           <Collapse sx={{borderTop: (theme) => `1px solid ${theme.palette.grey[300]}`}} in={open} timeout="auto" unmountOnExit>
