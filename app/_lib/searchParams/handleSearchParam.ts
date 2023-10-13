@@ -5,7 +5,7 @@ export interface HandleSearchParam {
 }
 
 export const refreshPage:HandleSearchParam = (searchParams: URLSearchParams) => {
-  searchParams.set('page', '1')
+  searchParams.delete('page')
   return searchParams
 }
 
