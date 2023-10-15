@@ -10,7 +10,7 @@ import RecordEdit from "./RecordEdit"
 import { RecordStatusName } from "./_consts/RecordStatus"
 import RecordDelete from "./RecordDelete"
 import { getFoodPairs } from "@/food/_db/getFoodPairs"
-import { Record } from "./_consts/RecordSchema"
+import { Record } from "./_db/schema/RecordSchema"
 import { WithStringId } from "@/_types"
 
 export interface RecordTableDetailProps{

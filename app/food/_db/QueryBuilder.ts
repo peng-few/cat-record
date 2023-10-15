@@ -1,6 +1,6 @@
 import { type WithId, type Filter } from "mongodb"
 import { FoodType } from "../_consts/FoodType"
-import { Food } from "../_consts/FoodSchema"
+import { Food } from "./schema/FoodSchema"
 
 export class QueryBuilder {
   filter: Filter<WithId<Food>> = {}

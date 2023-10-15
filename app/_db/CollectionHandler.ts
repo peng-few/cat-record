@@ -43,7 +43,7 @@ export class CollectionHandler<TEntity extends BSON.Document> {
     return collection.deleteOne(query);
   }
 
-  async getDatas(pipeline: BSON.Document[]) {
+  async getDatas(pipeline: BSON.Document[] = []) {
     try {
       const collection = await this.getCollection()
       const cursor = await collection.aggregate<WithId<TEntity>>(pipeline)

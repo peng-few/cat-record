@@ -1,5 +1,5 @@
 import { errorResponse, successResponse } from '@/_lib';
-import { BrandSchema } from "../_consts/BrandSchema";
+import { BrandSchema } from "../_db/schema/BrandSchema";
 import { getBrands } from "../_db/getBrands";
 import { Collection } from '../_db/Collection';
 

@@ -1,4 +1,5 @@
 import { RegisterOptions } from "react-hook-form"
+import { type BSON } from "mongodb";
 
 export interface AnyObject{ [x: string]: any }
 
@@ -31,6 +32,8 @@ export interface PageProps {
 }
 
 export type FilterNumberType<Obj extends NoSymbolKeyObject> = 
-  { [K in keyof Obj]: Obj[K] extends number ? K : never }[keyof Obj]
+  { [K in keyof Required<Obj>]: Obj[K] extends number ? K : never }[keyof Obj]
 
-export type WithStringId<TData> = Omit<TData,'_id'> & {_id: string}
+export type WithStringId<TData> = Omit<TData, '_id'> & { _id: string }
+
+export type MongoId = BSON.ObjectId

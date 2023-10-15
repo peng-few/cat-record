@@ -1,5 +1,5 @@
 import { unstable_cache } from 'next/cache'
-import { Record } from '../_consts/RecordSchema'
+import { Record } from './schema/RecordSchema'
 import { Collection } from '.'
 import { WithStringId } from '@/_types'
 import dayjs from 'dayjs'

@@ -7,7 +7,7 @@ import { StatusSnackbar,useSnackbar } from "@/_components/StatusSnackbar"
 import { useRouter } from "next/navigation"
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import RecordForm from "./RecordForm"
-import { RecordFormRequest } from "./_consts/RecordFormRequestSchema"
+import { RecordFormRequest } from "./_db/schema/RecordFormRequestSchema"
 
 export default function RecordAdd() {
   const {snackbarRef,snackbar} = useSnackbar()

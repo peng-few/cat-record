@@ -1,6 +1,6 @@
 import z from "zod";
 import { zIsNumber, zToNumberOptional,zToDate } from '@/_lib/zUtil'
-import { RecordStatus } from "./RecordStatus";
+import { RecordStatus } from "../../_consts/RecordStatus";
 
 export const RecordSchema = z.object({
   date: zToDate(),

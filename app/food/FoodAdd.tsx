@@ -7,7 +7,8 @@ import { StatusSnackbar,useSnackbar } from "@/_components/StatusSnackbar"
 import { useRouter } from "next/navigation"
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
 import FoodForm from "./FoodForm"
-import { FoodFormRequest } from "./_consts/FoodFormRequestSchema"
+import { FoodFormRequest } from "./_db/schema/FoodFormRequestSchema"
+import objToFormData from "@/_lib/objToFormData"
 
 export default function FoodAdd() {
   const {snackbarRef,snackbar} = useSnackbar()
@@ -24,8 +25,8 @@ export default function FoodAdd() {
   }
 
   const submitForm: SubmitHandler<FoodFormRequest> = async (data) => {
-    setLoading(true)
-    const { success } = await simpleFetch.post('/food/api', data)
+    const formData = objToFormData(data);
+    const { success } = await simpleFetch.post('/food/api', formData)
     if (success) {
       snackbar?.success({msg: '新增成功'})
       router.refresh()

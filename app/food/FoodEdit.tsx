@@ -1,12 +1,12 @@
 "use client"
 import { SubmitHandler } from "react-hook-form"
 import { useState } from "react"
-import { FoodFormRequest } from "./_consts/FoodFormRequestSchema"
+import { FoodFormRequest } from "./_db/schema/FoodFormRequestSchema"
 import  simpleFetch from '@/_lib/simpleFetch'
 import { StatusSnackbar,useSnackbar } from "@/_components/StatusSnackbar"
 import { useRouter } from "next/navigation"
 import FoodForm from "./FoodForm"
-import { Food } from "./_consts/FoodSchema" 
+import { Food } from "./_db/schema/FoodSchema" 
 import { unitConverter } from "@/_lib"
 import { WithStringId } from "@/_types"
 

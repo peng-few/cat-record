@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { zIsPositiveNumber, zToNumber, zToNumberOptional } from '@/_lib/zUtil'
-import { FoodType } from "./FoodType";
+import { zIsPositiveNumber, zToNumber, zToNumberOptional,zMongoId  } from '@/_lib/zUtil'
+import { FoodType } from "../../_consts/FoodType";
 
 export const FoodSchema = z.object({
   type: FoodType,
@@ -15,5 +15,6 @@ export const FoodSchema = z.object({
   water: zToNumberOptional(),
   phosphorus: zToNumberOptional(),
   calcium: zToNumberOptional(),
+  imgId: zMongoId.optional()
 });
 export type Food = z.infer<typeof FoodSchema>; 

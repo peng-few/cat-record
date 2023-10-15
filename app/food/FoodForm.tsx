@@ -13,7 +13,7 @@ import FormControl from "@mui/material/FormControl"
 import MenuItem from "@mui/material/MenuItem"
 import SwipeableDrawer from "@mui/material/SwipeableDrawer"
 import { PhosUnitType } from './_consts/PhosUnitType'
-import { FoodFormRequestSchema,FoodFormRequest } from "./_consts/FoodFormRequestSchema"
+import { FoodFormRequestSchema,FoodFormRequest } from "./_db/schema/FoodFormRequestSchema"
 import { noop, objToSelectOptions, unitConverter } from "@/_lib"
 import { ValidateField, StyleForm, HorizontalFieldBox, Loading } from "@/_components"
 import { getUnitOptions } from "@/_consts/UnitType"
@@ -61,7 +61,7 @@ export const FoodForm = ({
       phosphorus: unitConverter.mgToPercentage(values?.phosphorus, values?.energy)
     };
     reset(defaultValues)
-  },[reset,values, energyTypeOptions])
+  }, [reset, values, energyTypeOptions])
 
   return (
     <SwipeableDrawer
@@ -210,6 +210,7 @@ export const FoodForm = ({
             </ValidateField>   
           </HorizontalFieldBox>
         </HorizontalFieldBox>
+        <input type="file" {...register('img')}/>
         <Button type="submit" sx={{ mx: 1 }} variant="contained" size="large">
           {submitText}
         </Button>

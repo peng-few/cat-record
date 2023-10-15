@@ -10,7 +10,7 @@ import ConfirmDialog from "@/_components/ConfirmDialog";
 import { simpleFetch } from "@/_lib";
 import { useRouter } from "next/navigation"
 import { StatusSnackbar,useSnackbar } from "@/_components/StatusSnackbar";
-import { Food } from "./_consts/FoodSchema";
+import { Food } from "./_db/schema/FoodSchema";
 import FoodEdit from "./FoodEdit";
 import { WithStringId } from '@/_types';
 

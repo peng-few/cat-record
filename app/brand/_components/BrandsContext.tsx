@@ -1,6 +1,6 @@
 'use client'
 import { ReactNode, createContext, useContext  } from 'react';
-import { Brand } from '../_consts/BrandSchema';
+import { Brand } from '../_db/schema/BrandSchema';
 import { WithStringId } from '@/_types';
 
 export const BrandsContext = createContext<WithStringId<Brand>[]|undefined>([]);

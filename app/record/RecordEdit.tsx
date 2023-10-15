@@ -7,7 +7,7 @@ import { StatusSnackbar,useSnackbar } from "@/_components/StatusSnackbar"
 import { useRouter } from "next/navigation"
 import RecordForm from "./RecordForm"
 import { DailyRecord } from "./_db/getRecords"
-import { RecordFormRequest } from "./_consts/RecordFormRequestSchema"
+import { RecordFormRequest } from "./_db/schema/RecordFormRequestSchema"
 
 export interface RecordEditProps {
   record: DailyRecord['list'][number]

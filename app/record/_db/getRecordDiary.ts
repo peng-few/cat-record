@@ -1,7 +1,7 @@
 import { unstable_cache } from 'next/cache'
 import { Collection } from '.'
 import { WithStringId, Pagination,Override } from '@/_types'
-import { Record } from '../_consts/RecordSchema'
+import { Record } from './schema/RecordSchema'
 import { type WithId } from 'mongodb'
 import objectIdToString from '@/_lib/obectIdToString'
 

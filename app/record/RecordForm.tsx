@@ -25,7 +25,7 @@ import { RecordStatusName } from "./_consts/RecordStatus"
 import { DateTimePicker} from "@mui/x-date-pickers"
 import dayjs from "dayjs"
 import { FoodTypeName } from "@/food/_consts/FoodType"
-import { RecordFormRequest, RecordFormRequestSchema } from "./_consts/RecordFormRequestSchema"
+import { RecordFormRequest, RecordFormRequestSchema } from "./_db/schema/RecordFormRequestSchema"
 
 export interface FoodFormProps {
   values?: Partial<RecordFormRequest>

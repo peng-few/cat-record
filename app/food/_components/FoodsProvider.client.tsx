@@ -1,6 +1,6 @@
 'use client'
 import { ReactNode, createContext, useContext  } from 'react';
-import { Food } from '../_consts/FoodSchema';
+import { Food } from '../_db/schema/FoodSchema';
 import { WithStringId } from '@/_types';
 
 export const FoodsContext = createContext<WithStringId<Food>[]|undefined>([]);

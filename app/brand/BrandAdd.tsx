@@ -7,7 +7,7 @@ import { StatusSnackbar,useSnackbar } from "@/_components/StatusSnackbar"
 import { useRouter } from "next/navigation"
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
 import FoodForm from "./BrandForm"
-import { Brand } from "./_consts/BrandSchema"
+import { Brand } from "./_db/schema/BrandSchema"
 
 export default function BrandAdd() {
   const {snackbarRef,snackbar} = useSnackbar()

@@ -1,4 +1,4 @@
-import { type MongoId } from "@/_consts/IdSchema"
+import { type MongoId } from "@/_types"
 import { WithStringId } from "@/_types"
 
 export function objectIdToString<TData extends { _id: MongoId }>

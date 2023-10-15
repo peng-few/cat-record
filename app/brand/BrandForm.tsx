@@ -6,7 +6,7 @@ import SwipeableDrawer from "@mui/material/SwipeableDrawer"
 import { noop } from "@/_lib"
 import { ValidateField, StyleForm, Loading } from "@/_components"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Brand,BrandSchema } from "./_consts/BrandSchema"
+import { Brand,BrandSchema } from "./_db/schema/BrandSchema"
 
 export interface FoodFormProps {
   values?: Partial<Brand>,

@@ -1,7 +1,7 @@
 import { unstable_cache } from 'next/cache'
 import { Collection } from "./Collection"
 import QueryBuilder from './QueryBuilder';
-import { Food } from '../_consts/FoodSchema';
+import { Food } from './schema/FoodSchema';
 import { type WithId } from 'mongodb';
 import objectIdToString from '@/_lib/obectIdToString';
 

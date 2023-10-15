@@ -2,7 +2,7 @@ import { Collection } from "../_db/Collection";
 import { errorResponse, successResponse } from "@/_lib";
 import { formatFormRequest } from "./recordFormatter";
 import { revalidateTag } from "next/cache";
-import { RecordFormRequestSchema } from "../_consts/RecordFormRequestSchema";
+import { RecordFormRequestSchema } from "../_db/schema/RecordFormRequestSchema";
 
 export async function POST(req: Request) {
   try {
