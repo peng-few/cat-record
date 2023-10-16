@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material/styles';
+import { alpha, createTheme } from '@mui/material/styles';
 
 // Create a theme instance.
 const theme = createTheme({
@@ -74,6 +74,15 @@ const theme = createTheme({
           fontSize: '0.875rem',
           borderRadius: '50px',
           padding:'4px 18px'
+        }
+      }
+    },
+    MuiTableBody: {
+      styleOverrides: {
+        root: {
+          '.MuiTableRow-root:hover': {
+            background: alpha('#ebaf1a',0.08)
+          }
         }
       }
     },

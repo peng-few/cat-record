@@ -14,8 +14,6 @@ import FoodListAction from "./FoodTableAction";
 import { getBrandPairs } from "@/brand/_db/getBrandPairs"
 import { getFoodsByBrand } from "./_db/getFoodsByBrand"
 import { FoodTypeName } from "./_consts/FoodType"
-import FocusedBox from "@/_components/FocusedBox/FocusedBox"
-import FocusedBoxProvider from "@/_components/FocusedBox/FocusedBoxProvider"
 import formatPagination from "@/_lib/formatPagination"
 import Link from "next/link"
 import Button  from "@mui/material/Button"
@@ -32,7 +30,6 @@ export default async function FoodTable({searchParams,}:PageProps) {
       <p className="my-3 text-sm">
         比例皆為乾物比
       </p>
-      <FocusedBoxProvider>
       {brandsFood?.map(brand => (
         <React.Fragment key={brand._id}>
           <Typography variant="h6">{brandPairs[brand._id]}</Typography>
@@ -41,6 +38,7 @@ export default async function FoodTable({searchParams,}:PageProps) {
               <TableHead>
                 <TableRow>
                   <TableCell size="small">品項</TableCell>
+                  <TableCell size="small"></TableCell>
                   <TableCell align="right" size="small">
                     代謝能
                     <span className="ps-1 text-stone-400">
@@ -78,21 +76,21 @@ export default async function FoodTable({searchParams,}:PageProps) {
               <Suspense fallback={<Loading/>}>
                 <TableBody>
                   {brand.foods.map((food) => (
-                    <FocusedBox
-                      component={TableRow}
+                    <TableRow
                       key={food._id}
-                      id={food._id}
                       sx={{ '& > *': { borderBottom: 'unset!important' } }}
                     >
-                      <TableCell size="medium" sx={{width: '150px'}}>
-                        {food.name} <span className="text-stone-400 text-xs">{FoodTypeName[food.type]}</span>
+                      <TableCell size="small" sx={{ pr: 0, width: '100px'}}>
                         {food.imgId && <Image
-                          src={getFileSrc(food.imgId)}
-                          alt={brandPairs[brand._id] + food.name}
-                          width={100}
-                          height={75}
-                          className="mt-1"
-                        />}
+                            src={getFileSrc(food.imgId)}
+                            alt={brandPairs[brand._id] + food.name}
+                            width={100}
+                            height={75}
+                            className="mt-1"
+                          />}
+                      </TableCell>
+                      <TableCell sx={{width: '120px'}}>
+                        {food.name} <span className="text-stone-400 text-xs block">{FoodTypeName[food.type]}</span>
                       </TableCell>
                       <TableCell align="right">{`${Math.round(food.energy)}`}</TableCell>
                       <TableCell align="right">{`${Math.round(food.carbonhydrate)}`}</TableCell>
@@ -107,7 +105,7 @@ export default async function FoodTable({searchParams,}:PageProps) {
                       <TableCell>
                         <FoodListAction food={food}/>
                       </TableCell>
-                    </FocusedBox>
+                    </TableRow>
                   ))}
                 </TableBody>
               </Suspense>   
@@ -115,7 +113,6 @@ export default async function FoodTable({searchParams,}:PageProps) {
           </TableContainer>
         </React.Fragment>
       ))}
-      </FocusedBoxProvider>
       {
           prevPage > 0 && (
             <Link href={`/record${prevPage == 1 ?'':'?page='+prevPage}`}>
