@@ -14,16 +14,19 @@ import FoodListAction from "./FoodTableAction";
 import { getBrandPairs } from "@/brand/_db/getBrandPairs"
 import { getFoodsByBrand } from "./_db/getFoodsByBrand"
 import { FoodTypeName } from "./_consts/FoodType"
-import { FocusedBox, FocusedBoxProvider } from "@/_components"
+import FocusedBox from "@/_components/FocusedBox/FocusedBox"
+import FocusedBoxProvider from "@/_components/FocusedBox/FocusedBoxProvider"
 import formatPagination from "@/_lib/formatPagination"
 import Link from "next/link"
 import Button  from "@mui/material/Button"
+import getFileSrc from "@/file/_lib/getFileSrc"
+import Image from "next/image"
 
-export default async function FoodTable({searchParams}:PageProps) {
+export default async function FoodTable({searchParams,}:PageProps) {
   const [brandPairs, foodsByBrand] = await Promise.all([getBrandPairs(), getFoodsByBrand(searchParams)])
   const { data: brandsFood, pagination } = foodsByBrand;
   const { prevPage, nextPage, maxPage } = formatPagination(pagination)
-  
+
   return (
     <>
       <p className="my-3 text-sm">
@@ -74,7 +77,7 @@ export default async function FoodTable({searchParams}:PageProps) {
               </TableHead>
               <Suspense fallback={<Loading/>}>
                 <TableBody>
-                  {brand.foods.map((food,idx) => (
+                  {brand.foods.map((food) => (
                     <FocusedBox
                       component={TableRow}
                       key={food._id}
@@ -82,7 +85,14 @@ export default async function FoodTable({searchParams}:PageProps) {
                       sx={{ '& > *': { borderBottom: 'unset!important' } }}
                     >
                       <TableCell size="medium" sx={{width: '150px'}}>
-                        {food.name} <span className="text-stone-400 text-xs">{ FoodTypeName[food.type] }</span>
+                        {food.name} <span className="text-stone-400 text-xs">{FoodTypeName[food.type]}</span>
+                        {food.imgId && <Image
+                          src={getFileSrc(food.imgId)}
+                          alt={brandPairs[brand._id] + food.name}
+                          width={100}
+                          height={75}
+                          className="mt-1"
+                        />}
                       </TableCell>
                       <TableCell align="right">{`${Math.round(food.energy)}`}</TableCell>
                       <TableCell align="right">{`${Math.round(food.carbonhydrate)}`}</TableCell>

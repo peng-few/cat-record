@@ -8,7 +8,6 @@ import { zSingleImage } from "@/_lib";
 export const FoodFormRequestSchema = FoodSchema
   .omit({
     carbonhydrate: true,
-    imgId: true
   })
   .extend({
     phosUnit: PhosUnitType.optional(),

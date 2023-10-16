@@ -1,13 +1,16 @@
 import { isMgPerKalorieUnit} from '@/_consts/UnitType';
-import { Food } from '../_consts/FoodSchema';
+import { Food } from '../_db/schema/FoodSchema';
 import { EnergyType, isME } from "../_consts/EnergyType";
 import { PhosUnitType } from '../_consts/PhosUnitType';
-import { FoodFormRequest } from '../_consts/FoodFormRequestSchema';
+import { FoodFormRequest } from '../_db/schema/FoodFormRequestSchema';
 import calcaluteCarbohydrate from "@/calculate/calculateCarbohydrate";
 import calculateME from "@/calculate/calculateME";
 import unitConverter from "@/_lib/unitConverter";
 import { FilterNumberType, Formatter } from "@/_types/types";
-import { OptionalId } from 'mongodb';
+import { type OptionalId } from 'mongodb';
+import uploadFile from '@/file/_db/uploadFile';
+import sharp from 'sharp';
+import { deleteFile } from '@/file/_db/deleteFile';
 
 export class FoodFormatter implements Formatter<OptionalId<Food>> {
   data;
@@ -47,9 +50,28 @@ export class FoodFormatter implements Formatter<OptionalId<Food>> {
     this.data[name] = unitConverter.percentageToMg(this.data[name], this.data.energy)
     return this
   }
+
+  async refreshImg(img?:File) {
+    if (!img) return this
+
+    const [id]= await Promise.all([
+      uploadFile(img, (buffer) => {
+        return sharp(buffer)
+          .resize({
+            width: 200,
+            height: 150,
+            fit: sharp.fit.cover,
+          })
+          .toBuffer()
+      }),
+      deleteFile(this.data.imgId)
+    ])
+
+    this.data.imgId = id.toHexString()
+  }
 }
 
-export const formatFormRequest = ({ phosUnit, energyType, ...postData }:FoodFormRequest) => {
+export const formatFormRequest = async ({ phosUnit, energyType,img, ...postData }:FoodFormRequest) => {
   const foodFormatter = new FoodFormatter(postData)
   foodFormatter.setPhosphorusBaseMgPerKcal(phosUnit)
     .setInMgPerKcal("calcium")
@@ -59,6 +81,9 @@ export const formatFormRequest = ({ phosUnit, energyType, ...postData }:FoodForm
     .setInDryBasis("fat")
     .setInDryBasis("protein")
     .setInDryBasis("fiber")
+  
+  await foodFormatter.refreshImg(img)
+
 
   return foodFormatter.data
 }

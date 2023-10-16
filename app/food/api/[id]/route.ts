@@ -1,8 +1,10 @@
 import { errorResponse, successResponse } from "@/_lib"
 import { Collection } from '../../_db/Collection'
-import { formatFormRequest } from "../foodFormatter"
-import { FoodFormRequestSchema } from "@/food/_consts/FoodFormRequestSchema"
+import { FoodFormatter, formatFormRequest } from "../foodFormatter"
+import { FoodFormRequestSchema } from "@/food/_db/schema/FoodFormRequestSchema"
 import { revalidateTag } from "next/cache"
+import getFood from "@/food/_db/getFood"
+import { deleteFile } from "@/file/_db/deleteFile"
 
 export interface Params {
   params: {
@@ -12,7 +14,12 @@ export interface Params {
 
 export async function DELETE(req: Request, { params: { id } }: Params) { 
   try {
-    await Collection.deleteData(id)
+    const deleteImg = async (id:string) => {
+      const food = await getFood(id)
+      return deleteFile(food?.imgId)
+    }
+
+    await Promise.all([deleteImg(id),Collection.deleteData(id)])
     revalidateTag('foods')
     return successResponse()
   } catch (msg) {
@@ -22,9 +29,9 @@ export async function DELETE(req: Request, { params: { id } }: Params) {
 
 export async function PUT(req: Request, { params: { id } }: Params) { 
   try {
-    const json = await req.json()
-    const parsedData = FoodFormRequestSchema.parse(json)
-    const data = formatFormRequest(parsedData)
+    const formData = await req.formData()
+    const parsedData = FoodFormRequestSchema.parse(Object.fromEntries(formData.entries()))
+    const data = await formatFormRequest(parsedData)
     await Collection.updateData(id,data)
     revalidateTag('foods')
     return successResponse({data})

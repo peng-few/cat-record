@@ -3,17 +3,20 @@ import { Collection } from '../_db/Collection';
 import { errorResponse, successResponse } from '@/_lib';
 import { formatFormRequest } from "./foodFormatter";
 import { revalidateTag } from "next/cache";
-import { FoodFormRequestSchema } from '../_consts/FoodFormRequestSchema';
+import { FoodFormRequestSchema } from '../_db/schema/FoodFormRequestSchema';
+import { NextRequest } from 'next/server';
 
-export async function POST(req: Request) { 
+export async function POST(req: NextRequest) { 
   try {
-    const json = await req.json()
-    const parsedData = FoodFormRequestSchema.parse(json)
-    const data = formatFormRequest(parsedData)
-    await Collection.addData(data)
+    const formData = await req.formData()
+    const parsedData = FoodFormRequestSchema.parse(Object.fromEntries(formData.entries()))
+    const formatData = await formatFormRequest(parsedData)
+
+    await Collection.addData(formatData)
     revalidateTag('foods')
-    return successResponse({data})
+    return successResponse({data: formatData})
   } catch (msg) {
+    console.log(msg)
     return errorResponse({msg})
   }
 }

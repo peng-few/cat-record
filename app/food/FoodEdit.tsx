@@ -9,6 +9,7 @@ import FoodForm from "./FoodForm"
 import { Food } from "./_db/schema/FoodSchema" 
 import { unitConverter } from "@/_lib"
 import { WithStringId } from "@/_types"
+import objToFormData from "@/_lib/objToFormData"
 
 export interface FoodEditProps{
   food?: WithStringId<Food>,
@@ -32,7 +33,8 @@ function FoodEdit({food,onClose: closeForm, open:formOpen}:FoodEditProps) {
 
   const submitForm: SubmitHandler<FoodFormRequest> = async (data) => {
     setLoading(true)
-    const { success } = await simpleFetch.put(`/food/api/${food?._id}`, data)
+    const formData = objToFormData(data);
+    const { success } = await simpleFetch.put(`/food/api/${food?._id}`, formData)
     if (success) {
       snackbar?.success({msg: '新增成功'})
       router.refresh()

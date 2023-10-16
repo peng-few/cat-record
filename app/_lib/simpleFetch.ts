@@ -2,12 +2,13 @@ import { AnyObject } from "../_types/types"
 import { Response } from './apiResponse'
 
 
-const baseURL = process.env.BASE_URL || ''
+const baseURL = process.env.HOST || ''
 
 export const simpleFetch = {
-  post(url:string,data?:AnyObject,configs?:AnyObject): Promise<Response> {
+  post(url: string, data?: AnyObject | FormData, configs?: AnyObject): Promise<Response> {
+    const body = data instanceof FormData ? data : JSON.stringify(data);
     return fetch(baseURL+url, {
-      body: JSON.stringify(data),
+      body,
       method: "POST",
       ...configs
     }).then(res => res.json())
@@ -20,9 +21,10 @@ export const simpleFetch = {
     return fetch(baseURL+url,configs).then(res => res.json())
   },
 
-  put(url:string,data?:AnyObject,configs?:AnyObject): Promise<Response> {
+  put(url: string, data?: AnyObject, configs?: AnyObject): Promise<Response> {
+    const body = data instanceof FormData ? data : JSON.stringify(data);
     return fetch(baseURL+url, {
-      body: JSON.stringify(data),
+      body,
       method: "PUT",
       ...configs
     }).then(res => res.json())
