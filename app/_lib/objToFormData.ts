@@ -6,7 +6,7 @@ export const objToFormData = (obj:AnyObject) => {
     const value = obj[key]
     if (value instanceof Array) {
       value.forEach(arrValue => formData.append(key,arrValue))
-    } else {
+    } else if(typeof value !== 'undefined'){
       formData.append(key,obj[key])
     }
   });

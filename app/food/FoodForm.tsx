@@ -57,8 +57,8 @@ export const FoodForm = ({
       type: FoodType.enum.Compelete,
       brand: '',
       ...values,
-      calcium: unitConverter.mgToPercentage(values?.calcium, values?.energy),
-      phosphorus: unitConverter.mgToPercentage(values?.phosphorus, values?.energy)
+      calcium: values?.calcium && unitConverter.mgToPercentage(values?.calcium, values?.energy),
+      phosphorus:  values?.phosphorus && unitConverter.mgToPercentage(values?.phosphorus, values?.energy)
     };
     reset(defaultValues)
   }, [reset, values, energyTypeOptions])

@@ -8,8 +8,17 @@ export const zToNumber = (message = "請輸入數字??") =>
     .pipe(z.coerce.number({ invalid_type_error: "請輸入數字" }))
 
 export const zToNumberOptional = () => z.number()
-  .or(z.string())
-  .pipe(z.coerce.number({ invalid_type_error: "請輸入數字" }))
+  .or(z.string().transform((val,ctx) => {
+    if (!val) return undefined
+    if (isNaN(Number(val))) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Not a number",
+      });
+      return z.NEVER;
+    }
+    return Number(val)
+  })).optional()
 
 export const zToDate = () => z.date().or(z.string()).pipe(z.coerce.date({invalid_type_error: '請輸入正確時間'})) 
 

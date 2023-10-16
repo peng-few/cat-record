@@ -6,7 +6,7 @@ import TableRow from "@mui/material/TableRow"
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 import TableBody from '@mui/material/TableBody';
-import { toDecimalPlace } from "@/_lib"
+import { notExist, toDecimalPlace } from "@/_lib"
 import { PageProps } from "@/_types"
 import React, { Suspense } from "react"
 import { Loading } from "@/_components/Loading"
@@ -97,10 +97,12 @@ export default async function FoodTable({searchParams,}:PageProps) {
                       <TableCell align="right">{`${Math.round(food.protein)}`}</TableCell>
                       <TableCell align="right">{`${Math.round(food.fat)}`}</TableCell>
                       <TableCell align="right">
-                      {`${Math.round(food.phosphorus)}`}
+                       { notExist(food.phosphorus) ? '-' : `${Math.round(food.phosphorus)}`}
                       </TableCell>
                       <TableCell align="right">
-                      {`${food.phosphorus && food.calcium && toDecimalPlace(food.calcium/food.phosphorus, 1)}`}
+                        {(notExist(food.phosphorus) || notExist(food.calcium))
+                          ? '-'
+                          : `${toDecimalPlace(food.calcium/food.phosphorus, 1)}`}
                       </TableCell>
                       <TableCell>
                         <FoodListAction food={food}/>

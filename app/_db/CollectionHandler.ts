@@ -29,11 +29,9 @@ export class CollectionHandler<TEntity extends BSON.Document> {
   async updateData(id: string, data: TEntity) {
     const collection = await this.getCollection()
     const query = { _id: new ObjectId(id) } as Filter<TEntity>
-    return collection.updateOne(
+    return collection.replaceOne(
       query,
-      {
-        $set: data,
-      },
+      data,
     );
   }
 

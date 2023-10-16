@@ -41,13 +41,19 @@ export class FoodFormatter implements Formatter<OptionalId<Food>> {
   }
 
   setInDryBasis(name: FilterNumberType<Food>) {
-    this.data[name] = this.toDryMatterBasis(this.data[name])
+    const value = this.data[name]
+    if (typeof value !== 'number') return this
+
+    this.data[name] = this.toDryMatterBasis(value)
     
     return this
   }
 
   setInMgPerKcal(name: FilterNumberType<Food>) {
-    this.data[name] = unitConverter.percentageToMg(this.data[name], this.data.energy)
+    const value = this.data[name]
+    if (typeof value !== 'number') return this
+  
+    this.data[name] = unitConverter.percentageToMg(value, this.data.energy)
     return this
   }
 

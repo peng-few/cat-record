@@ -32,7 +32,7 @@ export interface PageProps {
 }
 
 export type FilterNumberType<Obj extends NoSymbolKeyObject> = 
-  { [K in keyof Required<Obj>]: Obj[K] extends number ? K : never }[keyof Obj]
+  { [K in keyof Required<Obj>]: number extends Obj[K] ? K : never }[keyof Obj]
 
 export type WithStringId<TData> = Omit<TData, '_id'> & { _id: string }
 
