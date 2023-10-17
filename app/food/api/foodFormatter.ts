@@ -79,9 +79,9 @@ export class FoodFormatter implements Formatter<OptionalId<Food>> {
 
 export const formatFormRequest = async ({ phosUnit, energyType,img, ...postData }:FoodFormRequest) => {
   const foodFormatter = new FoodFormatter(postData)
-  foodFormatter.setPhosphorusBaseMgPerKcal(phosUnit)
+  foodFormatter.setEnergyBaseME(energyType)
+    .setPhosphorusBaseMgPerKcal(phosUnit)
     .setInMgPerKcal("calcium")
-    .setEnergyBaseME(energyType)
     .setInDryBasis("ash")
     .setInDryBasis("carbonhydrate")
     .setInDryBasis("fat")

@@ -78,7 +78,7 @@ export default async function FoodTable({searchParams,}:PageProps) {
                   {brand.foods.map((food) => (
                     <TableRow
                       key={food._id}
-                      sx={{ '& > *': { borderBottom: 'unset!important' } }}
+                      sx={{ '&:last-child > *': { borderBottom: 'unset!important' } }}
                     >
                       <TableCell size="small" sx={{ pr: 0, width: '100px'}}>
                         {food.imgId && <Image
@@ -89,7 +89,7 @@ export default async function FoodTable({searchParams,}:PageProps) {
                             className="mt-1"
                           />}
                       </TableCell>
-                      <TableCell sx={{width: '120px'}}>
+                      <TableCell sx={{width: '130px',pr: 0}}>
                         {food.name} <span className="text-stone-400 text-xs block">{FoodTypeName[food.type]}</span>
                       </TableCell>
                       <TableCell align="right">{`${Math.round(food.energy)}`}</TableCell>
