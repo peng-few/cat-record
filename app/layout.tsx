@@ -1,7 +1,3 @@
-import '@fontsource/roboto/300.css'
-import '@fontsource/roboto/400.css'
-import '@fontsource/roboto/500.css'
-import '@fontsource/roboto/700.css'
 import './globals.css'
 import type { Metadata } from 'next'
 import ThemeRegistry from './_layout/theme/ThemeRegistry'
@@ -19,6 +15,8 @@ import NavbarList, { NavbarItemProps } from './_layout/NavbarList'
 import { PageProps } from './_types'
 import getUrlOnServer from "@/_lib/getUrlOnServer"
 import { WebSite, WithContext } from 'schema-dts'
+
+ 
 const websiteSchema: WithContext<WebSite> = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
