@@ -32,7 +32,7 @@ export default async function FoodTable({searchParams,}:PageProps) {
       </p>
       {brandsFood?.map(brand => (
         <React.Fragment key={brand._id}>
-          <Typography variant="h6">{brandPairs[brand._id]}</Typography>
+          <Typography variant="h2">{brandPairs[brand._id]}</Typography>
           <TableContainer component={Paper} variant="outlined" sx={{ mb: 5 }}>
             <Table sx={{ minWidth: 650, '.MuiTableCell-head': {fontSize: '0.75rem',position: 'sticky'} }}>
               <TableHead>
@@ -89,8 +89,10 @@ export default async function FoodTable({searchParams,}:PageProps) {
                             className="mt-1"
                           />}
                       </TableCell>
-                      <TableCell sx={{width: '130px',pr: 0}}>
-                        {food.name} <span className="text-stone-400 text-xs block">{FoodTypeName[food.type]}</span>
+                      <TableCell sx={{ width: '130px', pr: 0 }}>
+                        <h3>
+                          {food.name} <span className="text-stone-400 text-xs block">{FoodTypeName[food.type]}</span>
+                        </h3>   
                       </TableCell>
                       <TableCell align="right">{`${Math.round(food.energy)}`}</TableCell>
                       <TableCell align="right">{`${Math.round(food.carbonhydrate)}`}</TableCell>
