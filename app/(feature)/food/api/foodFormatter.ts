@@ -8,9 +8,9 @@ import calculateME from "@/calculate/calculateME";
 import unitConverter from "@/_lib/unitConverter";
 import { FilterNumberType, Formatter } from "@/_types/types";
 import { type OptionalId } from 'mongodb';
-import uploadFile from '@/file/_db/uploadFile';
+import uploadFile from '@/(feature)/file/_db/uploadFile';
 import sharp from 'sharp';
-import { deleteFile } from '@/file/_db/deleteFile';
+import { deleteFile } from '@/(feature)/file/_db/deleteFile';
 
 export class FoodFormatter implements Formatter<OptionalId<Food>> {
   data;

@@ -1,8 +1,8 @@
 import { toDecimalPlace } from "@/_lib";
 import { Formatter } from "@/_types/types";
 import { Record } from "../_db/schema/RecordSchema";
-import getFood from "@/food/_db/getFood";
-import { Food } from "@/food/_consts/FoodSchema";
+import getFood from "@/(feature)/food/_db/getFood";
+import { Food } from "@/(feature)/food/_consts/FoodSchema";
 import dayjs from "dayjs";
 import { type WithId } from 'mongodb'
 import { RecordFormRequest } from "../_db/schema/RecordFormRequestSchema";

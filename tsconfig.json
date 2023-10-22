@@ -35,7 +35,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "jest.setup.js",
-    "theme.d.ts"
+    "_types/theme.d.ts",
+    "_types/next-auth.d.ts"
   ],
   "exclude": [
     "node_modules"

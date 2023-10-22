@@ -1,7 +1,7 @@
-import BrandsProvider from "@/brand/_components/BrandsProvider";
+import BrandsProvider from "@/(feature)/brand/_components/BrandsProvider";
 import Typography from "@mui/material/Typography";
 import RecordAdd from "./RecordAdd";
-import FoodsProvider from "@/food/_components/FoodsProvider";
+import FoodsProvider from "@/(feature)/food/_components/FoodsProvider";
 import RecordTable from "./RecordTable";
 import { Suspense } from "react";
 import { Loading } from "@/_components/Loading";

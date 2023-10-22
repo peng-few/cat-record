@@ -1,10 +1,10 @@
 import { errorResponse, successResponse } from "@/_lib"
 import { Collection } from '../../_db/Collection'
 import { FoodFormatter, formatFormRequest } from "../foodFormatter"
-import { FoodFormRequestSchema } from "@/food/_db/schema/FoodFormRequestSchema"
+import { FoodFormRequestSchema } from "@/(feature)/food/_db/schema/FoodFormRequestSchema"
 import { revalidateTag } from "next/cache"
-import getFood from "@/food/_db/getFood"
-import { deleteFile } from "@/file/_db/deleteFile"
+import getFood from "@/(feature)/food/_db/getFood"
+import { deleteFile } from "@/(feature)/file/_db/deleteFile"
 
 export interface Params {
   params: {

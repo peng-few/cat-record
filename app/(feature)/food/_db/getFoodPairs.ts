@@ -1,6 +1,6 @@
 import { unstable_cache } from 'next/cache'
 import { getFoods } from './getFoods';
-import { getBrandPairs } from '@/brand/_db/getBrandPairs';
+import { getBrandPairs } from '@/(feature)/brand/_db/getBrandPairs';
 
 export const getFoodPairs = unstable_cache(async () => {
   const [foods, brandPairs] = await Promise.all([

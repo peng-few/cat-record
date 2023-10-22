@@ -1,4 +1,3 @@
-// app/ThemeRegistry.tsx
 'use client';
 import createCache,{Options} from '@emotion/cache';
 import { useServerInsertedHTML } from 'next/navigation';

@@ -14,8 +14,8 @@ import {
   HorizontalFieldBox,
   Loading,
 } from "@/_components"
-import { useFoods } from "@/food/_components/FoodsProvider.client"
-import { useBrands } from "@/brand/_components/BrandsContext"
+import { useFoods } from "@/(feature)/food/_components/FoodsProvider.client"
+import { useBrands } from "@/(feature)/brand/_components/BrandsContext"
 import { zodResolver } from "@hookform/resolvers/zod"
 import RadioGroup from "@mui/material/RadioGroup"
 import Radio from "@mui/material/Radio"
@@ -24,7 +24,7 @@ import FormControlLabel from "@mui/material/FormControlLabel"
 import { RecordStatusName } from "./_consts/RecordStatus"
 import { DateTimePicker} from "@mui/x-date-pickers"
 import dayjs from "dayjs"
-import { FoodTypeName } from "@/food/_consts/FoodType"
+import { FoodTypeName } from "@/(feature)/food/_consts/FoodType"
 import { RecordFormRequest, RecordFormRequestSchema } from "./_db/schema/RecordFormRequestSchema"
 
 export interface FoodFormProps {

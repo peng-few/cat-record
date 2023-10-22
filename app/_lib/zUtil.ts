@@ -1,5 +1,5 @@
 import { MongoId } from "@/_types"
-import { MAX_FILE_SIZE, isValidImage, isValidFile } from "@/file/_lib/fileValidation"
+import { MAX_FILE_SIZE, isValidImage, isValidFile } from "@/(feature)/file/_lib/fileValidation"
 import { z } from "zod"
 
 export const zToNumber = (message = "請輸入數字??") =>

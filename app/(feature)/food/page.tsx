@@ -1,6 +1,6 @@
 import FoodAdd from "./FoodAdd"
 import FoodTable from "./FoodTable"
-import BrandsProvider from "@/brand/_components/BrandsProvider"
+import BrandsProvider from "@/(feature)/brand/_components/BrandsProvider"
 import Typography from "@mui/material/Typography"
 import MenuItem from "@mui/material/MenuItem"
 import Box from "@mui/material/Box"
@@ -20,7 +20,10 @@ import TuneIcon from "@mui/icons-material/Tune"
 import ParamLink from "./_components/ParamLink"
 import { SearchParamType, getParamNames } from "./_consts/SearchParam"
 import { getFoodsByBrand } from "./_db/getFoodsByBrand"
-import { getBrandPairs } from "@/brand/_db/getBrandPairs"
+import { getBrandPairs } from "@/(feature)/brand/_db/getBrandPairs"
+import { isAdmin } from "@/auth/_db/schema/UserSchema"
+import { getUserSession } from "@/auth/_lib/getUserSession"
+
 
 export interface FoodPageProps extends PageProps{
   searchParams: { [key in SearchParamType|'page']?: string | string[]}
@@ -63,6 +66,7 @@ export default async function FoodPage({ searchParams }: FoodPageProps) {
   const { type } = searchParams
   const foodTypeName = foodTypeToName(type)
   const urlParams = toUrlSearchParams(searchParams)
+  const session = await getUserSession()
 
   return (
     <div className="py-4 px-6">
@@ -70,7 +74,7 @@ export default async function FoodPage({ searchParams }: FoodPageProps) {
         <Typography className="pb-3" variant="h1">
           {title}
         </Typography>
-        <FoodAdd />
+        {isAdmin(session?.user.role) && <FoodAdd />}
         <Box sx={{ ".MuiChip-root": { mr: 0.6 } }}>
           <div className="inline-flex text-stone-500 text-sm mr-2 items-center align-middle">
             <TuneIcon sx={{ fontSize: "14px", mb: 0.2 }} /> 條件篩選
@@ -108,7 +112,7 @@ export default async function FoodPage({ searchParams }: FoodPageProps) {
           <ParamLink type="fishmeat" value="0" urlParams={urlParams} />
         </Box>
         <Suspense fallback={<Loading />}>
-          <FoodTable searchParams={searchParams} />
+          <FoodTable searchParams={searchParams} session={session} />
         </Suspense>
       </BrandsProvider>
     </div>

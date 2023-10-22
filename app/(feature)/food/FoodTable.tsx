@@ -11,16 +11,21 @@ import { PageProps } from "@/_types"
 import React, { Suspense } from "react"
 import { Loading } from "@/_components/Loading"
 import FoodListAction from "./FoodTableAction";
-import { getBrandPairs } from "@/brand/_db/getBrandPairs"
+import { getBrandPairs } from "@/(feature)/brand/_db/getBrandPairs"
 import { getFoodsByBrand } from "./_db/getFoodsByBrand"
 import { FoodTypeName } from "./_consts/FoodType"
 import formatPagination from "@/_lib/formatPagination"
 import Link from "next/link"
 import Button  from "@mui/material/Button"
-import getFileSrc from "@/file/_lib/getFileSrc"
+import getFileSrc from "@/(feature)/file/_lib/getFileSrc"
 import Image from "next/image"
+import { isAdmin } from "@/auth/_db/schema/UserSchema"
+import { type Session } from "next-auth"
 
-export default async function FoodTable({searchParams,}:PageProps) {
+export interface FoodTableProps extends PageProps{
+  session: Session|null
+}
+export default async function FoodTable({searchParams, session}:FoodTableProps) {
   const [brandPairs, foodsByBrand] = await Promise.all([getBrandPairs(), getFoodsByBrand(searchParams)])
   const { data: brandsFood, pagination } = foodsByBrand;
   const { prevPage, nextPage, maxPage } = formatPagination(pagination)
@@ -107,7 +112,7 @@ export default async function FoodTable({searchParams,}:PageProps) {
                           : `${toDecimalPlace(food.calcium/food.phosphorus, 1)}`}
                       </TableCell>
                       <TableCell>
-                        <FoodListAction food={food}/>
+                        {isAdmin(session?.user.role) && <FoodListAction food={food}/>}
                       </TableCell>
                     </TableRow>
                   ))}

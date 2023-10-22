@@ -17,7 +17,7 @@ import { FoodFormRequestSchema,FoodFormRequest } from "./_db/schema/FoodFormRequ
 import { noop, objToSelectOptions, unitConverter } from "@/_lib"
 import { ValidateField, StyleForm, HorizontalFieldBox, Loading } from "@/_components"
 import { getUnitOptions } from "@/_consts/UnitType"
-import { useBrands } from "@/brand/_components/BrandsContext"
+import { useBrands } from "@/(feature)/brand/_components/BrandsContext"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 export interface FoodFormProps {
