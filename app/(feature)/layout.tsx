@@ -75,11 +75,6 @@ export const menus: NavbarItemProps[] = [
     path: "/brand",
     Icon: StorefrontOutlinedIcon,
   },
-  {
-    name: "成分計算",
-    path: "/calculator",
-    Icon: CalculateOutlinedIcon,
-  },
 ]
 
 export default async function RootLayout({

@@ -1,30 +1,34 @@
 "use client"
 import { useForm, SubmitHandler } from "react-hook-form"
-import { ReactNode, useEffect } from "react"
+import { ReactNode, useEffect, useMemo } from "react"
 import Button from "@mui/material/Button"
 import SwipeableDrawer from "@mui/material/SwipeableDrawer"
-import { noop } from "@/_lib"
+import { noop, objToSelectOptions } from "@/_lib"
 import { ValidateField, StyleForm, Loading } from "@/_components"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Brand,BrandSchema } from "./_db/schema/BrandSchema"
+import { Brand, BrandSchema } from "./_db/schema/BrandSchema"
+import { RegionTypeName } from "./_consts/RegionType"
+import MenuItem from "@mui/material/MenuItem"
+import { getCsrfToken } from "next-auth/react"
 
-export interface FoodFormProps {
-  values?: Partial<Brand>,
-  onSubmit: SubmitHandler<Brand>,
-  onClose: () => void,
-  submitText: ReactNode,
-  loading: boolean,
-  open: boolean,
+export interface BrandFormProps {
+  values?: Partial<Brand>
+  onSubmit: SubmitHandler<Brand>
+  onClose: () => void
+  submitText: ReactNode
+  loading: boolean
+  open: boolean
 }
 
-export const FoodForm = ({
+export const BrandForm = ({
   onClose,
   values,
   onSubmit: submitForm,
-  submitText='',
+  submitText = "",
   loading = false,
   open = false,
-}: FoodFormProps) => {
+}: BrandFormProps) => {
+  const regionOptions = useMemo(() => objToSelectOptions(RegionTypeName), [])
   const {
     register,
     handleSubmit,
@@ -32,15 +36,15 @@ export const FoodForm = ({
     reset,
     formState: { errors },
   } = useForm<Brand>({
-    resolver: zodResolver(BrandSchema)
+    resolver: zodResolver(BrandSchema),
   })
 
   useEffect(() => {
     const defaultValues = {
-      ...values
-    };
+      ...values,
+    }
     reset(defaultValues)
-  },[reset,values])
+  }, [reset, values])
 
   return (
     <SwipeableDrawer
@@ -54,19 +58,44 @@ export const FoodForm = ({
     >
       <StyleForm onSubmit={handleSubmit(submitForm)}>
         <ValidateField<Brand>
-            label="品牌"
-            className="flex-grow"
-            field="name"
-            errors={errors}
-            {...register("name", { required: true })}
-          />
-          <Button type="submit" sx={{ mx: 1 }} variant="contained" size="large">
-            {submitText}
-          </Button>
+          label="品牌"
+          className="flex-grow"
+          field="name"
+          errors={errors}
+          {...register("name", { required: true })}
+        />
+        <ValidateField<Brand>
+          select
+          className="flex-grow"
+          label="地域"
+          field="region"
+          value={watch("region")}
+          errors={errors}
+          {...register("region")}
+        >
+          {regionOptions?.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </ValidateField>
+        <ValidateField<Brand>
+          label="說明"
+          className="flex-grow"
+          field="remark"
+          errors={errors}
+          multiline
+          rows={2}
+          maxRows={4}
+          {...register("remark", { required: true })}
+        />
+        <Button type="submit" sx={{ mx: 1 }} variant="contained" size="large">
+          {submitText}
+        </Button>
       </StyleForm>
-      <Loading loading={loading}/>
+      <Loading loading={loading} />
     </SwipeableDrawer>
   )
 }
 
-export default FoodForm
+export default BrandForm

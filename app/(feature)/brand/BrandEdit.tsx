@@ -1,56 +1,45 @@
 "use client"
 import { SubmitHandler } from "react-hook-form"
 import { useState } from "react"
-import Button from "@mui/material/Button"
 import  simpleFetch from '@/_lib/simpleFetch'
 import { StatusSnackbar,useSnackbar } from "@/_components/StatusSnackbar"
 import { useRouter } from "next/navigation"
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
 import BrandForm from "./BrandForm"
 import { Brand } from "./_db/schema/BrandSchema"
+import { useBrandEdit } from "./BrandEditProvider"
 
-export default function BrandAdd() {
-  const {snackbarRef,snackbar} = useSnackbar()
+export default function BrandEdit() {
+  const { snackbarRef, snackbar } = useSnackbar()
   const [loading,setLoading] = useState(false)
   const [formOpen, setFormOpen] = useState(false)
+  const { brandEdit,setBrandEdit } = useBrandEdit()
   const router = useRouter()
 
-  const closeForm = () => {
-    setFormOpen(false)
-  }
-
-  const openForm = () => {
-    setFormOpen(true)
+  const cancelEdit = () => {
+    setBrandEdit({open: false})
   }
 
   const submitForm: SubmitHandler<Brand> = async (data) => {
     setLoading(true)
-    const { success } = await simpleFetch.post('/brand/api', data)
+    const { success } = await simpleFetch.put(`/brand/api/${brandEdit.brand?._id}`, data)
     if (success) {
-      snackbar?.success({msg: '新增成功'})
+      snackbar?.success({msg: '編輯成功'})
       router.refresh()
-      closeForm();
+      cancelEdit();
     } else {
-      snackbar?.error({msg: '新增失敗'})
+      snackbar?.error({msg: '編輯失敗'})
     }
     setLoading(false)
   }
 
   return (
     <>
-      <Button
-        className="mb-4"
-        variant="contained"
-        onClick={openForm}
-        startIcon={<AddOutlinedIcon />}
-      >
-        新增品項
-      </Button>
       <BrandForm
-        open={formOpen}
-        onClose={closeForm}
+        values={brandEdit.brand}
+        open={brandEdit.open}
+        onClose={cancelEdit}
         onSubmit={submitForm}
-        submitText="新增"
+        submitText="儲存"
         loading={loading}
       />
       <StatusSnackbar ref={snackbarRef}/>

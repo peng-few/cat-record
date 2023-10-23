@@ -2,7 +2,7 @@ import { errorResponse, successResponse } from "@/_lib"
 import { Collection } from '../../_db'
 import { formatFormRequest } from "../recordFormatter"
 import { revalidateTag } from "next/cache"
-import { RecordFormRequestSchema } from "@/record/_consts/RecordFormRequestSchema"
+import { RecordFormRequestSchema } from "../../_db/schema/RecordFormRequestSchema"
 
 export interface Params {
   params: {

@@ -22,6 +22,7 @@ export type SearchParamType = keyof typeof SearchParam
 
 export const getParamNames = (params: { [key in SearchParamType]?: string | string[]}) => {
   const paramNames = (Object.keys(params) as SearchParamType[]).reduce((accu, param) => {
+    if(!SearchParam[param]) return accu
     return {
       ...accu,
       [param]: getObjValueFromKey(SearchParam[param])(params[param])
