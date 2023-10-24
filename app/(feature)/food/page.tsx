@@ -7,7 +7,7 @@ import Box from "@mui/material/Box"
 import CheckCircleIcon from "@mui/icons-material/CheckCircle"
 import { FoodTypeName, foodTypeToName } from "./_consts/FoodType"
 import { PageProps } from "@/_types"
-import { Suspense } from "react"
+import { Suspense, cache } from "react"
 import { Loading } from "@/_components/Loading"
 import ChipMenu from "@/_components/ChipMenu"
 import objToSelectOptions from "@/_lib/objToSelectOptions"
@@ -29,26 +29,35 @@ export interface FoodPageProps extends PageProps{
   searchParams: { [key in SearchParamType|'page']?: string | string[]}
 }
 
-export const getFoodParamLabel = (searchParams: FoodPageProps["searchParams"]) => {
+export const getFoodParamLabel = cache(async (searchParams: FoodPageProps["searchParams"]) => {
   const detail = getParamNames(searchParams)
   const { type = '', phosphorus = '', fishmeat = '', protein = '', carbon = '' } = detail;
+  const [brandPairs, { data: brands }] = await Promise.all([getBrandPairs(), getFoodsByBrand(searchParams)])
+  const brandNames = brands?.map(brand => brandPairs[brand._id]).join('、')
+  const brandTitleLabel = searchParams.brand ? brandNames : ''
   
   return {
-    title: `${phosphorus}${protein}${carbon}${fishmeat}貓${type || "罐頭/乾飼料"}成份一覽`,
-    detail,
+    title: `${phosphorus}${protein}${carbon}${fishmeat}${brandTitleLabel}貓${type || "罐頭/乾飼料"}成份一覽`,
+    detail: {
+      type,
+      phosphorus,
+      fishmeat,
+      protein,
+      carbon,
+      brandNames,
+    },
   }
-}
+})
 
 export async function generateMetadata(
   { searchParams }: FoodPageProps,
 ): Promise<Metadata> {
-  const { title, detail } = getFoodParamLabel(searchParams)
-  const { type = '', phosphorus = '', fishmeat = '', protein = '', carbon = '' } = detail;
+  const { title, detail } = await getFoodParamLabel(searchParams)
+  const { type, phosphorus , fishmeat, protein, carbon, brandNames } = detail;
   const adjective = phosphorus + protein + carbon + fishmeat
-  const [brandPairs, { data: brands }] = await Promise.all([getBrandPairs(), getFoodsByBrand(searchParams)])
-  const brandNames = brands?.map(brand => brandPairs[brand._id]).join('、')
+
   const description =`各式${adjective && adjective + '的'}貓${type || "罐頭/乾飼料"}營養成份一覽
-  找到最符合你的貓咪的食物。${brandNames}品牌旗下貓${type || "罐頭/乾飼料"}的成分內容數值列表`
+  找到最符合你的貓咪的食物。${brandNames}品牌旗下貓${type || "罐頭/乾糧"}的成分內容數值列表`
 
   return {
     title,
@@ -62,7 +71,7 @@ export async function generateMetadata(
 
 export default async function FoodPage({ searchParams }: FoodPageProps) {
   const foodTypeOptions = objToSelectOptions(FoodTypeName)
-  const { title } = getFoodParamLabel(searchParams)
+  const { title } = await getFoodParamLabel(searchParams)
   const { type } = searchParams
   const foodTypeName = foodTypeToName(type)
   const urlParams = toUrlSearchParams(searchParams)
