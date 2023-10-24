@@ -48,7 +48,7 @@ export async function generateMetadata({
 export const menus: NavbarItemProps[] = [
   {
     name: "飲食紀錄",
-    path: "/record",
+    path: "/",
     Icon: HistoryEduOutlinedIcon,
   },
   {
