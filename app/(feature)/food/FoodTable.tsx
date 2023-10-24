@@ -37,7 +37,8 @@ export default async function FoodTable({searchParams, session}:FoodTableProps) 
       </p>
       {brandsFood?.map(brand => (
         <React.Fragment key={brand._id}>
-          <Typography variant="h2">{brandPairs[brand._id]}</Typography>
+          <Typography variant="h2">{brandPairs[brand._id].name}</Typography>
+          <Typography variant="overline">{brandPairs[brand._id].remark}</Typography>
           <TableContainer component={Paper} variant="outlined" sx={{ mb: 5 }}>
             <Table sx={{ minWidth: 650, '.MuiTableCell-head': {fontSize: '0.75rem',position: 'sticky'} }}>
               <TableHead>

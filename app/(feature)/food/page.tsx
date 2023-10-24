@@ -33,7 +33,7 @@ export const getFoodParamLabel = cache(async (searchParams: FoodPageProps["searc
   const detail = getParamNames(searchParams)
   const { type = '', phosphorus = '', fishmeat = '', protein = '', carbon = '' } = detail;
   const [brandPairs, { data: brands }] = await Promise.all([getBrandPairs(), getFoodsByBrand(searchParams)])
-  const brandNames = brands?.map(brand => brandPairs[brand._id]).join('、')
+  const brandNames = brands?.map(brand => brandPairs[brand._id].name).join('、')
   const brandTitleLabel = searchParams.brand ? brandNames : ''
   
   return {
