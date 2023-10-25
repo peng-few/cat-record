@@ -20,7 +20,7 @@ export const authOptions: AuthOptions = {
       if (!user) return token;
 
       const [DBUser] = await Collection.getDatas([{ $match: { email: user?.email } }])
-      console.log('jwt')
+
       if (DBUser) {
         return { ...token, ...user, role: DBUser.role, _id: DBUser._id }
       }

@@ -85,22 +85,22 @@ export default async function RootLayout({
     <ThemeRegistry options={{ key: "few" }}>
       <LocalizationProvider>
         <div className="flex">
-          <Navbar>
-            <NavbarList
-              list={menus}
-              sx={{
-                "&>.MuiListItem-root": {
-                  py: 1,
-                },
-              }}
-            />
-            <SessionProvider>
-              <AuthButton />
-            </SessionProvider>
-          </Navbar>
-          <div className="flex-grow">
-            <Suspense fallback={<Loading />}>{children}</Suspense>
-          </div>
+          <SessionProvider>
+            <Navbar>
+              <NavbarList
+                list={menus}
+                sx={{
+                  "&>.MuiListItem-root": {
+                    py: 1,
+                  },
+                }}
+              />
+                <AuthButton />
+            </Navbar>
+            <div className="flex-grow">
+              <Suspense fallback={<Loading />}>{children}</Suspense>
+            </div>
+          </SessionProvider>
         </div>
       </LocalizationProvider>
     </ThemeRegistry>

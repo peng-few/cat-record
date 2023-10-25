@@ -8,11 +8,14 @@ import { useRouter } from "next/navigation"
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import RecordForm from "./RecordForm"
 import { RecordFormRequest } from "./_db/schema/RecordFormRequestSchema"
+import { useSession } from "next-auth/react"
+import { popupCenter } from "@/_lib/popupCenter"
 
 export default function RecordAdd() {
   const {snackbarRef,snackbar} = useSnackbar()
   const [loading,setLoading] = useState(false)
   const [formOpen, setFormOpen] = useState(false)
+  const { data: session } = useSession()
   const router = useRouter()
 
   const closeForm = () => {
@@ -20,7 +23,7 @@ export default function RecordAdd() {
   }
 
   const openForm = () => {
-    setFormOpen(true)
+    session?.user ? setFormOpen(true) : popupCenter("/auth/signIn", "登入")
   }
 
   const submitForm: SubmitHandler<RecordFormRequest> = async (data) => {

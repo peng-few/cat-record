@@ -6,12 +6,18 @@ import RecordTable from "@/(feature)/record/RecordTable";
 import { Suspense } from "react";
 import { Loading } from "@/_components/Loading";
 import { PageProps } from "@/_types";
-
-export default async function RecordPage({searchParams}:PageProps) {
+import type { Metadata } from 'next'
+ 
+export const metadata: Metadata = {
+  title: '貓咪飲食記錄',
+  description: '紀錄屬於你家貓咪的飲食紀錄，隨時追蹤食量狀況'
+}
+ 
+export default async function RecordPage({ searchParams }: PageProps) {
   return (
     <div className="py-4 px-6">
       <Typography className="pb-3" variant="h1" display="block">
-        飲食記錄
+        貓咪飲食記錄
       </Typography>
       <BrandsProvider>
         <FoodsProvider>
