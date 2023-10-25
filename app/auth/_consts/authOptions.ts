@@ -22,11 +22,11 @@ export const authOptions: AuthOptions = {
       const [DBUser] = await Collection.getDatas([{ $match: { email: user?.email } }])
       console.log('jwt')
       if (DBUser) {
-        return { ...token, ...user, role: DBUser.role }
+        return { ...token, ...user, role: DBUser.role, _id: DBUser._id }
       }
 
       const newUser = await Collection.addData({ email: user?.email as string, role: UserRole.Enum.General })
-      return { ...token, ...user, role: newUser.role }
+      return { ...token, ...user, role: newUser.role, _id: newUser._id.toHexString()}
     },
 
     async session({ session, token }) {
@@ -35,6 +35,7 @@ export const authOptions: AuthOptions = {
         user: {
           ...session.user,
           role: token.role,
+          _id: token._id,
         },
       };
 

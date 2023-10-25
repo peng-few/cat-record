@@ -1,5 +1,6 @@
 "use client"
 import { signIn, useSession } from "next-auth/react"
+import { revalidateTag } from "next/cache"
 import { useEffect } from "react"
 
 const SignInPage = () => {
@@ -8,6 +9,7 @@ const SignInPage = () => {
   useEffect(() => {
     if (!(status === "loading") && !session) void signIn("google")
     if (session) window.close()
+  
   }, [session, status])
 
   return (

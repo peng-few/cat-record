@@ -1,5 +1,6 @@
 import { authOptions } from "@/auth/_consts/authOptions"
 import NextAuth from "next-auth"
+import { revalidateTag } from "next/cache"
 
 const handler = NextAuth(authOptions)
 
