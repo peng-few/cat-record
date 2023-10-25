@@ -10,6 +10,7 @@ export const RecordSchema = z.object({
   status: RecordStatus,
   energy: zIsNumber(),
   totalWater: zIsNumber(),
+  user: z.string(),
 })
 
 export type Record = z.infer<typeof RecordSchema>; 
