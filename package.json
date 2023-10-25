@@ -50,8 +50,5 @@
   "browser": {
     "child_process": false,
     "fs": false
-  },
-  "engines": {
-    "node": "^20"
   }
 }
