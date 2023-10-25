@@ -1,6 +1,6 @@
 "use client"
 import { SubmitHandler } from "react-hook-form"
-import { useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import Button from "@mui/material/Button"
 import  simpleFetch from '@/_lib/simpleFetch'
 import { StatusSnackbar,useSnackbar } from "@/_components/StatusSnackbar"
@@ -15,6 +15,7 @@ export default function RecordAdd() {
   const {snackbarRef,snackbar} = useSnackbar()
   const [loading,setLoading] = useState(false)
   const [formOpen, setFormOpen] = useState(false)
+  const [openFormAfterLogin,setOpenFormAfterLogin] = useState(false)
   const { data: session } = useSession()
   const router = useRouter()
 
@@ -22,9 +23,19 @@ export default function RecordAdd() {
     setFormOpen(false)
   }
 
-  const openForm = () => {
-    session?.user ? setFormOpen(true) : popupCenter("/auth/signIn", "登入")
-  }
+  const openForm = useCallback(() => {
+    if (session?.user) {
+      setFormOpen(true)
+      setOpenFormAfterLogin(false)
+    } else {
+      popupCenter("/auth/signIn", "登入")
+      setOpenFormAfterLogin(true)
+    }
+  },[session?.user])
+
+  useEffect(() => {
+    if(openFormAfterLogin && session?.user) openForm()
+  }, [openFormAfterLogin, openForm, session?.user])
 
   const submitForm: SubmitHandler<RecordFormRequest> = async (data) => {
     setLoading(true)
