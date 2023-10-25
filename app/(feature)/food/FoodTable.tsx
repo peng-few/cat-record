@@ -48,7 +48,7 @@ export default async function FoodTable({searchParams, session}:FoodTableProps) 
                   <TableCell align="right" size="small">
                     代謝能
                     <span className="ps-1 text-stone-400">
-                      (kcal/100g)
+                      (kcal ME/100g)
                     </span>
                   </TableCell>
                   <TableCell align="right" size="small">

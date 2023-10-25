@@ -5,6 +5,12 @@ import BrandList from "./BrandList";
 import { getUserSession } from "@/auth/_lib/getUserSession";
 import { isAdmin } from "@/auth/_db/schema/UserSchema";
 import { Typography } from "@mui/material";
+import type { Metadata } from 'next'
+ 
+export const metadata: Metadata = {
+  title: '貓咪食品品牌一覽',
+  description: '依據品牌來看其旗下所出產的食品與成分分析'
+}
 
 export default async function BrandPage() { 
   const session = await getUserSession()

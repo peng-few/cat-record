@@ -8,7 +8,7 @@ export const getFoodPairs = unstable_cache(async () => {
   ])
 
   const foodPairs = foods.reduce((accu, food) => {
-    accu[food._id] = brandPairs[food.brand]+food.name
+    accu[food._id] = brandPairs[food.brand].name+food.name
     return accu
   }, {} as Record<string, string>)
 
