@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { PageProps } from "./_types"
 import getUrlOnServer from "@/_lib/getUrlOnServer"
 import { WebSite, WithContext } from "schema-dts"
+import { Analytics } from '@vercel/analytics/react';
 
 const websiteSchema: WithContext<WebSite> = {
   "@context": "https://schema.org",
@@ -49,6 +50,7 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
         {children}
+        <Analytics />
       </body>
     </html>
   )

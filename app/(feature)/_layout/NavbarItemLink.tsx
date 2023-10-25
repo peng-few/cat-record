@@ -46,15 +46,16 @@ export const NavbarItemLink = ({
       <StyleListItemButton
         className={`flex-grow flex ${isActive ? 'active' : ''}`}
         onClick={toggleSub}
+        sx={{p: 0}}
       >
         {href ? (
-          <Link href={href} className='flex-grow flex'>
+          <Link href={href} className='flex-grow flex py-2 px-3'>
             {children}
           </Link>
         ) : (
           <>{children}</>
         )}
-        {sub && (open ? <ExpandLess className="sub-icon"/> : <ExpandMore className="sub-icon"/>)}
+        {sub && (open ? <ExpandLess className="sub-icon mr-1"/> : <ExpandMore className="sub-icon mr-1"/>)}
       </StyleListItemButton>
       {sub && (
         <Collapse in={subOpen} timeout="auto">
