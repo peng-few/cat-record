@@ -2,7 +2,7 @@ import { AnyObject } from "../_types/types"
 import { Response } from './apiResponse'
 
 
-const baseURL = process.env.VERCEL_URL
+const baseURL = 'https://'+process.env.VERCEL_URL
 
 export const simpleFetch = {
   post(url: string, data?: AnyObject | FormData, configs?: AnyObject): Promise<Response> {
