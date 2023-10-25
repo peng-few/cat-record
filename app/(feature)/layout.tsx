@@ -18,7 +18,7 @@ import SessionProvider from "@/auth/_components/SessionProvider"
 const websiteSchema: WithContext<WebSite> = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  url: process.env.HOST,
+  url: process.env.VERCEL_URL,
 }
 export async function generateMetadata({
   searchParams,

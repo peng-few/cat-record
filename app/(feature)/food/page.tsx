@@ -29,7 +29,7 @@ export interface FoodPageProps extends PageProps{
   searchParams: { [key in SearchParamType|'page']?: string | string[]}
 }
 
-export const getFoodParamLabel = cache(async (searchParams: FoodPageProps["searchParams"]) => {
+const getFoodParamLabel = cache(async (searchParams: FoodPageProps["searchParams"]) => {
   const detail = getParamNames(searchParams)
   const { type = '', phosphorus = '', fishmeat = '', protein = '', carbon = '' } = detail;
   const [brandPairs, { data: brands }] = await Promise.all([getBrandPairs(), getFoodsByBrand(searchParams)])
