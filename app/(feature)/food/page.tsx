@@ -23,6 +23,7 @@ import { getFoodsByBrand } from "./_db/getFoodsByBrand"
 import { getBrandPairs } from "@/(feature)/brand/_db/getBrandPairs"
 import { isAdmin } from "@/auth/_db/schema/UserSchema"
 import { getUserSession } from "@/auth/_lib/getUserSession"
+import { Host } from "@/_consts/Host"
 
 
 export interface FoodPageProps extends PageProps{
@@ -55,6 +56,7 @@ export async function generateMetadata(
   const { title, detail } = await getFoodParamLabel(searchParams)
   const { type, phosphorus , fishmeat, protein, carbon, brandNames } = detail;
   const adjective = phosphorus + protein + carbon + fishmeat
+  const queryString = new URLSearchParams(searchParams).toString()
 
   const description =`各式${adjective && adjective + '的'}貓${type || "罐頭/乾飼料"}營養成份一覽
   找到最符合你的貓咪的食物。${brandNames}品牌旗下貓${type || "罐頭/乾糧"}的成分內容數值列表`
@@ -66,6 +68,7 @@ export async function generateMetadata(
       title: `${title}|喵喵紀錄`,
       description,
     },
+    alternates: { canonical: `${Host}?${queryString}` },
   }
 }
 

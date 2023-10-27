@@ -1,0 +1,1 @@
+export const Host = process.env.VERCEL_URL

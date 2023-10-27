@@ -7,10 +7,12 @@ import { Suspense } from "react";
 import { Loading } from "@/_components/Loading";
 import { PageProps } from "@/_types";
 import type { Metadata } from 'next'
+import { Host } from "@/_consts/Host";
  
 export const metadata: Metadata = {
   title: '貓咪飲食記錄',
-  description: '紀錄屬於你家貓咪的飲食紀錄，隨時追蹤食量狀況'
+  description: '紀錄屬於你家貓咪的飲食紀錄，隨時追蹤食量狀況',
+  alternates: { canonical: Host+'/record' },
 }
  
 export default async function RecordPage({ searchParams }: PageProps) {

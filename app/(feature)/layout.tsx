@@ -10,10 +10,10 @@ import { Loading } from "@/_components/Loading"
 import { FoodType, FoodTypeName } from "./food/_consts/FoodType"
 import NavbarList, { NavbarItemProps } from "./_layout/NavbarList"
 import { PageProps } from "@/_types"
-import getUrlOnServer from "@/_lib/getUrlOnServer"
 import { WebSite, WithContext } from "schema-dts"
 import AuthButton from "@/auth/_components/AuthButton"
 import SessionProvider from "@/auth/_components/SessionProvider"
+import { Host } from "@/_consts/Host"
 
 const websiteSchema: WithContext<WebSite> = {
   "@context": "https://schema.org",
@@ -23,7 +23,7 @@ const websiteSchema: WithContext<WebSite> = {
 export async function generateMetadata({
   searchParams,
 }: PageProps): Promise<Metadata> {
-  const url = getUrlOnServer()
+  const url = Host
   const description =
     "了解貓咪的各種主食罐/副食罐/乾飼料營養成份，尋找適合自己貓咪的食物。還可以紀錄每日貓咪的飲食狀況"
   return {
