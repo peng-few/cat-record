@@ -1,1 +1,1 @@
-export const Host = process.env.VERCEL_URL
+export const Host = 'https://'+process.env.VERCEL_URL
