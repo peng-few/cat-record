@@ -10,7 +10,6 @@ import { notExist, toDecimalPlace } from "@/_lib"
 import { PageProps } from "@/_types"
 import React, { Suspense } from "react"
 import { Loading } from "@/_components/Loading"
-import FoodListAction from "./FoodTableAction";
 import { getBrandPairs } from "@/(feature)/brand/_db/getBrandPairs"
 import { getFoodsByBrand } from "./_db/getFoodsByBrand"
 import { FoodTypeName } from "./_consts/FoodType"
@@ -21,6 +20,10 @@ import getFileSrc from "@/(feature)/file/_lib/getFileSrc"
 import Image from "next/image"
 import { isAdmin } from "@/auth/_db/schema/UserSchema"
 import { type Session } from "next-auth"
+import dynamic from "next/dynamic"
+const FoodListAction = dynamic(() => import('./FoodTableAction'), {
+  ssr: false,
+})
 
 export interface FoodTableProps extends PageProps{
   session: Session|null

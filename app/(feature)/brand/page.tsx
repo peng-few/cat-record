@@ -1,4 +1,3 @@
-import BrandAdd from "./BrandAdd";
 import { Suspense } from "react";
 import { Loading } from "@/_components/Loading";
 import BrandList from "./BrandList";
@@ -7,6 +6,10 @@ import { isAdmin } from "@/auth/_db/schema/UserSchema";
 import { Typography } from "@mui/material";
 import type { Metadata } from 'next'
 import { Host } from "@/_consts/Host";
+import dynamic from "next/dynamic";
+const BrandAdd = dynamic(() => import('./BrandAdd'), {
+  ssr: false,
+})
  
 export const metadata: Metadata = {
   title: '貓咪食品品牌一覽',

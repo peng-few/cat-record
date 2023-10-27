@@ -6,8 +6,11 @@ import BrandEditProvider from "./BrandEditProvider"
 import { Session } from "next-auth"
 import { isAdmin as checkIsAdmin } from "@/auth/_db/schema/UserSchema"
 import BrandEdit from "./BrandEdit"
-import BrandEditButton from "./BrandEditButton"
 import React from "react"
+import dynamic from "next/dynamic"
+const BrandEditButton = dynamic(() =>  import('./BrandEditButton'), {
+    ssr: false,
+  })
 export interface BrandTableProps{
   session: Session | null
 }
