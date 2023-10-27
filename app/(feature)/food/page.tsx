@@ -1,4 +1,3 @@
-import FoodAdd from "./FoodAdd"
 import FoodTable from "./FoodTable"
 import BrandsProvider from "@/(feature)/brand/_components/BrandsProvider"
 import Typography from "@mui/material/Typography"
@@ -24,6 +23,10 @@ import { getBrandPairs } from "@/(feature)/brand/_db/getBrandPairs"
 import { isAdmin } from "@/auth/_db/schema/UserSchema"
 import { getUserSession } from "@/auth/_lib/getUserSession"
 import { Host } from "@/_consts/Host"
+import dynamic from "next/dynamic"
+const FoodAdd = dynamic(() => import('./FoodAdd'), {
+  ssr: false,
+});
 
 
 export interface FoodPageProps extends PageProps{
@@ -56,7 +59,7 @@ export async function generateMetadata(
   const { title, detail } = await getFoodParamLabel(searchParams)
   const { type, phosphorus , fishmeat, protein, carbon, brandNames } = detail;
   const adjective = phosphorus + protein + carbon + fishmeat
-  const queryString = new URLSearchParams(searchParams).toString()
+  const queryString = toUrlSearchParams(searchParams).toString()
 
   const description =`各式${adjective && adjective + '的'}貓${type || "罐頭/乾飼料"}營養成份一覽
   找到最符合你的貓咪的食物。${brandNames}品牌旗下貓${type || "罐頭/乾糧"}的成分內容數值列表`
