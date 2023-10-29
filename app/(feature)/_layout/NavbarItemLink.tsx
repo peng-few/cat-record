@@ -3,10 +3,11 @@ import { alpha, styled } from "@mui/material/styles"
 import ListItemButton from "@mui/material/ListItemButton"
 import Link, { LinkProps } from "next/link"
 import { usePathname, useSearchParams } from "next/navigation"
-import React, { ReactNode, useState } from "react"
+import React, { MouseEvent, ReactNode, useState } from "react"
 import ExpandLess from "@mui/icons-material/ExpandLess"
 import ExpandMore from "@mui/icons-material/ExpandMore"
 import Collapse from "@mui/material/Collapse"
+import { useRouter } from "next/navigation"
 
 const FAKE_DOMAIN = 'http://localhost'
 const StyleListItemButton = styled(ListItemButton)(({ theme }) => ({
@@ -40,6 +41,12 @@ export const NavbarItemLink = ({
   const [open, setOpen] = useState(false)
   const subOpen = open && !!sub
   const toggleSub = () => setOpen((prev) => !prev)
+  const router = useRouter()
+  const toLink = (e:MouseEvent) => {
+    e.preventDefault()
+    if (!href) return;
+    router.push(href)
+  }
 
   return (
     <>
@@ -49,9 +56,9 @@ export const NavbarItemLink = ({
         sx={{p: 0}}
       >
         {href ? (
-          <Link href={href} className='flex-grow flex py-2 px-3'>
+          <a href={href} onClick={toLink} className='flex-grow flex py-2 px-3'>
             {children}
-          </Link>
+          </a>
         ) : (
           <>{children}</>
         )}

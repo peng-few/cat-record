@@ -1,5 +1,8 @@
+'use client'
 import Chip, { ChipProps } from "@mui/material/Chip"
-import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { MouseEvent } from "react"
+// import Link from "next/link"
 
 export interface ChipLinkProps extends ChipProps{
   selected: boolean,
@@ -7,11 +10,21 @@ export interface ChipLinkProps extends ChipProps{
 }
 export const ChipLink = ({
   selected, href,variant="outlined",...props
-}:ChipLinkProps) => {
+}: ChipLinkProps) => {
+  const router = useRouter()
+  const toLink = (e:MouseEvent) => {
+    e.preventDefault()
+    router.push(href)
+  }
   return (
-    <Link href={href}>
-      <Chip {...props} variant={variant} color={selected? 'primary': 'default'}/>
-    </Link>
+    <a onClick={toLink} className="cursor-pointer">
+      <Chip
+        {...props}
+        variant={variant}
+        color={selected ? 'primary' : 'default'}  
+      />
+    </a>
+
   )
 }
 

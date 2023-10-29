@@ -1,0 +1,1 @@
+export {Loading as default} from '@/_components/Loading/Loading'
