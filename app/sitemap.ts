@@ -1,9 +1,7 @@
 import { getBrandPairs } from "./(feature)/brand/_db/getBrandPairs";
 import { SearchParam, SearchParamType } from "./(feature)/food/_consts/SearchParam";
-import dayjs from "dayjs";
+import { Host } from "./_consts/Host";
 
-
-const url = 'https://' + process.env.VERCEL_URL
 const lastModified = new Date().toISOString()
 type FoodUrlParams = Partial<Record<SearchParamType, string>>
 type Route = {
@@ -21,14 +19,14 @@ const getFoodRoutes = async () => {
     Object.keys(foodParams[key]).forEach(value => {
       if (!isSub) {
         foodRoutes.push({
-          url: `${url}/food?${key}=${value}`,
+          url: `${Host}/food?${key}=${value}`,
           lastModified
         })
       } else {
         const nextParams: FoodUrlParams = { ...params, [key]: value }
         const qs = new URLSearchParams(nextParams)
         foodRoutes.push({
-          url: `${url}/food?${qs.toString().replaceAll('&','&amp;')}`,
+          url: `${Host}/food?${qs.toString().replaceAll('&','&amp;')}`,
           lastModified
         })
       }
@@ -51,7 +49,7 @@ export default async function sitemap() {
   const foodRoutes = await getFoodRoutes()
   console.log(foodRoutes)
   const routes = ["", "/brand",'/food'].map((route) => ({
-    url: `${url}${route}`,
+    url: `${Host}${route}`,
     lastModified,
   }));
  
