@@ -1,13 +1,11 @@
+import { Host } from "@/_consts/Host";
 import { AnyObject } from "../_types/types"
 import { Response } from './apiResponse'
-
-
-const baseURL = 'https://'+process.env.VERCEL_URL
 
 export const simpleFetch = {
   post(url: string, data?: AnyObject | FormData, configs?: AnyObject): Promise<Response> {
     const body = data instanceof FormData ? data : JSON.stringify(data);
-    return fetch(baseURL+url, {
+    return fetch(Host, {
       body,
       method: "POST",
       ...configs
@@ -18,12 +16,12 @@ export const simpleFetch = {
     url: string,
     configs?: AnyObject
   ): Promise<Response<T>> {
-    return fetch(baseURL+url,configs).then(res => res.json())
+    return fetch(Host,configs).then(res => res.json())
   },
 
   put(url: string, data?: AnyObject, configs?: AnyObject): Promise<Response> {
     const body = data instanceof FormData ? data : JSON.stringify(data);
-    return fetch(baseURL+url, {
+    return fetch(Host, {
       body,
       method: "PUT",
       ...configs
@@ -31,7 +29,7 @@ export const simpleFetch = {
   },
 
   delete(url: string,configs?:AnyObject): Promise<Response> {
-    return fetch(baseURL+url, {
+    return fetch(Host, {
       method: "DELETE",
       ...configs
     }).then(res => res.json())
