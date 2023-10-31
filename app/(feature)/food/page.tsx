@@ -98,12 +98,14 @@ export default async function FoodPage({ searchParams }: FoodPageProps) {
             {foodTypeOptions.map((option) => (
               <Link
                 key={option.value}
-                href={`/food?${refreshPage(
-                  toggleParam(new URLSearchParams(urlParams), [
-                    "type",
-                    option.value,
-                  ])
-                ).toString()}`}
+                href={{
+                  pathname: '/food',
+                  query: refreshPage(
+                    toggleParam(new URLSearchParams(urlParams), [
+                      "type",
+                      option.value,
+                    ])).toString(),
+                }}
               >
                 <MenuItem>
                   {option.label}
