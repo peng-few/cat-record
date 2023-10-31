@@ -84,6 +84,7 @@ export default async function FoodPage({ searchParams }: FoodPageProps) {
   const foodTypeName = foodTypeToName(type)
   const urlParams = toUrlSearchParams(searchParams)
   const session = await getUserSession()
+  const queryString = urlParams.toString() 
 
   return (
     <div className="py-4 px-6">
@@ -101,7 +102,6 @@ export default async function FoodPage({ searchParams }: FoodPageProps) {
               <Link
                 key={option.value}
                 href={{
-                  pathname: '/food',
                   query: refreshPage(
                     toggleParam(new URLSearchParams(urlParams), [
                       "type",
@@ -130,8 +130,8 @@ export default async function FoodPage({ searchParams }: FoodPageProps) {
           <ParamLink type="carbon" value="low" urlParams={urlParams} />
           <ParamLink type="fishmeat" value="0" urlParams={urlParams} />
         </Box>
-        <Suspense fallback={<Loading />}>
-          <FoodTable searchParams={searchParams} session={session} />
+        <Suspense key={queryString} fallback={<Loading />}>
+          <FoodTable searchParams={searchParams} session={session} urlParams={urlParams}/>
         </Suspense>
       </BrandsProvider>
     </div>

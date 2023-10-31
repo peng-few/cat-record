@@ -21,18 +21,20 @@ import Image from "next/image"
 import { isAdmin } from "@/auth/_db/schema/UserSchema"
 import { type Session } from "next-auth"
 import dynamic from "next/dynamic"
+import { toggleParam } from "@/_lib/searchParams/handleSearchParam"
+
 const FoodListAction = dynamic(() => import('./FoodTableAction'), {
   ssr: false,
 })
 
 export interface FoodTableProps extends PageProps{
-  session: Session|null
+  session: Session | null
+  urlParams: URLSearchParams
 }
-export default async function FoodTable({searchParams, session}:FoodTableProps) {
+export default async function FoodTable({searchParams, session,urlParams}:FoodTableProps) {
   const [brandPairs, foodsByBrand] = await Promise.all([getBrandPairs(), getFoodsByBrand(searchParams)])
   const { data: brandsFood, pagination } = foodsByBrand;
   const { prevPage, nextPage, maxPage } = formatPagination(pagination)
-
   return (
     <>
       <p className="my-3 text-sm">
@@ -128,15 +130,25 @@ export default async function FoodTable({searchParams, session}:FoodTableProps) 
       ))}
       {
           prevPage > 0 && (
-            <Link href={`/record${prevPage == 1 ?'':'?page='+prevPage}`}>
-              <Button>上一頁</Button>  
+          <Link href={{
+              query: toggleParam(new URLSearchParams(urlParams), [
+                "page",
+                prevPage,
+              ]).toString()
+            }}>
+              <Button variant="outlined">上一頁</Button>  
             </Link>
           )
         }
         {
           nextPage <= maxPage&& (
-            <Link href={`/record?page=${nextPage}`}>
-              <Button>下一頁</Button>  
+            <Link href={{
+              query: toggleParam(new URLSearchParams(urlParams), [
+                "page",
+                nextPage,
+              ]).toString()
+            }}>
+              <Button variant="outlined">下一頁</Button>  
             </Link>
           )
         }
