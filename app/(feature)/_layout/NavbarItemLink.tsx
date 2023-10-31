@@ -3,11 +3,10 @@ import { alpha, styled } from "@mui/material/styles"
 import ListItemButton from "@mui/material/ListItemButton"
 import Link, { LinkProps } from "next/link"
 import { usePathname, useSearchParams } from "next/navigation"
-import React, { MouseEvent, ReactNode, useState } from "react"
+import React, { ReactNode, useState } from "react"
 import ExpandLess from "@mui/icons-material/ExpandLess"
 import ExpandMore from "@mui/icons-material/ExpandMore"
 import Collapse from "@mui/material/Collapse"
-import { useRouter } from "next/navigation"
 
 const FAKE_DOMAIN = 'http://localhost'
 const StyleListItemButton = styled(ListItemButton)(({ theme }) => ({
