@@ -7,7 +7,8 @@ import { Suspense } from "react";
 import { Loading } from "@/_components/Loading";
 import { PageProps } from "@/_types";
 import type { Metadata } from 'next'
-import { Host } from "@/_consts/Host";
+import { getHost } from "@/_lib/getHost";
+const Host = getHost()
  
 export const metadata: Metadata = {
   title: '貓咪飲食記錄',

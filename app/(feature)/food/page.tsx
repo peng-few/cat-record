@@ -22,7 +22,9 @@ import { getFoodsByBrand } from "./_db/getFoodsByBrand"
 import { getBrandPairs } from "@/(feature)/brand/_db/getBrandPairs"
 import { isAdmin } from "@/auth/_db/schema/UserSchema"
 import { getUserSession } from "@/auth/_lib/getUserSession"
-import { Host } from "@/_consts/Host"
+import { getHost } from "@/_lib/getHost";
+const Host = getHost()
+
 import dynamic from "next/dynamic"
 const FoodAdd = dynamic(() => import('./FoodAdd'), {
   ssr: false,

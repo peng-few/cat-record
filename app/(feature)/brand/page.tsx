@@ -5,7 +5,8 @@ import { getUserSession } from "@/auth/_lib/getUserSession";
 import { isAdmin } from "@/auth/_db/schema/UserSchema";
 import { Typography } from "@mui/material";
 import type { Metadata } from 'next'
-import { Host } from "@/_consts/Host";
+import { getHost } from "@/_lib/getHost";
+const Host = getHost()
 import dynamic from "next/dynamic";
 const BrandAdd = dynamic(() => import('./BrandAdd'), {
   ssr: false,

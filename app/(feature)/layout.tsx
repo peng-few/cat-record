@@ -13,7 +13,8 @@ import { PageProps } from "@/_types"
 import { WebSite, WithContext } from "schema-dts"
 import AuthButton from "@/auth/_components/AuthButton"
 import SessionProvider from "@/auth/_components/SessionProvider"
-import { Host } from "@/_consts/Host"
+import { getHost } from "@/_lib/getHost";
+const Host = getHost()
 
 const websiteSchema: WithContext<WebSite> = {
   "@context": "https://schema.org",

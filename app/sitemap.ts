@@ -1,6 +1,7 @@
 import { getBrandPairs } from "./(feature)/brand/_db/getBrandPairs";
 import { SearchParam, SearchParamType } from "./(feature)/food/_consts/SearchParam";
-import { Host } from "./_consts/Host";
+import { getHost } from "@/_lib/getHost";
+const Host = getHost()
 
 const lastModified = new Date().toISOString()
 type FoodUrlParams = Partial<Record<SearchParamType, string>>
