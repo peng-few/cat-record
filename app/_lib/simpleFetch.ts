@@ -1,7 +1,7 @@
 import { AnyObject } from "../_types/types"
 import { Response } from './apiResponse'
 import { getHost } from "@/_lib/getHost";
-const Host = getHost()
+const Host = getHost()+ '/'
 
 export const simpleFetch = {
   post(url: string, data?: AnyObject | FormData, configs?: AnyObject): Promise<Response> {
