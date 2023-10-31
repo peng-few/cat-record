@@ -18,12 +18,12 @@ import { Metadata } from "next"
 import TuneIcon from "@mui/icons-material/Tune"
 import ParamLink from "./_components/ParamLink"
 import { SearchParamType, getParamNames } from "./_consts/SearchParam"
-import { getFoodsByBrand } from "./_db/getFoodsByBrand"
 import { getBrandPairs } from "@/(feature)/brand/_db/getBrandPairs"
 import { isAdmin } from "@/auth/_db/schema/UserSchema"
 import { getUserSession } from "@/auth/_lib/getUserSession"
 import { getHost } from "@/_lib/getHost";
 const Host = getHost()
+const foodTypeOptions = objToSelectOptions(FoodTypeName)
 
 import dynamic from "next/dynamic"
 const FoodAdd = dynamic(() => import('./FoodAdd'), {
@@ -36,14 +36,13 @@ export interface FoodPageProps extends PageProps{
 }
 
 const getFoodParamLabel = cache(async (searchParams: FoodPageProps["searchParams"]) => {
-  const detail = getParamNames(searchParams)
-  const { type = '', phosphorus = '', fishmeat = '', protein = '', carbon = '' } = detail;
-  const [brandPairs, { data: brands }] = await Promise.all([getBrandPairs(), getFoodsByBrand(searchParams)])
-  const brandNames = brands?.map(brand => brandPairs[brand._id].name).join('、')
-  const brandTitleLabel = searchParams.brand ? brandNames : ''
+  const { type = '', phosphorus = '', fishmeat = '', protein = '', carbon = '' } = getParamNames(searchParams)
+  const brandVal = typeof searchParams.brand === 'string' ? [searchParams.brand] : searchParams.brand;
+  const brandPairs = await getBrandPairs()
+  const brandNames = brandVal?.map(brand => brandPairs[brand].name).join('、') || ''
   
   return {
-    title: `${phosphorus}${protein}${carbon}${fishmeat}${brandTitleLabel}貓${type || "罐頭/乾飼料"}成份一覽`,
+    title: `${phosphorus}${protein}${carbon}${fishmeat}${brandNames}貓${type || "罐頭/乾飼料"}成份一覽`,
     detail: {
       type,
       phosphorus,
@@ -58,12 +57,11 @@ const getFoodParamLabel = cache(async (searchParams: FoodPageProps["searchParams
 export async function generateMetadata(
   { searchParams }: FoodPageProps,
 ): Promise<Metadata> {
-  const { title, detail } = await getFoodParamLabel(searchParams)
-  const { type, phosphorus , fishmeat, protein, carbon, brandNames } = detail;
+  const { title, detail:{ type, phosphorus , fishmeat, protein, carbon, brandNames } } = await getFoodParamLabel(searchParams)
   const adjective = phosphorus + protein + carbon + fishmeat
   const queryString = toUrlSearchParams(searchParams).toString()
 
-  const description =`各式${adjective && adjective + '的'}貓${type || "罐頭/乾飼料"}營養成份一覽
+  const description =`各式${adjective && adjective + '的'}貓${type || "罐頭/乾飼料"}營養成份，
   找到最符合你的貓咪的食物。${brandNames}品牌旗下貓${type || "罐頭/乾糧"}的成分內容數值列表`
 
   return {
@@ -78,10 +76,9 @@ export async function generateMetadata(
 }
 
 export default async function FoodPage({ searchParams }: FoodPageProps) {
-  const foodTypeOptions = objToSelectOptions(FoodTypeName)
-  const { title } = await getFoodParamLabel(searchParams)
   const { type } = searchParams
   const foodTypeName = foodTypeToName(type)
+  const { title } = await getFoodParamLabel(searchParams)
   const urlParams = toUrlSearchParams(searchParams)
   const session = await getUserSession()
   const queryString = urlParams.toString() 
@@ -102,6 +99,7 @@ export default async function FoodPage({ searchParams }: FoodPageProps) {
               <Link
                 key={option.value}
                 href={{
+                  pathname: '/food',
                   query: refreshPage(
                     toggleParam(new URLSearchParams(urlParams), [
                       "type",
@@ -131,7 +129,7 @@ export default async function FoodPage({ searchParams }: FoodPageProps) {
           <ParamLink type="fishmeat" value="0" urlParams={urlParams} />
         </Box>
         <Suspense key={queryString} fallback={<Loading />}>
-          <FoodTable key={queryString} searchParams={searchParams} session={session} urlParams={urlParams}/>
+          <FoodTable searchParams={searchParams} session={session} urlParams={urlParams}/>
         </Suspense>
       </BrandsProvider>
     </div>

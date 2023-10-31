@@ -13,6 +13,7 @@ export function ParamLink<Type extends SearchParamType>({ type, value, urlParams
     <ChipLink
       label={SearchParam[type][value] as string}
       href={{
+        pathname: '/food',
         query: refreshPage(toggleParam(new URLSearchParams(urlParams),[type,value])).toString()
       }}
       selected={urlParams.has(type,value)}
