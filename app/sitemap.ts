@@ -48,7 +48,7 @@ const getFoodRoutes = async () => {
 }
 export default async function sitemap() {
   const foodRoutes = await getFoodRoutes()
-  console.log(foodRoutes)
+
   const routes = ["", "/brand",'/food'].map((route) => ({
     url: `${Host}${route}`,
     lastModified,
