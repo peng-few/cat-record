@@ -131,7 +131,7 @@ export default async function FoodPage({ searchParams }: FoodPageProps) {
           <ParamLink type="fishmeat" value="0" urlParams={urlParams} />
         </Box>
         <Suspense key={queryString} fallback={<Loading />}>
-          <FoodTable searchParams={searchParams} session={session} urlParams={urlParams}/>
+          <FoodTable key={queryString} searchParams={searchParams} session={session} urlParams={urlParams}/>
         </Suspense>
       </BrandsProvider>
     </div>

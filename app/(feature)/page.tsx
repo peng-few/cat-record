@@ -8,6 +8,7 @@ import { Loading } from "@/_components/Loading";
 import { PageProps } from "@/_types";
 import type { Metadata } from 'next'
 import { getHost } from "@/_lib/getHost";
+import toUrlSearchParams from "@/_lib/searchParams/toUrlSearchParams";
 const Host = getHost()
  
 export const metadata: Metadata = {
@@ -17,6 +18,9 @@ export const metadata: Metadata = {
 }
  
 export default async function RecordPage({ searchParams }: PageProps) {
+  const urlParams = toUrlSearchParams(searchParams)
+  const queryString = urlParams.toString() 
+
   return (
     <div className="py-4 px-6">
       <Typography className="pb-3" variant="h1" display="block">
@@ -25,7 +29,7 @@ export default async function RecordPage({ searchParams }: PageProps) {
       <BrandsProvider>
         <FoodsProvider>
           <RecordAdd />
-          <Suspense fallback={<Loading />}>
+          <Suspense key={queryString}  fallback={<Loading />}>
             <RecordTable searchParams={searchParams}/>
           </Suspense>
         </FoodsProvider>

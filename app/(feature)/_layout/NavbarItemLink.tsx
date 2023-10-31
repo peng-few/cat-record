@@ -41,12 +41,6 @@ export const NavbarItemLink = ({
   const [open, setOpen] = useState(false)
   const subOpen = open && !!sub
   const toggleSub = () => setOpen((prev) => !prev)
-  const router = useRouter()
-  const toLink = (e:MouseEvent) => {
-    e.preventDefault()
-    if (!href) return;
-    router.push(href)
-  }
 
   return (
     <>
@@ -56,9 +50,9 @@ export const NavbarItemLink = ({
         sx={{p: 0}}
       >
         {href ? (
-          <a href={href} onClick={toLink} className='flex-grow flex py-2 px-3'>
+          <Link href={href} className='flex-grow flex py-2 px-3'>
             {children}
-          </a>
+          </Link>
         ) : (
           <>{children}</>
         )}
