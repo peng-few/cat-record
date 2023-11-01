@@ -9,7 +9,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Brand, BrandSchema } from "./_db/schema/BrandSchema"
 import { RegionTypeName } from "./_consts/RegionType"
 import MenuItem from "@mui/material/MenuItem"
-import { getCsrfToken } from "next-auth/react"
 
 export interface BrandFormProps {
   values?: Partial<Brand>

@@ -1,6 +1,5 @@
 import BrandsProvider from "@/(feature)/brand/_components/BrandsProvider";
 import Typography from "@mui/material/Typography";
-import RecordAdd from "@/(feature)/record/RecordAdd";
 import FoodsProvider from "@/(feature)/food/_components/FoodsProvider";
 import RecordTable from "@/(feature)/record/RecordTable";
 import { Suspense } from "react";
@@ -9,6 +8,11 @@ import { PageProps } from "@/_types";
 import type { Metadata } from 'next'
 import { getHost } from "@/_lib/getHost";
 import toUrlSearchParams from "@/_lib/searchParams/toUrlSearchParams";
+import { getUserSession } from "@/auth/_lib/getUserSession";
+import dynamic from "next/dynamic"
+const RecordAdd = dynamic(() => import('@/(feature)/record/RecordAdd'), {
+  ssr: false,
+});
 const Host = getHost()
  
 export const metadata: Metadata = {
@@ -20,15 +24,21 @@ export const metadata: Metadata = {
 export default async function RecordPage({ searchParams }: PageProps) {
   const urlParams = toUrlSearchParams(searchParams)
   const queryString = urlParams.toString() 
+  const session = await getUserSession()
 
   return (
     <div className="py-4 px-6">
-      <Typography className="pb-3" variant="h1" display="block">
-        貓咪飲食記錄
-      </Typography>
+      {session?.user &&
+        <Typography className="pb-3" variant="h1" display="block">
+          貓咪飲食記錄
+        </Typography>
+      }
+
       <BrandsProvider>
         <FoodsProvider>
-          <RecordAdd />
+          {
+            session?.user &&  <RecordAdd />
+          }
           <Suspense key={queryString}  fallback={<Loading />}>
             <RecordTable searchParams={searchParams}/>
           </Suspense>
