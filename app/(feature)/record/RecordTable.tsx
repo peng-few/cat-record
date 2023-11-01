@@ -24,7 +24,7 @@ interface RecordTableProps{
 }
 
 export default async function RecordTable({searchParams}: RecordTableProps) {
-  const { data: recordDiary, pagination } = await getRecordDiary({ page: searchParams.page })
+  const { data: recordDiary, pagination } = await getRecordDiary({ page: Number(searchParams.page) ?? 1 })
   const {prevPage,nextPage,maxPage} = formatPagination(pagination)
   return (
     <>
@@ -47,7 +47,6 @@ export default async function RecordTable({searchParams}: RecordTableProps) {
             <RecordAdd/>
           </div>
         </div>
-        
       ): (
         <TableContainer component={Paper} className="mt-4">
           <Table sx={{ minWidth: 650 }}>

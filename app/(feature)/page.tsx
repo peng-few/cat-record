@@ -10,6 +10,7 @@ import { getHost } from "@/_lib/getHost";
 import toUrlSearchParams from "@/_lib/searchParams/toUrlSearchParams";
 import { getUserSession } from "@/auth/_lib/getUserSession";
 import dynamic from "next/dynamic"
+
 const RecordAdd = dynamic(() => import('@/(feature)/record/RecordAdd'), {
   ssr: false,
 });
@@ -28,17 +29,14 @@ export default async function RecordPage({ searchParams }: PageProps) {
 
   return (
     <div className="py-4 px-6">
-      {session?.user &&
+      {session?.user && (
         <Typography className="pb-3" variant="h1" display="block">
           貓咪飲食記錄
         </Typography>
-      }
-
+      )}
       <BrandsProvider>
         <FoodsProvider>
-          {
-            session?.user &&  <RecordAdd />
-          }
+          {session?.user && <RecordAdd />}
           <Suspense key={queryString}  fallback={<Loading />}>
             <RecordTable searchParams={searchParams}/>
           </Suspense>

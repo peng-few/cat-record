@@ -34,7 +34,10 @@ export default function RecordAdd() {
   },[session?.user])
 
   useEffect(() => {
-    if(openFormAfterLogin && session?.user) openForm()
+    if (openFormAfterLogin && session?.user) {
+      router.refresh()
+      openForm()
+    }
   }, [openFormAfterLogin, openForm, session?.user])
 
   const submitForm: SubmitHandler<RecordFormRequest> = async (data) => {

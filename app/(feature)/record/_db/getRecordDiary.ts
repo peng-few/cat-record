@@ -21,7 +21,7 @@ export interface RecordDiaries {
 
 type dbRecordDiary = Override<RecordDiary, { records: WithId<Record>[] }>
 
-export const getRecordDiary = unstable_cache(async ({ page = 1, pageSize = 20 }): Promise<RecordDiaries> => {
+export const getRecordDiary = async ({ page = 1, pageSize = 20 }): Promise<RecordDiaries> => {
   try {
     const session = await getUserSession();
     if (!session?.user) throw new Error('please login')
@@ -80,4 +80,4 @@ export const getRecordDiary = unstable_cache(async ({ page = 1, pageSize = 20 })
     }
   }
 
-},undefined,{tags: ['records','auth']})
+}
