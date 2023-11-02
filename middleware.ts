@@ -17,5 +17,10 @@ export function middleware(request: NextRequest) {
   "style-src 'unsafe-inline' 'self';"]
 
   response.headers.set('Content-Security-Policy', csp.join(" "))
+  response.headers.set('X-Content-Type-Options', 'nosniff')
+  response.headers.set('X-Frame-Options', 'DENY')
+  response.headers.set('X-XSS-Protection', '1; mode=block')
+  response.headers.set('Access-Control-Allow-Origin','<origin>')
+
   return response
 }
