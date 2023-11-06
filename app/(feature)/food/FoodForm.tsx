@@ -2,7 +2,7 @@
 import { useForm, SubmitHandler } from "react-hook-form"
 import { FoodType, FoodTypeName, isDry } from "./_consts/FoodType"
 import { EnergyTypeName } from "./_consts/EnergyType"
-import { ReactNode, useEffect, useMemo } from "react"
+import { ReactNode } from "react"
 import RadioGroup from "@mui/material/RadioGroup"
 import Radio from "@mui/material/Radio"
 import FormHelperText from "@mui/material/FormHelperText"
@@ -29,6 +29,9 @@ export interface FoodFormProps {
   open: boolean,
 }
 
+const phosUnitOptions = getUnitOptions(PhosUnitType.Values)
+const energyTypeOptions = objToSelectOptions(EnergyTypeName)
+const foodTypeOptions = objToSelectOptions(FoodTypeName)
 export const FoodForm = ({
   onClose,
   values,
@@ -37,31 +40,24 @@ export const FoodForm = ({
   loading = false,
   open = false,
 }: FoodFormProps) => {
-  const phosUnitOptions = useMemo(() => getUnitOptions(PhosUnitType.Values), [])
-  const energyTypeOptions = useMemo(() => objToSelectOptions(EnergyTypeName), [])
-  const foodTypeOptions = useMemo(()=> objToSelectOptions(FoodTypeName), [])
+
   const brands = useBrands()
   const {
     register,
     handleSubmit,
     watch,
-    reset,
     formState: { errors },
   } = useForm<FoodFormRequest>({
-    resolver: zodResolver(FoodFormRequestSchema)
-  })
-
-  useEffect(() => {
-    const defaultValues:Partial<FoodFormRequest> = {
+    resolver: zodResolver(FoodFormRequestSchema),
+    defaultValues: {
       energyType: energyTypeOptions[0].value,
       type: FoodType.enum.Compelete,
       brand: '',
       ...values,
       calcium: values?.calcium && unitConverter.mgToPercentage(values?.calcium, values?.energy),
       phosphorus:  values?.phosphorus && unitConverter.mgToPercentage(values?.phosphorus, values?.energy)
-    };
-    reset(defaultValues)
-  }, [reset, values, energyTypeOptions])
+    }
+  })
 
   return (
     <SwipeableDrawer

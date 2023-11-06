@@ -6,22 +6,30 @@ import { StatusSnackbar,useSnackbar } from "@/_components/StatusSnackbar"
 import { useRouter } from "next/navigation"
 import BrandForm from "./BrandForm"
 import { Brand } from "./_db/schema/BrandSchema"
-import { useBrandEdit } from "./BrandEditProvider"
+import IconButton from "@mui/material/IconButton"
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import { WithStringId } from "@/_types"
 
-export default function BrandEdit() {
+export interface BrandEditProps{
+  brand: WithStringId<Brand>;
+}
+
+export default function BrandEdit({brand}: BrandEditProps) {
   const { snackbarRef, snackbar } = useSnackbar()
-  const [loading,setLoading] = useState(false)
-  const [formOpen, setFormOpen] = useState(false)
-  const { brandEdit,setBrandEdit } = useBrandEdit()
+  const [loading, setLoading] = useState(false)
+  const [isFormOpen, setIsFormOpen] = useState(false);
   const router = useRouter()
 
   const cancelEdit = () => {
-    setBrandEdit({open: false})
+    setIsFormOpen(false)
+  }
+  const openEdit = () => {
+    setIsFormOpen(true)
   }
 
   const submitForm: SubmitHandler<Brand> = async (data) => {
     setLoading(true)
-    const { success } = await simpleFetch.put(`/brand/api/${brandEdit.brand?._id}`, data)
+    const { success } = await simpleFetch.put(`/brand/api/${brand?._id}`, data)
     if (success) {
       snackbar?.success({msg: '編輯成功'})
       router.refresh()
@@ -34,9 +42,16 @@ export default function BrandEdit() {
 
   return (
     <>
+      <IconButton
+        size="small"
+        onClick={openEdit}
+        color="primary"
+      >
+        <ModeEditIcon fontSize="inherit"/>
+      </IconButton>
       <BrandForm
-        values={brandEdit.brand}
-        open={brandEdit.open}
+        values={brand}
+        open={isFormOpen}
         onClose={cancelEdit}
         onSubmit={submitForm}
         submitText="儲存"

@@ -1,6 +1,6 @@
 "use client"
 import { useForm, SubmitHandler } from "react-hook-form"
-import { ReactNode, useEffect, useMemo } from "react"
+import { ReactNode } from "react"
 import Button from "@mui/material/Button"
 import SwipeableDrawer from "@mui/material/SwipeableDrawer"
 import { noop, objToSelectOptions } from "@/_lib"
@@ -18,32 +18,26 @@ export interface BrandFormProps {
   loading: boolean
   open: boolean
 }
+const regionOptions = objToSelectOptions(RegionTypeName)
 
 export const BrandForm = ({
   onClose,
-  values,
+  values:defaultValues={},
   onSubmit: submitForm,
   submitText = "",
   loading = false,
   open = false,
 }: BrandFormProps) => {
-  const regionOptions = useMemo(() => objToSelectOptions(RegionTypeName), [])
+  
   const {
     register,
     handleSubmit,
     watch,
-    reset,
     formState: { errors },
   } = useForm<Brand>({
     resolver: zodResolver(BrandSchema),
+    defaultValues: defaultValues,
   })
-
-  useEffect(() => {
-    const defaultValues = {
-      ...values,
-    }
-    reset(defaultValues)
-  }, [reset, values])
 
   return (
     <SwipeableDrawer
@@ -85,7 +79,6 @@ export const BrandForm = ({
           errors={errors}
           multiline
           rows={2}
-          maxRows={4}
           {...register("remark", { required: true })}
         />
         <Button type="submit" sx={{ mx: 1 }} variant="contained" size="large">

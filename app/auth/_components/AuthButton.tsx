@@ -14,7 +14,6 @@ export default function AuthButton() {
 
   useEffect(() => {
     if (userId !== prevUserId) {
-      console.log('refresh')
       router.refresh()
       setPrevUserId(userId)
     }

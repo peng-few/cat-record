@@ -37,7 +37,7 @@ export default async function RecordPage({ searchParams }: PageProps) {
       <BrandsProvider>
         <FoodsProvider>
           {session?.user && <RecordAdd />}
-          <Suspense key={queryString}  fallback={<Loading />}>
+          <Suspense key={queryString} fallback={<Loading />}>
             <RecordTable searchParams={searchParams}/>
           </Suspense>
         </FoodsProvider>
