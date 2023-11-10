@@ -32,6 +32,7 @@ export async function generateMetadata({
       template: "%s | 喵喵紀錄",
       default: "喵喵紀錄",
     },
+    robots: 'index,follow,noarchive',
     openGraph: {
       title: "喵喵紀錄",
       description,

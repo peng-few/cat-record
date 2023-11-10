@@ -7,7 +7,7 @@ export function middleware(request: NextRequest) {
   "default-src 'none';",
   "base-uri 'self';",
   "block-all-mixed-content;",
-  "connect-src 'self';",
+  "connect-src 'self' https://vitals.vercel-insights.com/v1/vitals;",
   "form-action 'self';",
   "frame-ancestors 'none';",
   "img-src 'self';",
