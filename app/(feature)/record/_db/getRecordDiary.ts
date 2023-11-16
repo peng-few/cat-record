@@ -1,4 +1,3 @@
-import { unstable_cache } from 'next/cache'
 import { Collection } from '.'
 import { WithStringId, Pagination,Override } from '@/_types'
 import { Record } from './schema/RecordSchema'
@@ -58,7 +57,7 @@ export const getRecordDiary = async ({ page = 1, pageSize = 20 }): Promise<Recor
         $sort: { _id: -1 }
       }]
     })
-  
+    
     const diariesWithStringId= diaries.data?.map(diary => ({
         ...diary,
         records: diary.records.map(objectIdToString)

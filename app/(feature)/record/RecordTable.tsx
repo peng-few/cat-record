@@ -24,8 +24,9 @@ interface RecordTableProps{
 }
 
 export default async function RecordTable({searchParams}: RecordTableProps) {
-  const { data: recordDiary, pagination } = await getRecordDiary({ page: Number(searchParams.page) ?? 1 })
-  const {prevPage,nextPage,maxPage} = formatPagination(pagination)
+  const { data: recordDiary, pagination } = await getRecordDiary({ page: Number(searchParams.page) || 1 })
+  const { prevPage, nextPage, maxPage } = formatPagination(pagination)
+
   return (
     <>
       {pagination.total === 0 ? (
